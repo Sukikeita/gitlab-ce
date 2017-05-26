@@ -8,7 +8,7 @@
     <output-cell
       v-if="hasOutput"
       :count="cell.execution_count"
-      :output="output"
+      :outputs="outputs"
       :code-css-class="codeCssClass" />
   </div>
 </template>
@@ -44,8 +44,8 @@ export default {
     hasOutput() {
       return this.cell.outputs.length;
     },
-    output() {
-      return this.cell.outputs[0];
+    outputs() {
+      return this.cell.outputs;
     },
   },
 };
