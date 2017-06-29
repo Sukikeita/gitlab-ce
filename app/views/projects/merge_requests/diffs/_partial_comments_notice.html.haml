@@ -1,0 +1,9 @@
+- project = merge_request.target_project
+.mr-version-controls
+  .mr-version-menus-container.content-block
+    .comments-disabled-notif
+      = icon('info-circle')
+      Not all comments are displayed because you're viewing only the changes in commit
+      = succeed '.' do
+        = link_to commit.short_id, diffs_namespace_project_merge_request_path(project.namespace, project, merge_request, commit_sha: commit.id), class: "commit-sha btn btn-transparent"
+      = clipboard_button(text: commit.id, title: "Copy commit SHA to clipboard")

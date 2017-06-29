@@ -23,14 +23,29 @@ class Projects::MergeRequests::DiffsController < Projects::MergeRequests::Applic
   private
 
   def define_diff_vars
-    @merge_request_diff =
-      if params[:diff_id]
-        @merge_request.merge_request_diffs.viewable.find(params[:diff_id])
-      else
-        @merge_request.merge_request_diff
-      end
+    if params[:commit_sha].present?
+      handle_commit_sha_case
+    else
+      handle_diff_case
+    end
+    @diffs = @compare.diffs(diff_options)
+  end
 
+  def handle_commit_sha_case
+    project = @merge_request.target_project
+    @compare = project.commit(params[:commit_sha])
+    @compare ||= @merge_request.merge_request_diff
+  end
+
+  def handle_diff_case
     @merge_request_diffs = @merge_request.merge_request_diffs.viewable.select_without_diff.order_id_desc
+
+    if diff_id = params[:diff_id]
+      @merge_request_diff = @merge_request.merge_request_diffs.viewable.find_by(id: diff_id)
+    end
+
+    @merge_request_diff ||= @merge_request.merge_request_diff
+
     @comparable_diffs = @merge_request_diffs.select { |diff| diff.id < @merge_request_diff.id }
 
     if params[:start_sha].present?
@@ -49,8 +64,6 @@ class Projects::MergeRequests::DiffsController < Projects::MergeRequests::Applic
       else
         @merge_request_diff
       end
-
-    @diffs = @compare.diffs(diff_options)
   end
 
   def define_diff_comment_vars
@@ -58,6 +71,10 @@ class Projects::MergeRequests::DiffsController < Projects::MergeRequests::Applic
       noteable_type: 'MergeRequest',
       noteable_id: @merge_request.id
     }
+
+    if @compare.is_a?(Commit)
+      @new_diff_note_attrs[:commit_id] = @compare.id
+    end
 
     @diff_notes_disabled = false
 

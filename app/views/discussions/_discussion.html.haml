@@ -31,10 +31,19 @@
                 a deleted commit
             - elsif discussion.diff_discussion?
               on
-              = conditional_link_to url.present?, url do
-                - unless discussion.active?
-                  an old version of
-                the diff
+              - if discussion.on_merge_request_commit?
+                - if discussion.active?
+                  the commit
+                - else
+                  an outdated change in commit
+
+                = link_to discussion.commit_id, url, class: 'monospace'
+              - else
+                = conditional_link_to url.present?, url do
+                  - unless discussion.active?
+                    an old version of
+                  the diff
+
 
             = time_ago_with_tooltip(discussion.created_at, placement: "bottom", html_class: "note-created-ago")
           = render "discussions/headline", discussion: discussion
