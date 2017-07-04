@@ -33,7 +33,7 @@ module DiscussionOnDiff
   end
 
   def on_merge_request_commit?
-    !commit_id.blank?
+    for_merge_request? && commit_id.present?
   end
 
   # Returns an array of at most 16 highlighted lines above a diff note

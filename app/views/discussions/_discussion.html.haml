@@ -31,15 +31,14 @@
                 a deleted commit
             - elsif discussion.diff_discussion?
               on
-              - if discussion.on_merge_request_commit?
-                - if discussion.active?
-                  the commit
-                - else
-                  an outdated change in commit
+              = conditional_link_to url.present?, url do
+                - if discussion.on_merge_request_commit?
+                  - unless discussion.active?
+                    an outdated change in
+                  commit
 
-                = link_to discussion.commit_id, url, class: 'monospace'
-              - else
-                = conditional_link_to url.present?, url do
+                  %span.commit-sha= Commit.truncate_sha(discussion.commit_id)
+                - else
                   - unless discussion.active?
                     an old version of
                   the diff

@@ -1,9 +1,8 @@
-- ref = local_assigns.fetch(:ref)
-- merge_request = local_assigns.fetch(:merge_request)
-:ruby
-  link = (merge_request && !merge_request.new_record?) ?
-    diffs_namespace_project_merge_request_path(project.namespace, project, merge_request, commit_sha: commit.id) :
-    namespace_project_commit_path(project.namespace, project, commit.id)
+- view_details = local_assigns.fetch(:view_details, false)
+- merge_request = local_assigns.fetch(:merge_request, nil)
+- project = local_assigns.fetch(:project) { merge_request&.project }
+- ref = local_assigns.fetch(:ref) { merge_request&.source_branch }
+- link = commit_path(project, commit, merge_request: merge_request)
 
 - if @note_counts
   - note_count = @note_counts.fetch(commit.id, 0)
@@ -11,7 +10,7 @@
   - notes = commit.notes
   - note_count = notes.user.count
 
-- cache_key = [project.full_path, commit.id, current_application_settings, @path.presence, current_controller?(:commits), I18n.locale]
+- cache_key = [project.full_path, commit.id, current_application_settings, note_count, @path.presence, current_controller?(:commits), merge_request, I18n.locale]
 - cache_key.push(commit.status(ref)) if commit.status(ref)
 
 = cache(cache_key, expires_in: 1.day) do
@@ -42,8 +41,7 @@
           - commit_text =  _('%{commit_author_link} committed %{commit_timeago}') % { commit_author_link: commit_author_link, commit_timeago: commit_timeago }
           #{ commit_text.html_safe }
 
-
-      .commit-actions.hidden-xs
+      .commit-actions.flex-row.hidden-xs
         - if request.xhr?
           = render partial: 'projects/commit/signature', object: commit.signature
         - else
@@ -55,3 +53,6 @@
         = link_to commit.short_id, link, class: "commit-sha btn btn-transparent"
         = clipboard_button(text: commit.id, title: _("Copy commit SHA to clipboard"))
         = link_to_browse_code(project, commit)
+
+        - if view_details && merge_request
+          = link_to "View details", namespace_project_commit_path(project.namespace, project, commit.id, merge_request_iid: merge_request.iid), class: "btn btn-default"

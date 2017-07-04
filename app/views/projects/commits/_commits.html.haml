@@ -1,9 +1,6 @@
-- ref = local_assigns.fetch(:ref)
-- merge_request = local_assigns.fetch(:merge_request)
-- if merge_request
-  - ref = merge_request.source_branch
-  - project = merge_request.project
-
+- merge_request = local_assigns.fetch(:merge_request, nil)
+- project = local_assigns.fetch(:project) { merge_request&.project }
+- ref = local_assigns.fetch(:ref) { merge_request&.source_branch }
 
 - commits, hidden = limited_commits(@commits)
 
