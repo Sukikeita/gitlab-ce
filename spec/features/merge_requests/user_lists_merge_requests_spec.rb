@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Projects > Merge requests > User lists merge requests' do
+describe 'Merge requests > User lists merge requests' do
   include MergeRequestHelpers
   include SortingHelper
 
@@ -30,25 +30,6 @@ describe 'Projects > Merge requests > User lists merge requests' do
            source_branch: 'merge-test',
            created_at: 3.minutes.ago,
            updated_at: 10.seconds.ago)
-  end
-
-  it 'filters on no assignee' do
-    visit_merge_requests(project, assignee_id: IssuableFinder::NONE)
-
-    expect(current_path).to eq(project_merge_requests_path(project))
-    expect(page).to have_content 'merge-test'
-    expect(page).not_to have_content 'fix'
-    expect(page).not_to have_content 'markdown'
-    expect(count_merge_requests).to eq(1)
-  end
-
-  it 'filters on a specific assignee' do
-    visit_merge_requests(project, assignee_id: user.id)
-
-    expect(page).not_to have_content 'merge-test'
-    expect(page).to have_content 'fix'
-    expect(page).to have_content 'markdown'
-    expect(count_merge_requests).to eq(2)
   end
 
   it 'sorts by newest' do
