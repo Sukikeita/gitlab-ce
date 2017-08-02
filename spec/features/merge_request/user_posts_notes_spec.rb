@@ -4,7 +4,7 @@ feature 'Merge request > User posts notes', :js do
   include NoteInteractionHelpers
 
   given(:project) { create(:project, :repository) }
-  given(:project) { project.creator }
+  given(:user) { project.creator }
   given(:merge_request) do
     create(:merge_request, source_project: project, target_project: project)
   end

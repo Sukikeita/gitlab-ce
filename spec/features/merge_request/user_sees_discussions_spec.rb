@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 feature 'Merge request > User sees discussions' do
+  given(:project) { create(:project, :public, :repository) }
+  given(:user) { project.creator }
+  given(:merge_request) { create(:merge_request, source_project: project) }
+
   background do
-    sign_in(create(:admin))
+    project.add_master(user)
+    sign_in(user)
   end
 
   describe "Diff discussions" do
-    given(:project) { create(:project, :public, :repository) }
-    given(:user) { project.creator }
-    given(:merge_request) { create(:merge_request, target_project: project) }
     given!(:old_merge_request_diff) { merge_request.merge_request_diffs.create(diff_refs: outdated_diff_refs) }
     given!(:new_merge_request_diff) { merge_request.merge_request_diffs.create }
     given!(:outdated_discussion) { create(:diff_note_on_merge_request, project: project, noteable: merge_request, position: outdated_position).to_discussion }
@@ -48,9 +50,6 @@ feature 'Merge request > User sees discussions' do
   end
 
   describe 'Commit comments displayed in MR context', :js do
-    given(:merge_request) { create(:merge_request) }
-    given(:project) { merge_request.project }
-
     shared_examples 'a functional discussion' do
       given(:discussion_id) { note.discussion_id(merge_request) }
 

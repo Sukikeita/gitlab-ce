@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 feature 'Merge request > User sees empty state' do
-  given(:project) { create(:project, :repository) }
+  given(:project) { create(:project, :public, :repository) }
   given(:user)    { project.creator }
 
   background do
+    project.add_master(user)
     sign_in(user)
   end
 

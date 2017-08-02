@@ -8,6 +8,8 @@ feature 'Merge request > User sees versions', :js do
   given!(:merge_request_diff3) { merge_request.merge_request_diffs.create(head_commit_sha: '5937ac0a7beb003549fc5fd26fc247adbce4a52e') }
 
   background do
+    project.add_master(user)
+    sign_in(user)
     visit diffs_project_merge_request_path(merge_request.project, merge_request)
   end
 

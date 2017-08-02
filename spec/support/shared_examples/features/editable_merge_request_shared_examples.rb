@@ -6,11 +6,13 @@ RSpec.shared_examples 'an editable merge request' do
   let!(:label2)      { create(:label, project: target_project) }
   let(:target_project) { create(:project, :public, :repository) }
   let(:source_project) { target_project }
-  let(:merge_request) { create(:merge_request,
-                                source_project: source_project,
-                                target_project: target_project,
-                                source_branch: 'fix',
-                                target_branch: 'master') }
+  let(:merge_request) do
+    create(:merge_request,
+      source_project: source_project,
+      target_project: target_project,
+      source_branch: 'fix',
+      target_branch: 'master')
+  end
 
   before do
     source_project.add_master(user)
