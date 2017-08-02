@@ -1,22 +1,22 @@
 require 'rails_helper'
 
-feature 'Multiple merge requests updating from merge_requests#index' do
-  let!(:user)    { create(:user)}
-  let!(:project) { create(:project, :repository) }
-  let!(:merge_request) { create(:merge_request, source_project: project, target_project: project) }
+feature 'Merge requests > User mass updates', :js do
+  given(:project) { create(:project, :repository) }
+  given(:user)    { project.creator }
+  given!(:merge_request) { create(:merge_request, source_project: project, target_project: project) }
 
-  before do
-    project.team << [user, :master]
+  background do
+    project.add_master(user)
     sign_in(user)
   end
 
-  context 'status', :js do
+  context 'status' do
     describe 'close merge request' do
-      before do
+      background do
         visit project_merge_requests_path(project)
       end
 
-      it 'closes merge request' do
+      scenario 'closes merge request' do
         change_status('Closed')
 
         expect(page).to have_selector('.merge-request', count: 0)
@@ -24,12 +24,12 @@ feature 'Multiple merge requests updating from merge_requests#index' do
     end
 
     describe 'reopen merge request' do
-      before do
+      background do
         merge_request.close
         visit project_merge_requests_path(project, state: 'closed')
       end
 
-      it 'reopens merge request' do
+      scenario 'reopens merge request' do
         change_status('Open')
 
         expect(page).to have_selector('.merge-request', count: 0)
@@ -37,9 +37,9 @@ feature 'Multiple merge requests updating from merge_requests#index' do
     end
   end
 
-  context 'assignee', :js do
+  context 'assignee' do
     describe 'set assignee' do
-      before do
+      background do
         visit project_merge_requests_path(project)
       end
 
@@ -53,7 +53,7 @@ feature 'Multiple merge requests updating from merge_requests#index' do
     end
 
     describe 'remove assignee' do
-      before do
+      background do
         merge_request.assignee = user
         merge_request.save
         visit project_merge_requests_path(project)
@@ -67,11 +67,11 @@ feature 'Multiple merge requests updating from merge_requests#index' do
     end
   end
 
-  context 'milestone', :js do
+  context 'milestone' do
     let(:milestone)  { create(:milestone, project: project) }
 
     describe 'set milestone' do
-      before do
+      background do
         visit project_merge_requests_path(project)
       end
 
@@ -83,7 +83,7 @@ feature 'Multiple merge requests updating from merge_requests#index' do
     end
 
     describe 'unset milestone' do
-      before do
+      background do
         merge_request.milestone = milestone
         merge_request.save
         visit project_merge_requests_path(project)

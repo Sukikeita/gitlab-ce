@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Merge request > User sees MR from deleted forked project', :js do
   given(:project) { create(:project, :public, :repository) }
@@ -14,7 +14,6 @@ feature 'Merge request > User sees MR from deleted forked project', :js do
     MergeRequests::MergeService.new(project, user).execute(merge_request)
     fork_project.destroy!
     sign_in(user)
-
     visit project_merge_request_path(project, merge_request)
   end
 

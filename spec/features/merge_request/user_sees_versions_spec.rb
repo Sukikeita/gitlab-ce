@@ -1,18 +1,17 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Merge Request versions', :js do
-  let(:merge_request) { create(:merge_request, importing: true) }
-  let(:project) { merge_request.source_project }
-  let!(:merge_request_diff1) { merge_request.merge_request_diffs.create(head_commit_sha: '6f6d7e7ed97bb5f0054f2b1df789b39ca89b6ff9') }
-  let!(:merge_request_diff2) { merge_request.merge_request_diffs.create(head_commit_sha: nil) }
-  let!(:merge_request_diff3) { merge_request.merge_request_diffs.create(head_commit_sha: '5937ac0a7beb003549fc5fd26fc247adbce4a52e') }
+feature 'Merge request > User sees versions', :js do
+  given(:project) { create(:project, :public, :repository) }
+  given(:merge_request) { create(:merge_request, source_project: project) }
+  given!(:merge_request_diff1) { merge_request.merge_request_diffs.create(head_commit_sha: '6f6d7e7ed97bb5f0054f2b1df789b39ca89b6ff9') }
+  given!(:merge_request_diff2) { merge_request.merge_request_diffs.create(head_commit_sha: nil) }
+  given!(:merge_request_diff3) { merge_request.merge_request_diffs.create(head_commit_sha: '5937ac0a7beb003549fc5fd26fc247adbce4a52e') }
 
-  before do
-    sign_in(create(:admin))
-    visit diffs_project_merge_request_path(project, merge_request)
+  background do
+    visit diffs_project_merge_request_path(merge_request.project, merge_request)
   end
 
-  it 'show the latest version of the diff' do
+  scenario 'show the latest version of the diff' do
     page.within '.mr-version-dropdown' do
       expect(page).to have_content 'latest version'
     end
@@ -21,7 +20,7 @@ feature 'Merge Request versions', :js do
   end
 
   describe 'switch between versions' do
-    before do
+    background do
       page.within '.mr-version-dropdown' do
         find('.btn-default').click
         click_link 'version 1'
@@ -33,7 +32,7 @@ feature 'Merge Request versions', :js do
       end
     end
 
-    it 'should show older version' do
+    scenario 'should show older version' do
       page.within '.mr-version-dropdown' do
         expect(page).to have_content 'version 1'
       end
@@ -41,11 +40,11 @@ feature 'Merge Request versions', :js do
       expect(page).to have_content '5 changed files'
     end
 
-    it 'show the message about comments' do
+    scenario 'show the message about comments' do
       expect(page).to have_content 'Not all comments are displayed'
     end
 
-    it 'shows comments that were last relevant at that version' do
+    scenario 'shows comments that were last relevant at that version' do
       position = Gitlab::Diff::Position.new(
         old_path: ".gitmodules",
         new_path: ".gitmodules",
@@ -57,12 +56,12 @@ feature 'Merge Request versions', :js do
       outdated_diff_note.position = outdated_diff_note.original_position
       outdated_diff_note.save!
 
-      visit current_url
+      refresh
 
       expect(page).to have_css(".diffs .notes[data-discussion-id='#{outdated_diff_note.discussion_id}']")
     end
 
-    it 'allows commenting' do
+    scenario 'allows commenting' do
       diff_file_selector = ".diff-file[id='7445606fbf8f3683cd42bdc54b05d7a0bc2dfc44']"
       line_code = '7445606fbf8f3683cd42bdc54b05d7a0bc2dfc44_2_2'
 
@@ -83,7 +82,7 @@ feature 'Merge Request versions', :js do
   end
 
   describe 'compare with older version' do
-    before do
+    background do
       page.within '.mr-version-compare-dropdown' do
         find('.btn-default').click
         click_link 'version 1'
@@ -95,7 +94,7 @@ feature 'Merge Request versions', :js do
       end
     end
 
-    it 'has a path with comparison context' do
+    scenario 'has a path with comparison context' do
       expect(page).to have_current_path diffs_project_merge_request_path(
         project,
         merge_request.iid,
@@ -104,17 +103,17 @@ feature 'Merge Request versions', :js do
       )
     end
 
-    it 'should have correct value in the compare dropdown' do
+    scenario 'should have correct value in the compare dropdown' do
       page.within '.mr-version-compare-dropdown' do
         expect(page).to have_content 'version 1'
       end
     end
 
-    it 'show the message about comments' do
+    scenario 'show the message about comments' do
       expect(page).to have_content 'Not all comments are displayed'
     end
 
-    it 'shows comments that were last relevant at that version' do
+    scenario 'shows comments that were last relevant at that version' do
       position = Gitlab::Diff::Position.new(
         old_path: ".gitmodules",
         new_path: ".gitmodules",
@@ -126,13 +125,13 @@ feature 'Merge Request versions', :js do
       outdated_diff_note.position = outdated_diff_note.original_position
       outdated_diff_note.save!
 
-      visit current_url
+      refresh
       wait_for_requests
 
       expect(page).to have_css(".diffs .notes[data-discussion-id='#{outdated_diff_note.discussion_id}']")
     end
 
-    it 'allows commenting' do
+    scenario 'allows commenting' do
       diff_file_selector = ".diff-file[id='7445606fbf8f3683cd42bdc54b05d7a0bc2dfc44']"
       line_code = '7445606fbf8f3683cd42bdc54b05d7a0bc2dfc44_4_4'
 
@@ -151,11 +150,11 @@ feature 'Merge Request versions', :js do
       end
     end
 
-    it 'show diff between new and old version' do
+    scenario 'show diff between new and old version' do
       expect(page).to have_content '4 changed files with 15 additions and 6 deletions'
     end
 
-    it 'should return to latest version when "Show latest version" button is clicked' do
+    scenario 'should return to latest version when "Show latest version" button is clicked' do
       click_link 'Show latest version'
       page.within '.mr-version-dropdown' do
         expect(page).to have_content 'latest version'
@@ -165,14 +164,14 @@ feature 'Merge Request versions', :js do
   end
 
   describe 'compare with same version' do
-    before do
+    background do
       page.within '.mr-version-compare-dropdown' do
         find('.btn-default').click
         click_link 'version 1'
       end
     end
 
-    it 'should have 0 chages between versions' do
+    scenario 'should have 0 chages between versions' do
       page.within '.mr-version-compare-dropdown' do
         expect(find('.dropdown-toggle')).to have_content 'version 1'
       end
@@ -186,14 +185,14 @@ feature 'Merge Request versions', :js do
   end
 
   describe 'compare with newer version' do
-    before do
+    background do
       page.within '.mr-version-compare-dropdown' do
         find('.btn-default').click
         click_link 'version 2'
       end
     end
 
-    it 'should set the compared versions to be the same' do
+    scenario 'should set the compared versions to be the same' do
       page.within '.mr-version-compare-dropdown' do
         expect(find('.dropdown-toggle')).to have_content 'version 2'
       end

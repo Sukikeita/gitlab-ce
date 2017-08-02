@@ -1,18 +1,17 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Only allow merge requests to be merged if the pipeline succeeds', :js do
-  let(:merge_request) { create(:merge_request_with_diffs) }
-  let(:project)       { merge_request.target_project }
+feature 'Merge request > User merges only if pipeline succeeds', :js do
+  given(:merge_request) { create(:merge_request_with_diffs) }
+  given(:project)       { merge_request.target_project }
 
-  before do
-    sign_in merge_request.author
-
-    project.team << [merge_request.author, :master]
+  background do
+    project.add_master(merge_request.author)
+    sign_in(merge_request.author)
   end
 
-  context 'project does not have CI enabled', :js do
-    it 'allows MR to be merged' do
-      visit_merge_request(merge_request)
+  context 'project does not have CI enabled' do
+    scenario 'allows MR to be merged' do
+      visit project_merge_request_path(project, merge_request)
 
       wait_for_requests
 
@@ -20,7 +19,7 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
     end
   end
 
-  context 'when project has CI enabled', :js do
+  context 'when project has CI enabled' do
     given!(:pipeline) do
       create(:ci_empty_pipeline,
       project: project,
@@ -30,15 +29,15 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
     end
 
     context 'when merge requests can only be merged if the pipeline succeeds' do
-      before do
+      background do
         project.update_attribute(:only_allow_merge_if_pipeline_succeeds, true)
       end
 
       context 'when CI is running' do
         given(:status) { :running }
 
-        it 'does not allow to merge immediately' do
-          visit_merge_request(merge_request)
+        scenario 'does not allow to merge immediately' do
+          visit project_merge_request_path(project, merge_request)
 
           wait_for_requests
 
@@ -50,8 +49,8 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
       context 'when CI failed' do
         given(:status) { :failed }
 
-        it 'does not allow MR to be merged' do
-          visit_merge_request(merge_request)
+        scenario 'does not allow MR to be merged' do
+          visit project_merge_request_path(project, merge_request)
 
           wait_for_requests
 
@@ -63,8 +62,8 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
       context 'when CI canceled' do
         given(:status) { :canceled }
 
-        it 'does not allow MR to be merged' do
-          visit_merge_request(merge_request)
+        scenario 'does not allow MR to be merged' do
+          visit project_merge_request_path(project, merge_request)
 
           wait_for_requests
 
@@ -76,8 +75,8 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
       context 'when CI succeeded' do
         given(:status) { :success }
 
-        it 'allows MR to be merged' do
-          visit_merge_request(merge_request)
+        scenario 'allows MR to be merged' do
+          visit project_merge_request_path(project, merge_request)
 
           wait_for_requests
 
@@ -88,8 +87,8 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
       context 'when CI skipped' do
         given(:status) { :skipped }
 
-        it 'allows MR to be merged' do
-          visit_merge_request(merge_request)
+        scenario 'allows MR to be merged' do
+          visit project_merge_request_path(project, merge_request)
 
           wait_for_requests
 
@@ -99,15 +98,15 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
     end
 
     context 'when merge requests can be merged when the build failed' do
-      before do
+      background do
         project.update_attribute(:only_allow_merge_if_pipeline_succeeds, false)
       end
 
       context 'when CI is running' do
         given(:status) { :running }
 
-        it 'allows MR to be merged immediately' do
-          visit_merge_request(merge_request)
+        scenario 'allows MR to be merged immediately' do
+          visit project_merge_request_path(project, merge_request)
 
           wait_for_requests
 
@@ -121,8 +120,8 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
       context 'when CI failed' do
         given(:status) { :failed }
 
-        it 'allows MR to be merged' do
-          visit_merge_request(merge_request)
+        scenario 'allows MR to be merged' do
+          visit project_merge_request_path(project, merge_request)
 
           wait_for_requests
 
@@ -133,8 +132,8 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
       context 'when CI succeeded' do
         given(:status) { :success }
 
-        it 'allows MR to be merged' do
-          visit_merge_request(merge_request)
+        scenario 'allows MR to be merged' do
+          visit project_merge_request_path(project, merge_request)
 
           wait_for_requests
 
@@ -142,9 +141,5 @@ feature 'Only allow merge requests to be merged if the pipeline succeeds', :js d
         end
       end
     end
-  end
-
-  def visit_merge_request(merge_request)
-    visit project_merge_request_path(merge_request.project, merge_request)
   end
 end

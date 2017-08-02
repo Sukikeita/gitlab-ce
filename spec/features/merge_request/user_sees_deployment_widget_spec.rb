@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Widget Deployments Header', :js do
+feature 'Merge request > User sees deployment widget', :js do
   describe 'when deployed to an environment' do
     given(:user) { create(:user) }
     given(:project) { merge_request.target_project }
@@ -12,14 +12,13 @@ feature 'Widget Deployments Header', :js do
     given!(:manual) { }
 
     background do
+      project.add_user(user, role)
       sign_in(user)
-      project.team << [user, role]
       visit project_merge_request_path(project, merge_request)
+      wait_for_requests
     end
 
     scenario 'displays that the environment is deployed' do
-      wait_for_requests
-
       expect(page).to have_content("Deployed to #{environment.name}")
       expect(find('.js-deploy-time')['data-title']).to eq(deployment.created_at.to_time.in_time_zone.to_s(:medium))
     end
@@ -31,14 +30,6 @@ feature 'Widget Deployments Header', :js do
       given(:deployment) do
         create(:deployment, environment: environment, ref: merge_request.target_branch,
                             sha: sha, deployable: build, on_stop: 'close_app')
-      end
-
-      background do
-        wait_for_requests
-      end
-
-      scenario 'does show stop button' do
-        expect(page).to have_button('Stop environment')
       end
 
       scenario 'does start build when stop button clicked' do

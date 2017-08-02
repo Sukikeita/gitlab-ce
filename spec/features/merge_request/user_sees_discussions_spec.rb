@@ -1,20 +1,19 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Merge Request Discussions' do
-  before do
+feature 'Merge request > User sees discussions' do
+  background do
     sign_in(create(:admin))
   end
 
   describe "Diff discussions" do
-    let(:merge_request) { create(:merge_request, importing: true) }
-    let(:project) { merge_request.source_project }
-    let!(:old_merge_request_diff) { merge_request.merge_request_diffs.create(diff_refs: outdated_diff_refs) }
-    let!(:new_merge_request_diff) { merge_request.merge_request_diffs.create }
-
-    let!(:outdated_discussion) { create(:diff_note_on_merge_request, project: project, noteable: merge_request, position: outdated_position).to_discussion }
-    let!(:active_discussion) { create(:diff_note_on_merge_request, noteable: merge_request, project: project).to_discussion }
-
-    let(:outdated_position) do
+    given(:project) { create(:project, :public, :repository) }
+    given(:user) { project.creator }
+    given(:merge_request) { create(:merge_request, target_project: project) }
+    given!(:old_merge_request_diff) { merge_request.merge_request_diffs.create(diff_refs: outdated_diff_refs) }
+    given!(:new_merge_request_diff) { merge_request.merge_request_diffs.create }
+    given!(:outdated_discussion) { create(:diff_note_on_merge_request, project: project, noteable: merge_request, position: outdated_position).to_discussion }
+    given!(:active_discussion) { create(:diff_note_on_merge_request, noteable: merge_request, project: project).to_discussion }
+    given(:outdated_position) do
       Gitlab::Diff::Position.new(
         old_path: "files/ruby/popen.rb",
         new_path: "files/ruby/popen.rb",
@@ -23,15 +22,14 @@ feature 'Merge Request Discussions' do
         diff_refs: outdated_diff_refs
       )
     end
+    given(:outdated_diff_refs) { project.commit("874797c3a73b60d2187ed6e2fcabd289ff75171e").diff_refs }
 
-    let(:outdated_diff_refs) { project.commit("874797c3a73b60d2187ed6e2fcabd289ff75171e").diff_refs }
-
-    before do
+    background do
       visit project_merge_request_path(project, merge_request)
     end
 
     context 'active discussions' do
-      it 'shows a link to the diff' do
+      scenario 'shows a link to the diff' do
         within(".discussion[data-discussion-id='#{active_discussion.id}']") do
           path = diffs_project_merge_request_path(project, merge_request, anchor: active_discussion.line_code)
           expect(page).to have_link('the diff', href: path)
@@ -40,7 +38,7 @@ feature 'Merge Request Discussions' do
     end
 
     context 'outdated discussions' do
-      it 'shows a link to the outdated diff' do
+      scenario 'shows a link to the outdated diff' do
         within(".discussion[data-discussion-id='#{outdated_discussion.id}']") do
           path = diffs_project_merge_request_path(project, merge_request, diff_id: old_merge_request_diff.id, anchor: outdated_discussion.line_code)
           expect(page).to have_link('an old version of the diff', href: path)
@@ -50,17 +48,17 @@ feature 'Merge Request Discussions' do
   end
 
   describe 'Commit comments displayed in MR context', :js do
-    let(:merge_request) { create(:merge_request) }
-    let(:project) { merge_request.project }
+    given(:merge_request) { create(:merge_request) }
+    given(:project) { merge_request.project }
 
     shared_examples 'a functional discussion' do
-      let(:discussion_id) { note.discussion_id(merge_request) }
+      given(:discussion_id) { note.discussion_id(merge_request) }
 
-      it 'is displayed' do
+      scenario 'is displayed' do
         expect(page).to have_css(".discussion[data-discussion-id='#{discussion_id}']")
       end
 
-      it 'can be replied to' do
+      scenario 'can be replied to' do
         within(".discussion[data-discussion-id='#{discussion_id}']") do
           click_button 'Reply...'
           fill_in 'note[note]', with: 'Test!'
@@ -71,18 +69,22 @@ feature 'Merge Request Discussions' do
       end
     end
 
+<<<<<<< HEAD:spec/features/merge_requests/discussion_spec.rb
     before do
+=======
+    background do
+>>>>>>> Continue to improve MR feature specs and reduce duplication:spec/features/merge_request/user_sees_discussions_spec.rb
       visit project_merge_request_path(project, merge_request)
     end
 
     context 'a regular commit comment' do
-      let(:note) { create(:note_on_commit, project: project) }
+      given(:note) { create(:note_on_commit, project: project) }
 
       it_behaves_like 'a functional discussion'
     end
 
     context 'a commit diff comment' do
-      let(:note) { create(:diff_note_on_commit, project: project) }
+      given(:note) { create(:diff_note_on_commit, project: project) }
 
       it_behaves_like 'a functional discussion'
     end

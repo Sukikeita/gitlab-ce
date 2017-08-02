@@ -1,16 +1,16 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Work In Progress help message' do
-  let!(:project) { create(:project, :public, :repository) }
-  let!(:user)    { create(:user) }
+feature 'Merge request > User sees WIP help message' do
+  given(:project) { create(:project, :public, :repository) }
+  given(:user)    { project.creator }
 
-  before do
-    project.team << [user, :master]
+  background do
+    project.add_master(user)
     sign_in(user)
   end
 
   context 'with WIP commits' do
-    it 'shows a specific WIP hint' do
+    scenario 'shows a specific WIP hint' do
       visit project_new_merge_request_path(
         project,
         merge_request: {
@@ -29,7 +29,7 @@ feature 'Work In Progress help message' do
   end
 
   context 'without WIP commits' do
-    it 'shows the regular WIP message' do
+    scenario 'shows the regular WIP message' do
       visit project_new_merge_request_path(
         project,
         merge_request: {

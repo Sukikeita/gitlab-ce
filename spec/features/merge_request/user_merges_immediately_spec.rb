@@ -1,38 +1,30 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Merge immediately', :js do
-  let(:user) { create(:user) }
-  let(:project) { create(:project, :public, :repository) }
-
-  let!(:merge_request) do
+feature 'Merge requests > User merges immediately', :js do
+  given(:project) { create(:project, :public, :repository) }
+  given(:user) { project.creator }
+  given!(:merge_request) do
     create(:merge_request_with_diffs, source_project: project,
                                       author: user,
                                       title: 'Bug NS-04',
                                       head_pipeline: pipeline,
                                       source_branch: pipeline.ref)
   end
-
-  let(:pipeline) do
+  given(:pipeline) do
     create(:ci_pipeline, project: project,
                          ref: 'master',
                          sha: project.repository.commit('master').id)
   end
 
-  before do
-    project.team << [user, :master]
-  end
-
   context 'when there is active pipeline for merge request' do
     background do
       create(:ci_build, pipeline: pipeline)
+      project.add_master(user)
+      sign_in(user)
+      visit project_merge_request_path(project, merge_request)
     end
 
-    before do
-      sign_in user
-      visit project_merge_request_path(merge_request.project, merge_request)
-    end
-
-    it 'enables merge immediately' do
+    scenario 'enables merge immediately' do
       page.within '.mr-widget-body' do
         find('.dropdown-toggle').click
 

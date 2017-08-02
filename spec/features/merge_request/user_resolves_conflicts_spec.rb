@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Merge request conflict resolution', :js do
-  let(:user) { create(:user) }
-  let(:project) { create(:project, :repository) }
+feature 'Merge request > User resolves conflicts', :js do
+  given(:project) { create(:project, :repository) }
+  given(:user) { project.creator }
 
-  before do
+  background do
     # In order to have the diffs collapsed, we need to disable the increase feature
     stub_feature_flags(gitlab_git_diff_size_limit_increase: false)
   end
@@ -85,15 +85,15 @@ feature 'Merge request conflict resolution', :js do
   end
 
   context 'can be resolved in the UI' do
-    before do
-      project.team << [user, :developer]
+    background do
+      project.add_developer(user)
       sign_in(user)
     end
 
     context 'the conflicts are resolvable' do
-      let(:merge_request) { create_merge_request('conflict-resolvable') }
+      given(:merge_request) { create_merge_request('conflict-resolvable') }
 
-      before do
+      background do
         visit project_merge_request_path(project, merge_request)
       end
 
@@ -102,7 +102,7 @@ feature 'Merge request conflict resolution', :js do
       end
 
       context 'in Inline view mode' do
-        before do
+        background do
           click_link('conflicts', href: /\/conflicts\Z/)
         end
 
@@ -111,7 +111,7 @@ feature 'Merge request conflict resolution', :js do
       end
 
       context 'in Parallel view mode' do
-        before do
+        background do
           click_link('conflicts', href: /\/conflicts\Z/)
           click_button 'Side-by-side'
         end
@@ -122,9 +122,9 @@ feature 'Merge request conflict resolution', :js do
     end
 
     context 'the conflict contain markers' do
-      let(:merge_request) { create_merge_request('conflict-contains-conflict-markers') }
+      given(:merge_request) { create_merge_request('conflict-contains-conflict-markers') }
 
-      before do
+      background do
         visit project_merge_request_path(project, merge_request)
         click_link('conflicts', href: /\/conflicts\Z/)
       end
@@ -169,12 +169,11 @@ feature 'Merge request conflict resolution', :js do
 
   UNRESOLVABLE_CONFLICTS.each do |source_branch, description|
     context description do
-      let(:merge_request) { create_merge_request(source_branch) }
+      given(:merge_request) { create_merge_request(source_branch) }
 
-      before do
-        project.team << [user, :developer]
+      background do
+        project.add_developer(user)
         sign_in(user)
-
         visit project_merge_request_path(project, merge_request)
       end
 

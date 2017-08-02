@@ -1,4 +1,4 @@
-RSpec.shared_examples 'a creatable merge request', :js do
+RSpec.shared_examples 'a creatable merge request' do
   let(:user)        { create(:user) }
   let(:user2)       { create(:user) }
   let(:target_project) { create(:project, :public, :repository) }
@@ -23,7 +23,7 @@ RSpec.shared_examples 'a creatable merge request', :js do
       })
   end
 
-  it 'creates new merge request' do
+  it 'creates new merge request', :js do
     click_button 'Assignee'
     page.within '.dropdown-menu-user' do
       click_link user2.name

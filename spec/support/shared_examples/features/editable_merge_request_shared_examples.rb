@@ -116,10 +116,10 @@ RSpec.shared_examples 'an editable merge request' do
 
   context 'when "Remove source branch" is set' do
     before do
-      merge_request.update(merge_params: { 'force_remove_source_branch' => '1' })
+      merge_request.update!(merge_params: { 'force_remove_source_branch' => '1' })
     end
 
-    it 'allows to unselect "Remove source branch"' do
+    it 'allows to unselect "Remove source branch"', :js do
       expect(merge_request.merge_params['force_remove_source_branch']).to be_truthy
 
       visit edit_project_merge_request_path(target_project, merge_request)

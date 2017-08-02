@@ -1,17 +1,15 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Diffs URL', :js do
-  include ProjectForksHelper
-
-  let(:project) { create(:project, :public, :repository) }
-  let(:merge_request) { create(:merge_request, source_project: project) }
+feature 'Merge request > User sees diff', :js do
+  given(:project) { create(:project, :public, :repository) }
+  given(:merge_request) { create(:merge_request, source_project: project) }
 
   context 'when visit with */* as accept header' do
-    before do
+    background do
       page.driver.add_header('Accept', '*/*')
     end
 
-    it 'renders the notes' do
+    scenario 'renders the notes' do
       create :note_on_merge_request, project: project, noteable: merge_request, note: 'Rebasing with master'
 
       visit diffs_project_merge_request_path(project, merge_request)
@@ -24,38 +22,43 @@ feature 'Diffs URL', :js do
 
   context 'when linking to note' do
     describe 'with unresolved note' do
-      let(:note) { create :diff_note_on_merge_request, project: project, noteable: merge_request }
-      let(:fragment) { "#note_#{note.id}" }
+      given(:note) { create :diff_note_on_merge_request, project: project, noteable: merge_request }
+      given(:fragment) { "#note_#{note.id}" }
 
-      before do
+      background do
         visit "#{diffs_project_merge_request_path(project, merge_request)}#{fragment}"
       end
 
-      it 'shows expanded note' do
+      scenario 'shows expanded note' do
         expect(page).to have_selector(fragment, visible: true)
       end
     end
 
     describe 'with resolved note' do
-      let(:note) { create :diff_note_on_merge_request, :resolved, project: project, noteable: merge_request }
-      let(:fragment) { "#note_#{note.id}" }
+      given(:note) { create :diff_note_on_merge_request, :resolved, project: project, noteable: merge_request }
+      given(:fragment) { "#note_#{note.id}" }
 
-      before do
+      background do
         visit "#{diffs_project_merge_request_path(project, merge_request)}#{fragment}"
       end
 
+<<<<<<< HEAD:spec/features/merge_requests/diffs_spec.rb
       it 'shows collapsed note' do
         wait_for_requests
 
         expect(page).to have_selector('.discussion-notes.collapsed') do |note_container|
           expect(note_container).to have_selector(fragment, visible: false)
         end
+=======
+      scenario 'shows expanded note' do
+        expect(page).to have_selector(fragment, visible: true)
+>>>>>>> Continue to improve MR feature specs and reduce duplication:spec/features/merge_request/user_sees_diff_spec.rb
       end
     end
   end
 
   context 'when merge request has overflow' do
-    it 'displays warning' do
+    scenario 'displays warning' do
       allow(Commit).to receive(:max_diff_options).and_return(max_files: 3)
 
       visit diffs_project_merge_request_path(project, merge_request)
@@ -68,18 +71,26 @@ feature 'Diffs URL', :js do
   end
 
   context 'when editing file' do
+<<<<<<< HEAD:spec/features/merge_requests/diffs_spec.rb
     let(:author_user) { create(:user) }
     let(:user) { create(:user) }
     let(:forked_project) { fork_project(project, author_user, repository: true) }
     let(:merge_request) { create(:merge_request_with_diffs, source_project: forked_project, target_project: project, author: author_user) }
     let(:changelog_id) { Digest::SHA1.hexdigest("CHANGELOG") }
+=======
+    given(:author_user) { create(:user) }
+    given(:user) { create(:user) }
+    given(:forked_project) { Projects::ForkService.new(project, author_user).execute }
+    given(:merge_request) { create(:merge_request_with_diffs, source_project: forked_project, target_project: project, author: author_user) }
+    given(:changelog_id) { Digest::SHA1.hexdigest("CHANGELOG") }
+>>>>>>> Continue to improve MR feature specs and reduce duplication:spec/features/merge_request/user_sees_diff_spec.rb
 
-    before do
+    background do
       forked_project.repository.after_import
     end
 
     context 'as author' do
-      it 'shows direct edit link' do
+      scenario 'shows direct edit link' do
         sign_in(author_user)
         visit diffs_project_merge_request_path(project, merge_request)
 
@@ -89,7 +100,7 @@ feature 'Diffs URL', :js do
     end
 
     context 'as user who needs to fork' do
-      it 'shows fork/cancel confirmation' do
+      scenario 'shows fork/cancel confirmation' do
         sign_in(user)
         visit diffs_project_merge_request_path(project, merge_request)
 

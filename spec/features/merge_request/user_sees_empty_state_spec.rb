@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Merge Requests > User sees empty state' do
-  let(:project) { create(:project, :repository) }
-  let(:user)    { project.creator }
+feature 'Merge request > User sees empty state' do
+  given(:project) { create(:project, :repository) }
+  given(:user)    { project.creator }
 
   background do
-    sign_in(project.creator)
+    sign_in(user)
   end
 
   it 'shows an empty state and a "New merge request" button' do

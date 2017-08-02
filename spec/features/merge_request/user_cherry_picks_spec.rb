@@ -1,14 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Cherry-pick Merge Requests', :js do
-  let(:user) { create(:user) }
-  let(:group) { create(:group) }
-  let(:project) { create(:project, :repository, namespace: group) }
-  let(:merge_request) { create(:merge_request_with_diffs, source_project: project, author: user) }
+feature 'Merge request > User cherry-picks', :js do
+  given(:group) { create(:group) }
+  given(:project) { create(:project, :repository, namespace: group) }
+  given(:user) { project.creator }
+  given(:merge_request) { create(:merge_request_with_diffs, source_project: project, author: user) }
 
   before do
-    sign_in user
-    project.team << [user, :master]
+    project.add_master(user)
+    sign_in(user)
   end
 
   context "Viewing a merged merge request" do

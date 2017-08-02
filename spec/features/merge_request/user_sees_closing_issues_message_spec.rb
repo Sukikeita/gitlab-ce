@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Merge Request closing issues message', :js do
-  let(:user) { create(:user) }
-  let(:project) { create(:project, :public, :repository) }
-  let(:issue_1) { create(:issue, project: project)}
-  let(:issue_2) { create(:issue, project: project)}
-  let(:merge_request) do
+feature 'Merge request > User sees closing issues message', :js do
+  given(:project) { create(:project, :public, :repository) }
+  given(:user) { project.creator }
+  given(:issue_1) { create(:issue, project: project)}
+  given(:issue_2) { create(:issue, project: project)}
+  given(:merge_request) do
     create(
       :merge_request,
       :simple,
@@ -14,14 +14,12 @@ feature 'Merge Request closing issues message', :js do
       title: merge_request_title
     )
   end
-  let(:merge_request_description) { 'Merge Request Description' }
-  let(:merge_request_title) { 'Merge Request Title' }
+  given(:merge_request_description) { 'Merge Request Description' }
+  given(:merge_request_title) { 'Merge Request Title' }
 
   before do
-    project.team << [user, :master]
-
-    sign_in user
-
+    project.add_master(user)
+    sign_in(user)
     visit project_merge_request_path(project, merge_request)
     wait_for_requests
   end

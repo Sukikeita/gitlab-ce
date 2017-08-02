@@ -1,19 +1,21 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Merge requests > User posts notes', :js do
+feature 'Merge request > User posts notes', :js do
   include NoteInteractionHelpers
 
-  let(:project) { create(:project, :repository) }
-  let(:merge_request) do
+  given(:project) { create(:project, :repository) }
+  given(:project) { project.creator }
+  given(:merge_request) do
     create(:merge_request, source_project: project, target_project: project)
   end
-  let!(:note) do
+  given!(:note) do
     create(:note_on_merge_request, :with_attachment, noteable: merge_request,
                                                      project: project)
   end
 
   before do
-    sign_in(create(:admin))
+    project.add_master(user)
+    sign_in(user)
     visit project_merge_request_path(project, merge_request)
   end
 

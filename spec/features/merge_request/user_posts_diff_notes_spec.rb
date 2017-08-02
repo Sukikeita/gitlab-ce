@@ -1,11 +1,13 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Merge requests > User posts diff notes', :js do
-  include MergeRequestDiffHelpers
-
-  let(:user) { create(:user) }
-  let(:merge_request) { create(:merge_request) }
-  let(:project) { merge_request.source_project }
+feature 'Merge request > User posts diff notes', :js do
+  given(:merge_request) { create(:merge_request) }
+  given(:project) { merge_request.source_project }
+  given(:user) { project.creator }
+  given(:comment_button_class) { '.add-diff-note' }
+  given(:notes_holder_input_class) { 'js-temp-notes-holder' }
+  given(:notes_holder_input_xpath) { './following-sibling::*[contains(concat(" ", @class, " "), " notes_holder ")]' }
+  given(:test_note_comment) { 'this is a test note!' }
 
   before do
     page.driver.set_cookie('sidebar_collapsed', 'true')
@@ -13,11 +15,6 @@ feature 'Merge requests > User posts diff notes', :js do
     project.add_developer(user)
     sign_in(user)
   end
-
-  let(:comment_button_class) { '.add-diff-note' }
-  let(:notes_holder_input_class) { 'js-temp-notes-holder' }
-  let(:notes_holder_input_xpath) { './following-sibling::*[contains(concat(" ", @class, " "), " notes_holder ")]' }
-  let(:test_note_comment) { 'this is a test note!' }
 
   context 'when hovering over a parallel view diff file' do
     before do
@@ -82,7 +79,7 @@ feature 'Merge requests > User posts diff notes', :js do
 
       # The first `.js-unfold` unfolds upwards, therefore the first
       # `.line_holder` will be an unfolded line.
-      let(:line_holder) { first('.line_holder[id="1"]') }
+      given(:line_holder) { first('.line_holder[id="1"]') }
 
       it 'does not allow commenting on the left side' do
         should_not_allow_commenting(line_holder, 'left')
@@ -141,7 +138,7 @@ feature 'Merge requests > User posts diff notes', :js do
 
       # The first `.js-unfold` unfolds upwards, therefore the first
       # `.line_holder` will be an unfolded line.
-      let(:line_holder) { first('.line_holder[id="1"]') }
+      given(:line_holder) { first('.line_holder[id="1"]') }
 
       it 'does not allow commenting' do
         should_not_allow_commenting line_holder

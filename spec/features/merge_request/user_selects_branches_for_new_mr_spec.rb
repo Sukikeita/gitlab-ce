@@ -1,16 +1,15 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Create New Merge Request', :js do
-  let(:user) { create(:user) }
-  let(:project) { create(:project, :public, :repository) }
+feature 'Merge request > User selects branches for new MR', :js do
+  given(:project) { create(:project, :public, :repository) }
+  given(:user) { project.creator }
 
-  before do
-    project.team << [user, :master]
-
+  background do
+    project.add_master(user)
     sign_in user
   end
 
-  it 'selects the source branch sha when a tag with the same name exists' do
+  scenario 'selects the source branch sha when a tag with the same name exists' do
     visit project_merge_requests_path(project)
 
     page.within '.content' do
@@ -25,7 +24,7 @@ feature 'Create New Merge Request', :js do
     expect(page).to have_content "b83d6e3"
   end
 
-  it 'selects the target branch sha when a tag with the same name exists' do
+  scenario 'selects the target branch sha when a tag with the same name exists' do
     visit project_merge_requests_path(project)
 
     page.within '.content' do
@@ -41,7 +40,7 @@ feature 'Create New Merge Request', :js do
     expect(page).to have_content "b83d6e3"
   end
 
-  it 'generates a diff for an orphaned branch' do
+  scenario 'generates a diff for an orphaned branch' do
     visit project_merge_requests_path(project)
 
     page.within '.content' do
@@ -68,7 +67,7 @@ feature 'Create New Merge Request', :js do
   end
 
   context 'when target project cannot be viewed by the current user' do
-    it 'does not leak the private project name & namespace' do
+    scenario 'does not leak the private project name & namespace' do
       private_project = create(:project, :private, :repository)
 
       visit project_new_merge_request_path(project, merge_request: { target_project_id: private_project.id })
@@ -79,7 +78,7 @@ feature 'Create New Merge Request', :js do
   end
 
   context 'when source project cannot be viewed by the current user' do
-    it 'does not leak the private project name & namespace' do
+    scenario 'does not leak the private project name & namespace' do
       private_project = create(:project, :private, :repository)
 
       visit project_new_merge_request_path(project, merge_request: { source_project_id: private_project.id })
@@ -89,13 +88,13 @@ feature 'Create New Merge Request', :js do
     end
   end
 
-  it 'populates source branch button' do
+  scenario 'populates source branch button' do
     visit project_new_merge_request_path(project, change_branches: true, merge_request: { target_branch: 'master', source_branch: 'fix' })
 
     expect(find('.js-source-branch')).to have_content('fix')
   end
 
-  it 'allows to change the diff view' do
+  scenario 'allows to change the diff view' do
     visit project_new_merge_request_path(project, merge_request: { target_branch: 'master', source_branch: 'fix' })
 
     click_link 'Changes'
@@ -111,7 +110,7 @@ feature 'Create New Merge Request', :js do
     end
   end
 
-  it 'does not allow non-existing branches' do
+  scenario 'does not allow non-existing branches' do
     visit project_new_merge_request_path(project, merge_request: { target_branch: 'non-exist-target', source_branch: 'non-exist-source' })
 
     expect(page).to have_content('The form contains the following errors')
@@ -120,7 +119,7 @@ feature 'Create New Merge Request', :js do
   end
 
   context 'when a branch contains commits that both delete and add the same image' do
-    it 'renders the diff successfully' do
+    scenario 'renders the diff successfully' do
       visit project_new_merge_request_path(project, merge_request: { target_branch: 'master', source_branch: 'deleted-image-test' })
 
       click_link "Changes"
@@ -130,7 +129,7 @@ feature 'Create New Merge Request', :js do
   end
 
   # Isolates a regression (see #24627)
-  it 'does not show error messages on initial form' do
+  scenario 'does not show error messages on initial form' do
     visit project_new_merge_request_path(project)
     expect(page).not_to have_selector('#error_explanation')
     expect(page).not_to have_content('The form contains the following error')
@@ -143,7 +142,7 @@ feature 'Create New Merge Request', :js do
                            project: project)
     end
 
-    it 'shows pipelines for a new merge request' do
+    scenario 'shows pipelines for a new merge request' do
       visit project_new_merge_request_path(
         project,
         merge_request: { target_branch: 'master', source_branch: 'fix' })

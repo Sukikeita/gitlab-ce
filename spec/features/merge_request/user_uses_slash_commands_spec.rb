@@ -1,34 +1,26 @@
 require 'rails_helper'
 
-feature 'Merge Requests > User uses quick actions', :js do
+feature 'Merge request > User uses quick actions', :js do
   include QuickActionsHelpers
 
   it_behaves_like 'issuable record that supports quick actions in its description and notes', :merge_request do
-    let(:issuable) { create(:merge_request, source_project: project) }
-    let(:new_url_opts) { { merge_request: { source_branch: 'feature', target_branch: 'master' } } }
+    given(:issuable) { create(:merge_request, source_project: project) }
+    given(:new_url_opts) { { merge_request: { source_branch: 'feature', target_branch: 'master' } } }
   end
 
   describe 'merge-request-only commands' do
-    let(:user) { create(:user) }
     let(:project) { create(:project, :public, :repository) }
+    let(:user) { project.creator }
     let(:merge_request) { create(:merge_request, source_project: project) }
     let!(:milestone) { create(:milestone, project: project, title: 'ASAP') }
 
     before do
-      project.team << [user, :master]
+      project.add_master(user)
       sign_in(user)
       visit project_merge_request_path(project, merge_request)
     end
 
-    after do
-      wait_for_requests
-    end
-
     describe 'time tracking' do
-      before do
-        visit project_merge_request_path(project, merge_request)
-      end
-
       it_behaves_like 'issuable time tracker'
     end
 
@@ -56,9 +48,8 @@ feature 'Merge Requests > User uses quick actions', :js do
       end
 
       context 'when the current user cannot toggle the WIP prefix' do
-        let(:guest) { create(:user) }
-        before do
-          project.team << [guest, :guest]
+        background do
+          project.add_guest(guest)
           sign_out(:user)
           sign_in(guest)
           visit project_merge_request_path(project, merge_request)
@@ -87,7 +78,7 @@ feature 'Merge Requests > User uses quick actions', :js do
       end
 
       context 'when the head diff changes in the meanwhile' do
-        before do
+        background do
           merge_request.source_branch = 'another_branch'
           merge_request.save
         end
@@ -102,9 +93,8 @@ feature 'Merge Requests > User uses quick actions', :js do
       end
 
       context 'when the current user cannot merge the MR' do
-        let(:guest) { create(:user) }
-        before do
-          project.team << [guest, :guest]
+        background do
+          project.add_guest(guest)
           sign_out(:user)
           sign_in(guest)
           visit project_merge_request_path(project, merge_request)
@@ -129,12 +119,12 @@ feature 'Merge Requests > User uses quick actions', :js do
     end
 
     describe '/target_branch command in merge request' do
-      let(:another_project) { create(:project, :public, :repository) }
-      let(:new_url_opts) { { merge_request: { source_branch: 'feature' } } }
+      given(:another_project) { create(:project, :public, :repository) }
+      given(:new_url_opts) { { merge_request: { source_branch: 'feature' } } }
 
-      before do
+      background do
         sign_out(:user)
-        another_project.team << [user, :master]
+        another_project.add_master(user)
         sign_in(user)
       end
 
@@ -186,9 +176,8 @@ feature 'Merge Requests > User uses quick actions', :js do
       end
 
       context 'when current user can not change target branch' do
-        let(:guest) { create(:user) }
-        before do
-          project.team << [guest, :guest]
+        background do
+          project.add_guest(guest)
           sign_out(:user)
           sign_in(guest)
           visit project_merge_request_path(project, merge_request)

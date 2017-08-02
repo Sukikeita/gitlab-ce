@@ -3,10 +3,10 @@ require 'rails_helper'
 feature 'Merge requests > User filters by multiple criteria', :js do
   include FilteredSearchHelpers
 
-  let!(:project)   { create(:project, :public, :repository) }
-  let(:user)       { project.creator }
-  let!(:milestone) { create(:milestone, title: 'v1.1', project: project) }
-  let!(:wontfix)   { create(:label, project: project, title: "Won't fix") }
+  given!(:project)   { create(:project, :public, :repository) }
+  given(:user)       { project.creator }
+  given!(:milestone) { create(:milestone, title: 'v1.1', project: project) }
+  given!(:wontfix)   { create(:label, project: project, title: "Won't fix") }
 
   background do
     sign_in(user)
@@ -17,7 +17,7 @@ feature 'Merge requests > User filters by multiple criteria', :js do
   end
 
   describe 'filtering by label:~"Won\'t fix" and assignee:~bug' do
-    it 'applies the filters' do
+    scenario 'applies the filters' do
       input_filtered_search("label:~\"Won't fix\" assignee:@#{user.username}")
 
       expect(page).to have_issuable_counts(open: 1, closed: 0, all: 1)
@@ -27,7 +27,7 @@ feature 'Merge requests > User filters by multiple criteria', :js do
   end
 
   describe 'filtering by text, author, assignee, milestone, and label' do
-    it 'filters by text, author, assignee, milestone, and label' do
+    scenario 'filters by text, author, assignee, milestone, and label' do
       input_filtered_search_keys("author:@#{user.username} assignee:@#{user.username} milestone:%\"v1.1\" label:~\"Won't fix\" Bug")
 
       expect(page).to have_issuable_counts(open: 1, closed: 0, all: 1)

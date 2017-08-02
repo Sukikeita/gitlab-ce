@@ -1,13 +1,13 @@
-require 'spec_helper'
+require 'rails_helper'
 
-feature 'Pipelines for Merge Requests', :js do
+feature 'Merge request > User sees pipelines', :js do
   describe 'pipeline tab' do
-    given(:user) { create(:user) }
     given(:merge_request) { create(:merge_request) }
     given(:project) { merge_request.target_project }
+    given(:user) { project.creator }
 
     before do
-      project.team << [user, :master]
+      project.add_master(user)
       sign_in user
     end
 
@@ -47,16 +47,16 @@ feature 'Pipelines for Merge Requests', :js do
   end
 
   describe 'race condition' do
-    given(:project) { create(:project, :repository) }
-    given(:user) { create(:user) }
-    given(:build_push_data) { { ref: 'feature', checkout_sha: TestEnv::BRANCH_SHA['feature'] } }
+    let(:project) { create(:project, :repository) }
+    let(:user) { project.creator }
+    let(:build_push_data) { { ref: 'feature', checkout_sha: TestEnv::BRANCH_SHA['feature'] } }
 
-    given(:merge_request_params) do
+    let(:merge_request_params) do
       { "source_branch" => "feature", "source_project_id" => project.id,
         "target_branch" => "master", "target_project_id" => project.id, "title" => "A" }
     end
 
-    background do
+    before do
       project.add_master(user)
       sign_in user
     end

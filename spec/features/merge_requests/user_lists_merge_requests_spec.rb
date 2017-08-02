@@ -1,13 +1,13 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Merge requests > User lists merge requests' do
+feature 'Merge requests > User lists merge requests' do
   include MergeRequestHelpers
   include SortingHelper
 
-  let(:project) { create(:project, :public, :repository) }
-  let(:user) { create(:user) }
+  given(:project) { create(:project, :public, :repository) }
+  given(:user) { create(:user) }
 
-  before do
+  background do
     @fix = create(:merge_request,
                   title: 'fix',
                   source_project: project,
@@ -32,29 +32,51 @@ describe 'Merge requests > User lists merge requests' do
            updated_at: 10.seconds.ago)
   end
 
-  it 'sorts by newest' do
-    visit_merge_requests(project, sort: sort_value_created_date)
+  scenario 'sorts by newest' do
+    visit_merge_requests(project, sort: sort_value_recently_created)
 
     expect(first_merge_request).to include('fix')
-    expect(last_merge_request).to include('merge-test')
+    expect(last_merge_request).to include('merge_lfs')
     expect(count_merge_requests).to eq(3)
   end
 
-  it 'sorts by last updated' do
+  scenario 'sorts by oldest' do
+    visit_merge_requests(project, sort: sort_value_oldest_created)
+
+    expect(first_merge_request).to include('merge_lfs')
+    expect(last_merge_request).to include('fix')
+    expect(count_merge_requests).to eq(3)
+  end
+
+  scenario 'sorts by last updated' do
     visit_merge_requests(project, sort: sort_value_recently_updated)
 
-    expect(first_merge_request).to include('merge-test')
+    expect(first_merge_request).to include('merge_lfs')
     expect(count_merge_requests).to eq(3)
   end
 
-  it 'sorts by milestone' do
-    visit_merge_requests(project, sort: sort_value_milestone)
+  scenario 'sorts by oldest updated' do
+    visit_merge_requests(project, sort: sort_value_oldest_updated)
+
+    expect(first_merge_request).to include('markdown')
+    expect(count_merge_requests).to eq(3)
+  end
+
+  scenario 'sorts by milestone due soon' do
+    visit_merge_requests(project, sort: sort_value_milestone_soon)
 
     expect(first_merge_request).to include('fix')
     expect(count_merge_requests).to eq(3)
   end
 
-  it 'filters on one label and sorts by due date' do
+  scenario 'sorts by milestone due later' do
+    visit_merge_requests(project, sort: sort_value_milestone_later)
+
+    expect(first_merge_request).to include('markdown')
+    expect(count_merge_requests).to eq(3)
+  end
+
+  scenario 'filters on one label and sorts by due soon' do
     label = create(:label, project: project)
     create(:label_link, label: label, target: @fix)
 
@@ -66,15 +88,15 @@ describe 'Merge requests > User lists merge requests' do
   end
 
   context 'while filtering on two labels' do
-    let(:label) { create(:label, project: project) }
-    let(:label2) { create(:label, project: project) }
+    given(:label) { create(:label, project: project) }
+    given(:label2) { create(:label, project: project) }
 
-    before do
+    background do
       create(:label_link, label: label, target: @fix)
       create(:label_link, label: label2, target: @fix)
     end
 
-    it 'sorts by due date' do
+    scenario 'sorts by due soon' do
       visit_merge_requests(project, label_name: [label.name, label2.name],
                                     sort: sort_value_due_date)
 
@@ -83,7 +105,7 @@ describe 'Merge requests > User lists merge requests' do
     end
 
     context 'filter on assignee and' do
-      it 'sorts by due soon' do
+      scenario 'sorts by due soon' do
         visit_merge_requests(project, label_name: [label.name, label2.name],
                                       assignee_id: user.id,
                                       sort: sort_value_due_date)
@@ -92,7 +114,7 @@ describe 'Merge requests > User lists merge requests' do
         expect(count_merge_requests).to eq(1)
       end
 
-      it 'sorts by recently due milestone' do
+      scenario 'sorts by recently due milestone' do
         visit project_merge_requests_path(project,
           label_name: [label.name, label2.name],
           assignee_id: user.id,

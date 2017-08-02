@@ -1,20 +1,17 @@
 require 'rails_helper'
 
-describe 'Merge request', :js do
-  let(:user) { create(:user) }
-  let(:project) { create(:project, :repository) }
-  let(:project_only_mwps) { create(:project, :repository, only_allow_merge_if_pipeline_succeeds: true) }
-  let(:merge_request) { create(:merge_request, source_project: project) }
-  let(:merge_request_in_only_mwps_project) { create(:merge_request, source_project: project_only_mwps) }
+feature 'Merge request > User sees merge widget', :js do
+  given(:project) { create(:project, :repository) }
+  given(:user) { project.creator }
+  given(:merge_request) { create(:merge_request, source_project: project) }
 
-  before do
+  background do
     project.add_master(user)
-    project_only_mwps.add_master(user)
     sign_in(user)
   end
 
   context 'new merge request' do
-    before do
+    background do
       visit project_new_merge_request_path(
         project,
         merge_request: {
@@ -25,7 +22,7 @@ describe 'Merge request', :js do
         })
     end
 
-    it 'shows widget status after creating new merge request' do
+    scenario 'shows widget status after creating new merge request' do
       click_button 'Submit merge request'
 
       wait_for_requests
@@ -44,11 +41,11 @@ describe 'Merge request', :js do
                           sha: merge_request.diff_head_sha)
     end
 
-    before do
+    background do
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'shows environments link' do
+    scenario 'shows environments link' do
       wait_for_requests
 
       page.within('.mr-widget-heading') do
@@ -57,7 +54,7 @@ describe 'Merge request', :js do
       end
     end
 
-    it 'shows green accept merge request button' do
+    scenario 'shows green accept merge request button' do
       # Wait for the `ci_status` and `merge_check` requests
       wait_for_requests
       expect(page).to have_selector('.accept-merge-request')
@@ -66,7 +63,7 @@ describe 'Merge request', :js do
   end
 
   context 'view merge request with external CI service' do
-    before do
+    background do
       create(:service, project: project,
                        active: true,
                        type: 'CiService',
@@ -75,7 +72,7 @@ describe 'Merge request', :js do
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'has danger button while waiting for external CI status' do
+    scenario 'has danger button while waiting for external CI status' do
       # Wait for the `ci_status` and `merge_check` requests
       wait_for_requests
       expect(page).to have_selector('.accept-merge-request.btn-danger')
@@ -83,7 +80,7 @@ describe 'Merge request', :js do
   end
 
   context 'view merge request with failed GitLab CI pipelines' do
-    before do
+    background do
       commit_status = create(:commit_status, project: project, status: 'failed')
       pipeline = create(:ci_pipeline, project: project,
                                       sha: merge_request.diff_head_sha,
@@ -96,7 +93,7 @@ describe 'Merge request', :js do
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'has danger button when not succeeded' do
+    scenario 'has danger button when not succeeded' do
       # Wait for the `ci_status` and `merge_check` requests
       wait_for_requests
       expect(page).to have_selector('.accept-merge-request.btn-danger')
@@ -104,7 +101,7 @@ describe 'Merge request', :js do
   end
 
   context 'when merge request is in the blocked pipeline state' do
-    before do
+    background do
       create(
         :ci_pipeline,
         project: project,
@@ -116,7 +113,7 @@ describe 'Merge request', :js do
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'shows information about blocked pipeline' do
+    scenario 'shows information about blocked pipeline' do
       expect(page).to have_content("Pipeline blocked")
       expect(page).to have_content(
         "The pipeline for this merge request requires a manual action")
@@ -124,6 +121,7 @@ describe 'Merge request', :js do
     end
   end
 
+<<<<<<< HEAD:spec/features/merge_requests/widget_spec.rb
   context 'view merge request with MWBS button' do
     before do
       commit_status = create(:commit_status, project: project, status: 'pending')
@@ -241,13 +239,15 @@ describe 'Merge request', :js do
     end
   end
 
+=======
+>>>>>>> Continue to improve MR feature specs and reduce duplication:spec/features/merge_request/user_sees_merge_widget_spec.rb
   context 'merge error' do
-    before do
+    background do
       allow_any_instance_of(Repository).to receive(:merge).and_return(false)
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'updates the MR widget' do
+    scenario 'updates the MR widget' do
       click_button 'Merge'
 
       page.within('.mr-widget-body') do
@@ -256,23 +256,29 @@ describe 'Merge request', :js do
     end
   end
 
+<<<<<<< HEAD:spec/features/merge_requests/widget_spec.rb
   context 'user can merge into source project but cannot push to fork', :js do
     let(:fork_project) { create(:project, :public, :repository) }
     let(:user2) { create(:user) }
+=======
+  context 'user can merge into source project but cannot push to fork' do
+    given(:fork_project) { create(:project, :public, :repository) }
+    given(:user2) { create(:user) }
+>>>>>>> Continue to improve MR feature specs and reduce duplication:spec/features/merge_request/user_sees_merge_widget_spec.rb
 
-    before do
-      project.team << [user2, :master]
+    background do
+      project.add_master(user2)
       sign_out(:user)
       sign_in(user2)
       merge_request.update(target_project: fork_project)
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'user can merge into the source project' do
+    scenario 'user can merge into the source project' do
       expect(page).to have_button('Merge', disabled: false)
     end
 
-    it 'user cannot remove source branch' do
+    scenario 'user cannot remove source branch' do
       expect(page).to have_field('remove-source-branch-input', disabled: true)
     end
   end
