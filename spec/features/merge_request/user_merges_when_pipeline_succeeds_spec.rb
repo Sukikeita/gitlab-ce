@@ -177,7 +177,7 @@ feature 'Merge request > User merges when pipeline succeeds', :js do
   end
 
   context 'when pipeline is not active' do
-    it "does not allow to enable merge when pipeline succeeds" do
+    scenario 'does not allow to enable merge when pipeline succeeds' do
       visit project_merge_request_path(project, merge_request)
 
       expect(page).not_to have_link 'Merge when pipeline succeeds'

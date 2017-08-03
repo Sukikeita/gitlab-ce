@@ -22,7 +22,7 @@ feature 'Merge request > User posts notes', :js do
   subject { page }
 
   describe 'the note form' do
-    it 'is valid' do
+    scenario 'is valid' do
       is_expected.to have_css('.js-main-target-form', visible: true, count: 1)
       expect(find('.js-main-target-form .js-comment-button').value)
         .to eq('Comment')
@@ -38,7 +38,7 @@ feature 'Merge request > User posts notes', :js do
         end
       end
 
-      it 'has enable submit button and preview button' do
+      scenario 'has enable submit button and preview button' do
         page.within('.js-main-target-form') do
           expect(page).not_to have_css('.js-comment-button[disabled]')
           expect(page).to have_css('.js-md-preview-button', visible: true)
@@ -56,7 +56,7 @@ feature 'Merge request > User posts notes', :js do
       end
     end
 
-    it 'is added and form reset' do
+    scenario 'is added and form reset' do
       is_expected.to have_content('This is awesome!')
       page.within('.js-main-target-form') do
         expect(page).to have_no_field('note[note]', with: 'This is awesome!')
@@ -69,7 +69,7 @@ feature 'Merge request > User posts notes', :js do
   end
 
   describe 'when editing a note' do
-    it 'there should be a hidden edit form' do
+    scenario 'there should be a hidden edit form' do
       is_expected.to have_css('.note-edit-form:not(.mr-note-edit-form)', visible: false, count: 1)
       is_expected.to have_css('.note-edit-form.mr-note-edit-form', visible: false, count: 1)
     end
@@ -81,7 +81,7 @@ feature 'Merge request > User posts notes', :js do
         find('.js-note-edit').click
       end
 
-      it 'shows the note edit form and hide the note body' do
+      scenario 'shows the note edit form and hide the note body' do
         page.within("#note_#{note.id}") do
           expect(find('.current-note-edit-form', visible: true)).to be_visible
           expect(find('.note-edit-form', visible: true)).to be_visible
@@ -89,7 +89,7 @@ feature 'Merge request > User posts notes', :js do
         end
       end
 
-      it 'resets the edit note form textarea with the original content of the note if cancelled' do
+      scenario 'resets the edit note form textarea with the original content of the note if cancelled' do
         within('.current-note-edit-form') do
           fill_in 'note[note]', with: 'Some new content'
           find('.btn-cancel').click
@@ -97,7 +97,7 @@ feature 'Merge request > User posts notes', :js do
         end
       end
 
-      it 'allows using markdown buttons after saving a note and then trying to edit it again' do
+      scenario 'allows using markdown buttons after saving a note and then trying to edit it again' do
         page.within('.current-note-edit-form') do
           fill_in 'note[note]', with: 'This is the new content'
           find('.btn-save').click
@@ -115,7 +115,7 @@ feature 'Merge request > User posts notes', :js do
         end
       end
 
-      it 'appends the edited at time to the note' do
+      scenario 'appends the edited at time to the note' do
         page.within('.current-note-edit-form') do
           fill_in 'note[note]', with: 'Some new content'
           find('.btn-save').click
@@ -136,13 +136,13 @@ feature 'Merge request > User posts notes', :js do
         find('.js-note-edit').click
       end
 
-      it 'shows the delete link' do
+      scenario 'shows the delete link' do
         page.within('.note-attachment') do
           is_expected.to have_css('.js-note-attachment-delete')
         end
       end
 
-      it 'removes the attachment div and resets the edit form' do
+      scenario 'removes the attachment div and resets the edit form' do
         find('.js-note-attachment-delete').click
         is_expected.not_to have_css('.note-attachment')
         is_expected.not_to have_css('.current-note-edit-form')

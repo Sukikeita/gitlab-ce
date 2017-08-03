@@ -136,7 +136,7 @@ feature 'Merge request > User selects branches for new MR', :js do
   end
 
   context 'when a new merge request has a pipeline' do
-    let!(:pipeline) do
+    given!(:pipeline) do
       create(:ci_pipeline, sha: project.commit('fix').id,
                            ref: 'fix',
                            project: project)

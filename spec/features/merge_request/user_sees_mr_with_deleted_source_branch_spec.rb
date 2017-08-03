@@ -14,11 +14,11 @@ feature 'Merge request > User sees MR with deleted source branch', :js do
     visit project_merge_request_path(project, merge_request)
   end
 
-  it 'shows a message about missing source branch' do
+  scenario 'shows a message about missing source branch' do
     expect(page).to have_content('Source branch does not exist.')
   end
 
-  it 'still contains Discussion, Commits and Changes tabs' do
+  scenario 'still contains Discussion, Commits and Changes tabs' do
     within '.merge-request-details' do
       expect(page).to have_content('Discussion')
       expect(page).to have_content('Commits')

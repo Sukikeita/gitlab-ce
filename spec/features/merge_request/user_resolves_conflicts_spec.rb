@@ -16,7 +16,7 @@ feature 'Merge request > User resolves conflicts', :js do
   end
 
   shared_examples "conflicts are resolved in Interactive mode" do
-    it 'conflicts are resolved in Interactive mode' do
+    scenario 'conflicts are resolved in Interactive mode' do
       within find('.files-wrapper .diff-file', text: 'files/ruby/popen.rb') do
         click_button 'Use ours'
       end
@@ -54,7 +54,7 @@ feature 'Merge request > User resolves conflicts', :js do
   end
 
   shared_examples "conflicts are resolved in Edit inline mode" do
-    it 'conflicts are resolved in Edit inline mode' do
+    scenario 'conflicts are resolved in Edit inline mode' do
       expect(find('#conflicts')).to have_content('popen.rb')
 
       within find('.files-wrapper .diff-file', text: 'files/ruby/popen.rb') do
@@ -97,7 +97,7 @@ feature 'Merge request > User resolves conflicts', :js do
         visit project_merge_request_path(project, merge_request)
       end
 
-      it 'shows a link to the conflict resolution page' do
+      scenario 'shows a link to the conflict resolution page' do
         expect(page).to have_link('conflicts', href: /\/conflicts\Z/)
       end
 
@@ -129,14 +129,14 @@ feature 'Merge request > User resolves conflicts', :js do
         click_link('conflicts', href: /\/conflicts\Z/)
       end
 
-      it 'conflicts can not be resolved in Interactive mode' do
+      scenario 'conflicts can not be resolved in Interactive mode' do
         within find('.files-wrapper .diff-file', text: 'files/markdown/ruby-style-guide.md') do
           expect(page).not_to have_content 'Interactive mode'
           expect(page).not_to have_content 'Edit inline'
         end
       end
 
-      it 'conflicts are resolved in Edit inline mode' do
+      scenario 'conflicts are resolved in Edit inline mode' do
         within find('.files-wrapper .diff-file', text: 'files/markdown/ruby-style-guide.md') do
           wait_for_requests
           execute_script('ace.edit($(".files-wrapper .diff-file pre")[0]).setValue("Gregor Samsa woke from troubled dreams");')
@@ -177,11 +177,11 @@ feature 'Merge request > User resolves conflicts', :js do
         visit project_merge_request_path(project, merge_request)
       end
 
-      it 'does not show a link to the conflict resolution page' do
+      scenario 'does not show a link to the conflict resolution page' do
         expect(page).not_to have_link('conflicts', href: /\/conflicts\Z/)
       end
 
-      it 'shows an error if the conflicts page is visited directly' do
+      scenario 'shows an error if the conflicts page is visited directly' do
         visit current_url + '/conflicts'
         wait_for_requests
 

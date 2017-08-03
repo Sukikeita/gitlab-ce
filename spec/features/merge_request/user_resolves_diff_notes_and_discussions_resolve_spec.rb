@@ -5,7 +5,7 @@ feature 'Merge request > User resolves diff notes and discussions', :js do
   given(:user)          { project.creator }
   given(:guest)         { create(:user) }
   given(:merge_request) { create(:merge_request_with_diffs, source_project: project, author: user, title: "Bug NS-04") }
-  let!(:note)           { create(:diff_note_on_merge_request, project: project, noteable: merge_request) }
+  given!(:note)          { create(:diff_note_on_merge_request, project: project, noteable: merge_request) }
   given(:path)          { "files/ruby/popen.rb" }
   given(:position) do
     Gitlab::Diff::Position.new(
@@ -425,7 +425,7 @@ feature 'Merge request > User resolves diff notes and discussions', :js do
     end
 
     context 'guest users merge request' do
-      let(:user) { guest }
+      given(:user) { guest }
 
       background do
         visit_merge_request

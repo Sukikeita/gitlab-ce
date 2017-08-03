@@ -43,7 +43,7 @@ feature 'Merge requests > User mass updates', :js do
         visit project_merge_requests_path(project)
       end
 
-      it "updates merge request with assignee" do
+      scenario 'updates merge request with assignee' do
         change_assignee(user.name)
 
         page.within('.merge-request .controls') do
@@ -59,7 +59,7 @@ feature 'Merge requests > User mass updates', :js do
         visit project_merge_requests_path(project)
       end
 
-      it "removes assignee from the merge request" do
+      scenario 'removes assignee from the merge request' do
         change_assignee('Unassigned')
 
         expect(find('.merge-request .controls')).not_to have_css('.author_link')
@@ -68,14 +68,14 @@ feature 'Merge requests > User mass updates', :js do
   end
 
   context 'milestone' do
-    let(:milestone)  { create(:milestone, project: project) }
+    given(:milestone)  { create(:milestone, project: project) }
 
     describe 'set milestone' do
       background do
         visit project_merge_requests_path(project)
       end
 
-      it "updates merge request with milestone" do
+      scenario 'updates merge request with milestone' do
         change_milestone(milestone.title)
 
         expect(find('.merge-request')).to have_content milestone.title
@@ -89,7 +89,7 @@ feature 'Merge requests > User mass updates', :js do
         visit project_merge_requests_path(project)
       end
 
-      it "removes milestone from the merge request" do
+      scenario 'removes milestone from the merge request' do
         change_milestone("No Milestone")
 
         expect(find('.merge-request')).not_to have_content milestone.title

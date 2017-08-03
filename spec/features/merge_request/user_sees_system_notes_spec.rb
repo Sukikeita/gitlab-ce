@@ -14,7 +14,7 @@ feature 'Merge request > User sees system notes' do
       sign_in(user)
     end
 
-    it 'shows the system note' do
+    scenario 'shows the system note' do
       visit project_merge_request_path(public_project, merge_request)
 
       expect(page).to have_css('.system-note')
@@ -22,7 +22,7 @@ feature 'Merge request > User sees system notes' do
   end
 
   context 'when not logged-in' do
-    it 'hides the system note' do
+    scenario 'hides the system note' do
       visit project_merge_request_path(public_project, merge_request)
 
       expect(page).not_to have_css('.system-note')

@@ -9,7 +9,7 @@ feature 'Merge request > User sees empty state' do
     sign_in(user)
   end
 
-  it 'shows an empty state and a "New merge request" button' do
+  scenario 'shows an empty state and a "New merge request" button' do
     visit project_merge_requests_path(project)
 
     expect(page).to have_selector('.empty-state')
@@ -23,7 +23,7 @@ feature 'Merge request > User sees empty state' do
       visit project_merge_requests_path(project)
     end
 
-    it 'does not show an empty state' do
+    scenario 'does not show an empty state' do
       expect(page).not_to have_selector('.empty-state')
     end
   end

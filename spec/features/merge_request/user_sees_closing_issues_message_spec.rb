@@ -25,7 +25,7 @@ feature 'Merge request > User sees closing issues message', :js do
   end
 
   context 'closing issues but not mentioning any other issue' do
-    let(:merge_request_description) { "Description\n\nclosing #{issue_1.to_reference}, #{issue_2.to_reference}" }
+    given(:merge_request_description) { "Description\n\nclosing #{issue_1.to_reference}, #{issue_2.to_reference}" }
 
     it 'does not display closing issue message' do
       expect(page).to have_content("Closes #{issue_1.to_reference} and #{issue_2.to_reference}")
@@ -33,7 +33,7 @@ feature 'Merge request > User sees closing issues message', :js do
   end
 
   context 'mentioning issues but not closing them' do
-    let(:merge_request_description) { "Description\n\nRefers to #{issue_1.to_reference} and #{issue_2.to_reference}" }
+    given(:merge_request_description) { "Description\n\nRefers to #{issue_1.to_reference} and #{issue_2.to_reference}" }
 
     it 'does not display closing issue message' do
       expect(page).to have_content("Mentions #{issue_1.to_reference} and #{issue_2.to_reference}")
@@ -41,7 +41,7 @@ feature 'Merge request > User sees closing issues message', :js do
   end
 
   context 'closing some issues in title and mentioning, but not closing, others' do
-    let(:merge_request_title) { "closes #{issue_1.to_reference}\n\n refers to #{issue_2.to_reference}" }
+    given(:merge_request_title) { "closes #{issue_1.to_reference}\n\n refers to #{issue_2.to_reference}" }
 
     it 'does not display closing issue message' do
       expect(page).to have_content("Closes #{issue_1.to_reference}")
@@ -50,7 +50,7 @@ feature 'Merge request > User sees closing issues message', :js do
   end
 
   context 'closing issues using title but not mentioning any other issue' do
-    let(:merge_request_title) { "closing #{issue_1.to_reference}, #{issue_2.to_reference}" }
+    given(:merge_request_title) { "closing #{issue_1.to_reference}, #{issue_2.to_reference}" }
 
     it 'does not display closing issue message' do
       expect(page).to have_content("Closes #{issue_1.to_reference} and #{issue_2.to_reference}")
@@ -58,7 +58,7 @@ feature 'Merge request > User sees closing issues message', :js do
   end
 
   context 'mentioning issues using title but not closing them' do
-    let(:merge_request_title) { "Refers to #{issue_1.to_reference} and #{issue_2.to_reference}" }
+    given(:merge_request_title) { "Refers to #{issue_1.to_reference} and #{issue_2.to_reference}" }
 
     it 'does not display closing issue message' do
       expect(page).to have_content("Mentions #{issue_1.to_reference} and #{issue_2.to_reference}")
@@ -66,7 +66,7 @@ feature 'Merge request > User sees closing issues message', :js do
   end
 
   context 'closing some issues using title and mentioning, but not closing, others' do
-    let(:merge_request_title) { "closes #{issue_1.to_reference}\n\n refers to #{issue_2.to_reference}" }
+    given(:merge_request_title) { "closes #{issue_1.to_reference}\n\n refers to #{issue_2.to_reference}" }
 
     it 'does not display closing issue message' do
       expect(page).to have_content("Closes #{issue_1.to_reference}")

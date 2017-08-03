@@ -14,13 +14,13 @@ feature 'Merge request > User assigns themselves', :js do
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'updates related issues' do
+    scenario 'updates related issues' do
       click_link 'Assign yourself to these issues'
 
       expect(page).to have_content '2 issues have been assigned to you'
     end
 
-    it 'returns user to the merge request' do
+    scenario 'returns user to the merge request' do
       click_link 'Assign yourself to these issues'
 
       expect(page).to have_content merge_request.description
@@ -31,7 +31,7 @@ feature 'Merge request > User assigns themselves', :js do
         [issue1, issue2].each { |issue| issue.update!(assignees: [user]) }
       end
 
-      it 'does not display if related issues are already assigned' do
+      scenario 'does not display if related issues are already assigned' do
         expect(page).not_to have_content 'Assign yourself'
       end
     end
@@ -43,7 +43,7 @@ feature 'Merge request > User assigns themselves', :js do
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'does not not show assignment link' do
+    scenario 'does not not show assignment link' do
       expect(page).not_to have_content 'Assign yourself'
     end
   end

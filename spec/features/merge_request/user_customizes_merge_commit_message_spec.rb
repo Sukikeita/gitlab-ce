@@ -37,7 +37,7 @@ feature 'Merge request < User customizes merge commit message', :js do
     visit project_merge_request_path(project, merge_request)
   end
 
-  it "toggles commit message between message with description and without description " do
+  scenario 'toggles commit message between message with description and without description' do
     expect(page).not_to have_selector('.js-commit-message')
     click_button "Modify commit message"
     expect(textbox).to be_visible

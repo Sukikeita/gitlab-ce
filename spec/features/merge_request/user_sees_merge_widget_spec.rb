@@ -33,9 +33,9 @@ feature 'Merge request > User sees merge widget', :js do
   end
 
   context 'view merge request' do
-    let!(:environment) { create(:environment, project: project) }
+    given!(:environment) { create(:environment, project: project) }
 
-    let!(:deployment) do
+    given!(:deployment) do
       create(:deployment, environment: environment,
                           ref: 'feature',
                           sha: merge_request.diff_head_sha)

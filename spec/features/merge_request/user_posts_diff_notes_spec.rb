@@ -9,7 +9,7 @@ feature 'Merge request > User posts diff notes', :js do
   given(:notes_holder_input_xpath) { './following-sibling::*[contains(concat(" ", @class, " "), " notes_holder ")]' }
   given(:test_note_comment) { 'this is a test note!' }
 
-  before do
+  background do
     page.driver.set_cookie('sidebar_collapsed', 'true')
 
     project.add_developer(user)
@@ -17,56 +17,56 @@ feature 'Merge request > User posts diff notes', :js do
   end
 
   context 'when hovering over a parallel view diff file' do
-    before do
+    background do
       visit diffs_project_merge_request_path(project, merge_request, view: 'parallel')
     end
 
     context 'with an old line on the left and no line on the right' do
-      it 'allows commenting on the left side' do
+      scenario 'allows commenting on the left side' do
         should_allow_commenting(find('[id="6eb14e00385d2fb284765eb1cd8d420d33d63fc9_23_22"]').find(:xpath, '..'), 'left')
       end
 
-      it 'does not allow commenting on the right side' do
+      scenario 'does not allow commenting on the right side' do
         should_not_allow_commenting(find('[id="6eb14e00385d2fb284765eb1cd8d420d33d63fc9_23_22"]').find(:xpath, '..'), 'right')
       end
     end
 
     context 'with no line on the left and a new line on the right' do
-      it 'does not allow commenting on the left side' do
+      scenario 'does not allow commenting on the left side' do
         should_not_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_15_15"]').find(:xpath, '..'), 'left')
       end
 
-      it 'allows commenting on the right side' do
+      scenario 'allows commenting on the right side' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_15_15"]').find(:xpath, '..'), 'right')
       end
     end
 
     context 'with an old line on the left and a new line on the right' do
-      it 'allows commenting on the left side' do
+      scenario 'allows commenting on the left side' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_9_9"]').find(:xpath, '..'), 'left')
       end
 
-      it 'allows commenting on the right side' do
+      scenario 'allows commenting on the right side' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_9_9"]').find(:xpath, '..'), 'right')
       end
     end
 
     context 'with an unchanged line on the left and an unchanged line on the right' do
-      it 'allows commenting on the left side' do
+      scenario 'allows commenting on the left side' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_7_7"]', match: :first).find(:xpath, '..'), 'left')
       end
 
-      it 'allows commenting on the right side' do
+      scenario 'allows commenting on the right side' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_7_7"]', match: :first).find(:xpath, '..'), 'right')
       end
     end
 
     context 'with a match line' do
-      it 'does not allow commenting on the left side' do
+      scenario 'does not allow commenting on the left side' do
         should_not_allow_commenting(find('.match', match: :first).find(:xpath, '..'), 'left')
       end
 
-      it 'does not allow commenting on the right side' do
+      scenario 'does not allow commenting on the right side' do
         should_not_allow_commenting(find('.match', match: :first).find(:xpath, '..'), 'right')
       end
     end
@@ -81,18 +81,18 @@ feature 'Merge request > User posts diff notes', :js do
       # `.line_holder` will be an unfolded line.
       given(:line_holder) { first('.line_holder[id="1"]') }
 
-      it 'does not allow commenting on the left side' do
+      scenario 'does not allow commenting on the left side' do
         should_not_allow_commenting(line_holder, 'left')
       end
 
-      it 'does not allow commenting on the right side' do
+      scenario 'does not allow commenting on the right side' do
         should_not_allow_commenting(line_holder, 'right')
       end
     end
   end
 
   context 'when hovering over an inline view diff file' do
-    before do
+    background do
       visit diffs_project_merge_request_path(project, merge_request, view: 'inline')
     end
 
@@ -107,25 +107,25 @@ feature 'Merge request > User posts diff notes', :js do
     end
 
     context 'with a new line' do
-      it 'allows commenting' do
+      scenario 'allows commenting' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_10_9"]'))
       end
     end
 
     context 'with an old line' do
-      it 'allows commenting' do
+      scenario 'allows commenting' do
         should_allow_commenting(find('[id="6eb14e00385d2fb284765eb1cd8d420d33d63fc9_22_22"]'))
       end
     end
 
     context 'with an unchanged line' do
-      it 'allows commenting' do
+      scenario 'allows commenting' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_7_7"]'))
       end
     end
 
     context 'with a match line' do
-      it 'does not allow commenting' do
+      scenario 'does not allow commenting' do
         should_not_allow_commenting(find('.match', match: :first))
       end
     end
@@ -140,45 +140,45 @@ feature 'Merge request > User posts diff notes', :js do
       # `.line_holder` will be an unfolded line.
       given(:line_holder) { first('.line_holder[id="1"]') }
 
-      it 'does not allow commenting' do
+      scenario 'does not allow commenting' do
         should_not_allow_commenting line_holder
       end
     end
 
     context 'when hovering over a diff discussion' do
-      before do
+      background do
         visit diffs_project_merge_request_path(project, merge_request, view: 'inline')
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_7_7"]'))
         visit project_merge_request_path(project, merge_request)
       end
 
-      it 'does not allow commenting' do
+      scenario 'does not allow commenting' do
         should_not_allow_commenting(find('.line_holder', match: :first))
       end
     end
   end
 
   context 'when cancelling the comment addition' do
-    before do
+    background do
       visit diffs_project_merge_request_path(project, merge_request, view: 'inline')
     end
 
     context 'with a new line' do
-      it 'allows dismissing a comment' do
+      scenario 'allows dismissing a comment' do
         should_allow_dismissing_a_comment(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_10_9"]'))
       end
     end
   end
 
   describe 'with muliple note forms' do
-    before do
+    background do
       visit diffs_project_merge_request_path(project, merge_request, view: 'inline')
       click_diff_line(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_10_9"]'))
       click_diff_line(find('[id="6eb14e00385d2fb284765eb1cd8d420d33d63fc9_22_22"]'))
     end
 
     describe 'posting a note' do
-      it 'adds as discussion' do
+      scenario 'adds as discussion' do
         expect(page).to have_css('.js-temp-notes-holder', count: 2)
 
         should_allow_commenting(find('[id="6eb14e00385d2fb284765eb1cd8d420d33d63fc9_22_22"]'), asset_form_reset: false)
@@ -190,31 +190,31 @@ feature 'Merge request > User posts diff notes', :js do
   end
 
   context 'when the MR only supports legacy diff notes' do
-    before do
+    background do
       merge_request.merge_request_diff.update_attributes(start_commit_sha: nil)
       visit diffs_project_merge_request_path(project, merge_request, view: 'inline')
     end
 
     context 'with a new line' do
-      it 'allows commenting' do
+      scenario 'allows commenting' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_10_9"]'))
       end
     end
 
     context 'with an old line' do
-      it 'allows commenting' do
+      scenario 'allows commenting' do
         should_allow_commenting(find('[id="6eb14e00385d2fb284765eb1cd8d420d33d63fc9_22_22"]'))
       end
     end
 
     context 'with an unchanged line' do
-      it 'allows commenting' do
+      scenario 'allows commenting' do
         should_allow_commenting(find('[id="2f6fcd96b88b36ce98c38da085c795a27d92a3dd_7_7"]'))
       end
     end
 
     context 'with a match line' do
-      it 'does not allow commenting' do
+      scenario 'does not allow commenting' do
         should_not_allow_commenting(find('.match', match: :first))
       end
     end
