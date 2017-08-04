@@ -7,7 +7,7 @@ describe 'Merge request > User assigns themselves', :js do
   let(:issue2) { create(:issue, project: project) }
   let(:merge_request) { create(:merge_request, :simple, source_project: project, author: user, description: "fixes #{issue1.to_reference} and #{issue2.to_reference}") }
 
-  context 'logged in as the MR author' do
+  context 'logged in as a member of the project' do
     before do
       project.add_master(user)
       sign_in(user)
@@ -37,7 +37,7 @@ describe 'Merge request > User assigns themselves', :js do
     end
   end
 
-  context 'logged in as not the MR author' do
+  context 'logged in as a non-member of the project' do
     before do
       sign_in(user)
       visit project_merge_request_path(project, merge_request)
