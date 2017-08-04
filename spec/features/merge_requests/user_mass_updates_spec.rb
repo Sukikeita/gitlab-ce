@@ -1,22 +1,22 @@
 require 'rails_helper'
 
-feature 'Merge requests > User mass updates', :js do
-  given(:project) { create(:project, :repository) }
-  given(:user)    { project.creator }
-  given!(:merge_request) { create(:merge_request, source_project: project, target_project: project) }
+describe'Merge requests > User mass updates', :js do
+  let(:project) { create(:project, :repository) }
+  let(:user)    { project.creator }
+  let!(:merge_request) { create(:merge_request, source_project: project, target_project: project) }
 
-  background do
+  before do
     project.add_master(user)
     sign_in(user)
   end
 
   context 'status' do
     describe 'close merge request' do
-      background do
+      before do
         visit project_merge_requests_path(project)
       end
 
-      scenario 'closes merge request' do
+      it 'closes merge request' do
         change_status('Closed')
 
         expect(page).to have_selector('.merge-request', count: 0)
@@ -24,12 +24,12 @@ feature 'Merge requests > User mass updates', :js do
     end
 
     describe 'reopen merge request' do
-      background do
+      before do
         merge_request.close
         visit project_merge_requests_path(project, state: 'closed')
       end
 
-      scenario 'reopens merge request' do
+      it 'reopens merge request' do
         change_status('Open')
 
         expect(page).to have_selector('.merge-request', count: 0)
@@ -39,11 +39,11 @@ feature 'Merge requests > User mass updates', :js do
 
   context 'assignee' do
     describe 'set assignee' do
-      background do
+      before do
         visit project_merge_requests_path(project)
       end
 
-      scenario 'updates merge request with assignee' do
+      it 'updates merge request with assignee' do
         change_assignee(user.name)
 
         page.within('.merge-request .controls') do
@@ -53,13 +53,13 @@ feature 'Merge requests > User mass updates', :js do
     end
 
     describe 'remove assignee' do
-      background do
+      before do
         merge_request.assignee = user
         merge_request.save
         visit project_merge_requests_path(project)
       end
 
-      scenario 'removes assignee from the merge request' do
+      it 'removes assignee from the merge request' do
         change_assignee('Unassigned')
 
         expect(find('.merge-request .controls')).not_to have_css('.author_link')
@@ -68,14 +68,14 @@ feature 'Merge requests > User mass updates', :js do
   end
 
   context 'milestone' do
-    given(:milestone)  { create(:milestone, project: project) }
+    let(:milestone)  { create(:milestone, project: project) }
 
     describe 'set milestone' do
-      background do
+      before do
         visit project_merge_requests_path(project)
       end
 
-      scenario 'updates merge request with milestone' do
+      it 'updates merge request with milestone' do
         change_milestone(milestone.title)
 
         expect(find('.merge-request')).to have_content milestone.title
@@ -83,13 +83,13 @@ feature 'Merge requests > User mass updates', :js do
     end
 
     describe 'unset milestone' do
-      background do
+      before do
         merge_request.milestone = milestone
         merge_request.save
         visit project_merge_requests_path(project)
       end
 
-      scenario 'removes milestone from the merge request' do
+      it 'removes milestone from the merge request' do
         change_milestone("No Milestone")
 
         expect(find('.merge-request')).not_to have_content milestone.title

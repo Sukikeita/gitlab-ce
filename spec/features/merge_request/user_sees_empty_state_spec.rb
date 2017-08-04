@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-feature 'Merge request > User sees empty state' do
-  given(:project) { create(:project, :public, :repository) }
-  given(:user)    { project.creator }
+describe 'Merge request > User sees empty state' do
+  let(:project) { create(:project, :public, :repository) }
+  let(:user)    { project.creator }
 
-  background do
+  before do
     project.add_master(user)
     sign_in(user)
   end
 
-  scenario 'shows an empty state and a "New merge request" button' do
+  it 'shows an empty state and a "New merge request" button' do
     visit project_merge_requests_path(project)
 
     expect(page).to have_selector('.empty-state')
@@ -23,7 +23,7 @@ feature 'Merge request > User sees empty state' do
       visit project_merge_requests_path(project)
     end
 
-    scenario 'does not show an empty state' do
+    it 'does not show an empty state' do
       expect(page).not_to have_selector('.empty-state')
     end
   end

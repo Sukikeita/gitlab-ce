@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-feature 'Merge request > User assigns themselves', :js do
-  given(:project) { create(:project, :public, :repository) }
-  given(:user) { project.creator }
-  given(:issue1) { create(:issue, project: project) }
-  given(:issue2) { create(:issue, project: project) }
-  given(:merge_request) { create(:merge_request, :simple, source_project: project, author: user, description: "fixes #{issue1.to_reference} and #{issue2.to_reference}") }
+describe 'Merge request > User assigns themselves', :js do
+  let(:project) { create(:project, :public, :repository) }
+  let(:user) { project.creator }
+  let(:issue1) { create(:issue, project: project) }
+  let(:issue2) { create(:issue, project: project) }
+  let(:merge_request) { create(:merge_request, :simple, source_project: project, author: user, description: "fixes #{issue1.to_reference} and #{issue2.to_reference}") }
 
   context 'logged in as the MR author' do
     before do
@@ -14,13 +14,13 @@ feature 'Merge request > User assigns themselves', :js do
       visit project_merge_request_path(project, merge_request)
     end
 
-    scenario 'updates related issues' do
+    it 'updates related issues' do
       click_link 'Assign yourself to these issues'
 
       expect(page).to have_content '2 issues have been assigned to you'
     end
 
-    scenario 'returns user to the merge request' do
+    it 'returns user to the merge request' do
       click_link 'Assign yourself to these issues'
 
       expect(page).to have_content merge_request.description
@@ -31,7 +31,7 @@ feature 'Merge request > User assigns themselves', :js do
         [issue1, issue2].each { |issue| issue.update!(assignees: [user]) }
       end
 
-      scenario 'does not display if related issues are already assigned' do
+      it 'does not display if related issues are already assigned' do
         expect(page).not_to have_content 'Assign yourself'
       end
     end
@@ -43,7 +43,7 @@ feature 'Merge request > User assigns themselves', :js do
       visit project_merge_request_path(project, merge_request)
     end
 
-    scenario 'does not not show assignment link' do
+    it 'does not not show assignment link' do
       expect(page).not_to have_content 'Assign yourself'
     end
   end

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-feature 'Merge request > User uses quick actions', :js do
+describe 'Merge request > User uses quick actions', :js do
   include QuickActionsHelpers
 
   it_behaves_like 'issuable record that supports quick actions in its description and notes', :merge_request do
-    given(:issuable) { create(:merge_request, source_project: project) }
-    given(:new_url_opts) { { merge_request: { source_branch: 'feature', target_branch: 'master' } } }
+    let(:issuable) { create(:merge_request, source_project: project) }
+    let(:new_url_opts) { { merge_request: { source_branch: 'feature', target_branch: 'master' } } }
   end
 
   describe 'merge-request-only commands' do
@@ -26,7 +26,7 @@ feature 'Merge request > User uses quick actions', :js do
 
     describe 'toggling the WIP prefix in the title from note' do
       context 'when the current user can toggle the WIP prefix' do
-        scenario 'adds the WIP: prefix to the title' do
+        it 'adds the WIP: prefix to the title' do
           write_note("/wip")
 
           expect(page).not_to have_content '/wip'
@@ -35,7 +35,7 @@ feature 'Merge request > User uses quick actions', :js do
           expect(merge_request.reload.work_in_progress?).to eq true
         end
 
-        scenario 'removes the WIP: prefix from the title' do
+        it 'removes the WIP: prefix from the title' do
           merge_request.title = merge_request.wip_title
           merge_request.save
           write_note("/wip")
@@ -48,14 +48,14 @@ feature 'Merge request > User uses quick actions', :js do
       end
 
       context 'when the current user cannot toggle the WIP prefix' do
-        background do
+        before do
           project.add_guest(guest)
           sign_out(:user)
           sign_in(guest)
           visit project_merge_request_path(project, merge_request)
         end
 
-        scenario 'does not change the WIP prefix' do
+        it 'does not change the WIP prefix' do
           write_note("/wip")
 
           expect(page).not_to have_content '/wip'
@@ -68,7 +68,7 @@ feature 'Merge request > User uses quick actions', :js do
 
     describe 'merging the MR from the note' do
       context 'when the current user can merge the MR' do
-        scenario 'merges the MR' do
+        it 'merges the MR' do
           write_note("/merge")
 
           expect(page).to have_content 'Commands applied'
@@ -78,12 +78,12 @@ feature 'Merge request > User uses quick actions', :js do
       end
 
       context 'when the head diff changes in the meanwhile' do
-        background do
+        before do
           merge_request.source_branch = 'another_branch'
           merge_request.save
         end
 
-        scenario 'does not merge the MR' do
+        it 'does not merge the MR' do
           write_note("/merge")
 
           expect(page).not_to have_content 'Your commands have been executed!'
@@ -93,14 +93,14 @@ feature 'Merge request > User uses quick actions', :js do
       end
 
       context 'when the current user cannot merge the MR' do
-        background do
+        before do
           project.add_guest(guest)
           sign_out(:user)
           sign_in(guest)
           visit project_merge_request_path(project, merge_request)
         end
 
-        scenario 'does not merge the MR' do
+        it 'does not merge the MR' do
           write_note("/merge")
 
           expect(page).not_to have_content 'Your commands have been executed!'
@@ -111,7 +111,7 @@ feature 'Merge request > User uses quick actions', :js do
     end
 
     describe 'adding a due date from note' do
-      scenario 'does not recognize the command nor create a note' do
+      it 'does not recognize the command nor create a note' do
         write_note('/due 2016-08-28')
 
         expect(page).not_to have_content '/due 2016-08-28'
@@ -119,16 +119,16 @@ feature 'Merge request > User uses quick actions', :js do
     end
 
     describe '/target_branch command in merge request' do
-      given(:another_project) { create(:project, :public, :repository) }
-      given(:new_url_opts) { { merge_request: { source_branch: 'feature' } } }
+      let(:another_project) { create(:project, :public, :repository) }
+      let(:new_url_opts) { { merge_request: { source_branch: 'feature' } } }
 
-      background do
+      before do
         sign_out(:user)
         another_project.add_master(user)
         sign_in(user)
       end
 
-      scenario 'changes target_branch in new merge_request' do
+      it 'changes target_branch in new merge_request' do
         visit project_new_merge_request_path(another_project, new_url_opts)
 
         fill_in "merge_request_title", with: 'My brand new feature'
@@ -140,7 +140,7 @@ feature 'Merge request > User uses quick actions', :js do
         expect(merge_request.target_branch).to eq 'fix'
       end
 
-      scenario 'does not change target branch when merge request is edited' do
+      it 'does not change target branch when merge request is edited' do
         new_merge_request = create(:merge_request, source_project: another_project)
 
         visit edit_project_merge_request_path(another_project, new_merge_request)
@@ -155,7 +155,7 @@ feature 'Merge request > User uses quick actions', :js do
 
     describe '/target_branch command from note' do
       context 'when the current user can change target branch' do
-        scenario 'changes target branch from a note' do
+        it 'changes target branch from a note' do
           write_note("message start \n/target_branch merge-test\n message end.")
 
           wait_for_requests
@@ -166,7 +166,7 @@ feature 'Merge request > User uses quick actions', :js do
           expect(merge_request.reload.target_branch).to eq 'merge-test'
         end
 
-        scenario 'does not fail when target branch does not exists' do
+        it 'does not fail when target branch does not exists' do
           write_note('/target_branch totally_not_existing_branch')
 
           expect(page).not_to have_content('/target_branch')
@@ -176,14 +176,14 @@ feature 'Merge request > User uses quick actions', :js do
       end
 
       context 'when current user can not change target branch' do
-        background do
+        before do
           project.add_guest(guest)
           sign_out(:user)
           sign_in(guest)
           visit project_merge_request_path(project, merge_request)
         end
 
-        scenario 'does not change target branch' do
+        it 'does not change target branch' do
           write_note('/target_branch merge-test')
 
           expect(page).not_to have_content '/target_branch merge-test'

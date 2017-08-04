@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Merge request > User cherry-picks', :js do
-  given(:group) { create(:group) }
-  given(:project) { create(:project, :repository, namespace: group) }
-  given(:user) { project.creator }
-  given(:merge_request) { create(:merge_request_with_diffs, source_project: project, author: user) }
+describe 'Merge request > User cherry-picks', :js do
+  let(:group) { create(:group) }
+  let(:project) { create(:project, :repository, namespace: group) }
+  let(:user) { project.creator }
+  let(:merge_request) { create(:merge_request_with_diffs, source_project: project, author: user) }
 
   before do
     project.add_master(user)
@@ -27,7 +27,7 @@ feature 'Merge request > User cherry-picks', :js do
         merge_request.save
       end
 
-      scenario 'does not show a Cherry-pick button' do
+      it 'does not show a Cherry-pick button' do
         visit project_merge_request_path(project, merge_request)
 
         expect(page).not_to have_link 'Cherry-pick'
@@ -35,7 +35,7 @@ feature 'Merge request > User cherry-picks', :js do
     end
 
     context 'With a merge commit' do
-      scenario 'shows a Cherry-pick button' do
+      it 'shows a Cherry-pick button' do
         visit project_merge_request_path(project, merge_request)
 
         expect(page).to have_link 'Cherry-pick'

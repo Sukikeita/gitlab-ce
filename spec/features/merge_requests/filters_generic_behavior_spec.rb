@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-feature 'Merge Requests > Filters generic behavior', :js do
+describe'Merge Requests > Filters generic behavior', :js do
   include FilteredSearchHelpers
 
-  given(:project) { create(:project, :public, :repository) }
-  given(:user)    { project.creator }
-  given(:bug) { create(:label, project: project, title: 'bug') }
-  given(:open_mr) { create(:merge_request, title: 'Bugfix1', source_project: project, target_project: project, source_branch: 'bugfix1') }
-  given(:merged_mr) { create(:merge_request, :merged, title: 'Bugfix2', source_project: project, target_project: project, source_branch: 'bugfix2') }
-  given(:closed_mr) { create(:merge_request, :closed, title: 'Feature', source_project: project, target_project: project, source_branch: 'improve/awesome') }
+  let(:project) { create(:project, :public, :repository) }
+  let(:user)    { project.creator }
+  let(:bug) { create(:label, project: project, title: 'bug') }
+  let(:open_mr) { create(:merge_request, title: 'Bugfix1', source_project: project, target_project: project, source_branch: 'bugfix1') }
+  let(:merged_mr) { create(:merge_request, :merged, title: 'Bugfix2', source_project: project, target_project: project, source_branch: 'bugfix2') }
+  let(:closed_mr) { create(:merge_request, :closed, title: 'Feature', source_project: project, target_project: project, source_branch: 'improve/awesome') }
 
-  background do
+  before do
     open_mr.labels << bug
     merged_mr.labels << bug
     closed_mr.labels << bug
@@ -20,12 +20,12 @@ feature 'Merge Requests > Filters generic behavior', :js do
   end
 
   context 'when filtered by a label' do
-    background do
+    before do
       input_filtered_search('label:~bug')
     end
 
     describe 'state tabs' do
-      scenario 'does not change when state tabs are clicked' do
+      it 'does not change when state tabs are clicked' do
         expect(page).to have_issuable_counts(open: 1, merged: 1, closed: 1, all: 3)
         expect(page).to have_content 'Bugfix1'
         expect(page).not_to have_content 'Bugfix2'
@@ -55,7 +55,7 @@ feature 'Merge Requests > Filters generic behavior', :js do
     end
 
     describe 'clear button' do
-      scenario 'allows user to remove filtered labels' do
+      it 'allows user to remove filtered labels' do
         first('.clear-search').click
         filtered_search.send_keys(:enter)
 
@@ -68,7 +68,7 @@ feature 'Merge Requests > Filters generic behavior', :js do
   end
 
   context 'filter dropdown' do
-    scenario 'filters by label name' do
+    it 'filters by label name' do
       init_label_search
       filtered_search.send_keys('~bug')
 

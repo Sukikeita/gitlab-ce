@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-feature 'Merge request > User selects branches for new MR', :js do
-  given(:project) { create(:project, :public, :repository) }
-  given(:user) { project.creator }
+describe 'Merge request > User selects branches for new MR', :js do
+  let(:project) { create(:project, :public, :repository) }
+  let(:user) { project.creator }
 
-  background do
+  before do
     project.add_master(user)
     sign_in user
   end
 
-  scenario 'selects the source branch sha when a tag with the same name exists' do
+  it 'selects the source branch sha when a tag with the same name exists' do
     visit project_merge_requests_path(project)
 
     page.within '.content' do
@@ -24,7 +24,7 @@ feature 'Merge request > User selects branches for new MR', :js do
     expect(page).to have_content "b83d6e3"
   end
 
-  scenario 'selects the target branch sha when a tag with the same name exists' do
+  it 'selects the target branch sha when a tag with the same name exists' do
     visit project_merge_requests_path(project)
 
     page.within '.content' do
@@ -40,7 +40,7 @@ feature 'Merge request > User selects branches for new MR', :js do
     expect(page).to have_content "b83d6e3"
   end
 
-  scenario 'generates a diff for an orphaned branch' do
+  it 'generates a diff for an orphaned branch' do
     visit project_merge_requests_path(project)
 
     page.within '.content' do
@@ -67,7 +67,7 @@ feature 'Merge request > User selects branches for new MR', :js do
   end
 
   context 'when target project cannot be viewed by the current user' do
-    scenario 'does not leak the private project name & namespace' do
+    it 'does not leak the private project name & namespace' do
       private_project = create(:project, :private, :repository)
 
       visit project_new_merge_request_path(project, merge_request: { target_project_id: private_project.id })
@@ -78,7 +78,7 @@ feature 'Merge request > User selects branches for new MR', :js do
   end
 
   context 'when source project cannot be viewed by the current user' do
-    scenario 'does not leak the private project name & namespace' do
+    it 'does not leak the private project name & namespace' do
       private_project = create(:project, :private, :repository)
 
       visit project_new_merge_request_path(project, merge_request: { source_project_id: private_project.id })
@@ -88,13 +88,13 @@ feature 'Merge request > User selects branches for new MR', :js do
     end
   end
 
-  scenario 'populates source branch button' do
+  it 'populates source branch button' do
     visit project_new_merge_request_path(project, change_branches: true, merge_request: { target_branch: 'master', source_branch: 'fix' })
 
     expect(find('.js-source-branch')).to have_content('fix')
   end
 
-  scenario 'allows to change the diff view' do
+  it 'allows to change the diff view' do
     visit project_new_merge_request_path(project, merge_request: { target_branch: 'master', source_branch: 'fix' })
 
     click_link 'Changes'
@@ -110,7 +110,7 @@ feature 'Merge request > User selects branches for new MR', :js do
     end
   end
 
-  scenario 'does not allow non-existing branches' do
+  it 'does not allow non-existing branches' do
     visit project_new_merge_request_path(project, merge_request: { target_branch: 'non-exist-target', source_branch: 'non-exist-source' })
 
     expect(page).to have_content('The form contains the following errors')
@@ -119,7 +119,7 @@ feature 'Merge request > User selects branches for new MR', :js do
   end
 
   context 'when a branch contains commits that both delete and add the same image' do
-    scenario 'renders the diff successfully' do
+    it 'renders the diff successfully' do
       visit project_new_merge_request_path(project, merge_request: { target_branch: 'master', source_branch: 'deleted-image-test' })
 
       click_link "Changes"
@@ -129,20 +129,20 @@ feature 'Merge request > User selects branches for new MR', :js do
   end
 
   # Isolates a regression (see #24627)
-  scenario 'does not show error messages on initial form' do
+  it 'does not show error messages on initial form' do
     visit project_new_merge_request_path(project)
     expect(page).not_to have_selector('#error_explanation')
     expect(page).not_to have_content('The form contains the following error')
   end
 
   context 'when a new merge request has a pipeline' do
-    given!(:pipeline) do
+    let!(:pipeline) do
       create(:ci_pipeline, sha: project.commit('fix').id,
                            ref: 'fix',
                            project: project)
     end
 
-    scenario 'shows pipelines for a new merge request' do
+    it 'shows pipelines for a new merge request' do
       visit project_new_merge_request_path(
         project,
         merge_request: { target_branch: 'master', source_branch: 'fix' })

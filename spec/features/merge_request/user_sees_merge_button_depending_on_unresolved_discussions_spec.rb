@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Merge request > User sees merge button depending on unresolved discussions', :js do
-  given(:project)        { create(:project, :repository) }
-  given(:user)           { project.creator }
-  given!(:merge_request) { create(:merge_request_with_diff_notes, source_project: project, author: user) }
+describe 'Merge request > User sees merge button depending on unresolved discussions', :js do
+  let(:project)        { create(:project, :repository) }
+  let(:user)           { project.creator }
+  let!(:merge_request) { create(:merge_request_with_diff_notes, source_project: project, author: user) }
 
   before do
     project.add_master(user)
@@ -17,7 +17,7 @@ feature 'Merge request > User sees merge button depending on unresolved discussi
     end
 
     context 'with unresolved discussions' do
-      scenario 'does not allow to merge' do
+      it 'does not allow to merge' do
         expect(page).not_to have_button 'Merge'
         expect(page).to have_content('There are unresolved discussions.')
       end
@@ -29,7 +29,7 @@ feature 'Merge request > User sees merge button depending on unresolved discussi
         visit project_merge_request_path(project, merge_request)
       end
 
-      scenario 'allows MR to be merged' do
+      it 'allows MR to be merged' do
         expect(page).to have_button 'Merge'
       end
     end
@@ -42,7 +42,7 @@ feature 'Merge request > User sees merge button depending on unresolved discussi
     end
 
     context 'with unresolved discussions' do
-      scenario 'does not allow to merge' do
+      it 'does not allow to merge' do
         expect(page).to have_button 'Merge'
       end
     end
@@ -53,7 +53,7 @@ feature 'Merge request > User sees merge button depending on unresolved discussi
         visit project_merge_request_path(project, merge_request)
       end
 
-      scenario 'allows MR to be merged' do
+      it 'allows MR to be merged' do
         expect(page).to have_button 'Merge'
       end
     end

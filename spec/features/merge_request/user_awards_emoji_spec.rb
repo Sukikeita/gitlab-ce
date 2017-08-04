@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-feature 'Merge request > User awards emoji', :js do
-  given(:project) { create(:project, :public, :repository) }
-  given(:user) { project.creator }
-  given(:merge_request) { create(:merge_request, source_project: project) }
+describe 'Merge request > User awards emoji', :js do
+  let(:project) { create(:project, :public, :repository) }
+  let(:user) { project.creator }
+  let(:merge_request) { create(:merge_request, source_project: project) }
 
   describe 'logged in' do
-    background do
+    before do
       sign_in(user)
       visit project_merge_request_path(project, merge_request)
     end
 
-    scenario 'adds award to merge request' do
+    it 'adds award to merge request' do
       first('.js-emoji-btn').click
       expect(page).to have_selector('.js-emoji-btn.active')
       expect(first('.js-emoji-btn')).to have_content '1'
@@ -20,7 +20,7 @@ feature 'Merge request > User awards emoji', :js do
       expect(first('.js-emoji-btn')).to have_content '1'
     end
 
-    scenario 'removes award from merge request' do
+    it 'removes award from merge request' do
       first('.js-emoji-btn').click
       find('.js-emoji-btn.active').click
       expect(first('.js-emoji-btn')).to have_content '0'
@@ -29,7 +29,7 @@ feature 'Merge request > User awards emoji', :js do
       expect(first('.js-emoji-btn')).to have_content '0'
     end
 
-    scenario 'has only one menu on the page' do
+    it 'has only one menu on the page' do
       first('.js-add-award').click
       expect(page).to have_selector('.emoji-menu')
 
@@ -38,11 +38,11 @@ feature 'Merge request > User awards emoji', :js do
   end
 
   describe 'logged out' do
-    background do
+    before do
       visit project_merge_request_path(project, merge_request)
     end
 
-    scenario 'does not see award menu button' do
+    it 'does not see award menu button' do
       expect(page).not_to have_selector('.js-award-holder')
     end
   end

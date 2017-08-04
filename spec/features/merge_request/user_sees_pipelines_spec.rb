@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Merge request > User sees pipelines', :js do
+describe 'Merge request > User sees pipelines', :js do
   describe 'pipeline tab' do
-    given(:merge_request) { create(:merge_request) }
-    given(:project) { merge_request.target_project }
-    given(:user) { project.creator }
+    let(:merge_request) { create(:merge_request) }
+    let(:project) { merge_request.target_project }
+    let(:user) { project.creator }
 
     before do
       project.add_master(user)
@@ -23,7 +23,7 @@ feature 'Merge request > User sees pipelines', :js do
         visit project_merge_request_path(project, merge_request)
       end
 
-      scenario 'user visits merge request pipelines tab' do
+      it 'user visits merge request pipelines tab' do
         page.within('.merge-request-tabs') do
           click_link('Pipelines')
         end
@@ -38,7 +38,7 @@ feature 'Merge request > User sees pipelines', :js do
         visit project_merge_request_path(project, merge_request)
       end
 
-      scenario 'user visits merge request page' do
+      it 'user visits merge request page' do
         page.within('.merge-request-tabs') do
           expect(page).to have_no_link('Pipelines')
         end
@@ -62,7 +62,7 @@ feature 'Merge request > User sees pipelines', :js do
     end
 
     context 'when pipeline and merge request were created simultaneously' do
-      background do
+      before do
         stub_ci_pipeline_to_return_yaml_file
 
         threads = []
@@ -78,7 +78,7 @@ feature 'Merge request > User sees pipelines', :js do
         threads.each { |thr| thr.join }
       end
 
-      scenario 'user sees pipeline in merge request widget' do
+      it 'user sees pipeline in merge request widget' do
         visit project_merge_request_path(project, @merge_request)
 
         expect(page.find(".ci-widget")).to have_content(TestEnv::BRANCH_SHA['feature'])

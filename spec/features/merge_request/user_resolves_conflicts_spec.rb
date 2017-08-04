@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Merge request > User resolves conflicts', :js do
-  given(:project) { create(:project, :repository) }
-  given(:user) { project.creator }
+describe 'Merge request > User resolves conflicts', :js do
+  let(:project) { create(:project, :repository) }
+  let(:user) { project.creator }
 
-  background do
+  before do
     # In order to have the diffs collapsed, we need to disable the increase feature
     stub_feature_flags(gitlab_git_diff_size_limit_increase: false)
   end
@@ -16,7 +16,7 @@ feature 'Merge request > User resolves conflicts', :js do
   end
 
   shared_examples "conflicts are resolved in Interactive mode" do
-    scenario 'conflicts are resolved in Interactive mode' do
+    it 'conflicts are resolved in Interactive mode' do
       within find('.files-wrapper .diff-file', text: 'files/ruby/popen.rb') do
         click_button 'Use ours'
       end
@@ -54,7 +54,7 @@ feature 'Merge request > User resolves conflicts', :js do
   end
 
   shared_examples "conflicts are resolved in Edit inline mode" do
-    scenario 'conflicts are resolved in Edit inline mode' do
+    it 'conflicts are resolved in Edit inline mode' do
       expect(find('#conflicts')).to have_content('popen.rb')
 
       within find('.files-wrapper .diff-file', text: 'files/ruby/popen.rb') do
@@ -85,24 +85,24 @@ feature 'Merge request > User resolves conflicts', :js do
   end
 
   context 'can be resolved in the UI' do
-    background do
+    before do
       project.add_developer(user)
       sign_in(user)
     end
 
     context 'the conflicts are resolvable' do
-      given(:merge_request) { create_merge_request('conflict-resolvable') }
+      let(:merge_request) { create_merge_request('conflict-resolvable') }
 
-      background do
+      before do
         visit project_merge_request_path(project, merge_request)
       end
 
-      scenario 'shows a link to the conflict resolution page' do
+      it 'shows a link to the conflict resolution page' do
         expect(page).to have_link('conflicts', href: /\/conflicts\Z/)
       end
 
       context 'in Inline view mode' do
-        background do
+        before do
           click_link('conflicts', href: /\/conflicts\Z/)
         end
 
@@ -111,7 +111,7 @@ feature 'Merge request > User resolves conflicts', :js do
       end
 
       context 'in Parallel view mode' do
-        background do
+        before do
           click_link('conflicts', href: /\/conflicts\Z/)
           click_button 'Side-by-side'
         end
@@ -122,21 +122,21 @@ feature 'Merge request > User resolves conflicts', :js do
     end
 
     context 'the conflict contain markers' do
-      given(:merge_request) { create_merge_request('conflict-contains-conflict-markers') }
+      let(:merge_request) { create_merge_request('conflict-contains-conflict-markers') }
 
-      background do
+      before do
         visit project_merge_request_path(project, merge_request)
         click_link('conflicts', href: /\/conflicts\Z/)
       end
 
-      scenario 'conflicts can not be resolved in Interactive mode' do
+      it 'conflicts can not be resolved in Interactive mode' do
         within find('.files-wrapper .diff-file', text: 'files/markdown/ruby-style-guide.md') do
           expect(page).not_to have_content 'Interactive mode'
           expect(page).not_to have_content 'Edit inline'
         end
       end
 
-      scenario 'conflicts are resolved in Edit inline mode' do
+      it 'conflicts are resolved in Edit inline mode' do
         within find('.files-wrapper .diff-file', text: 'files/markdown/ruby-style-guide.md') do
           wait_for_requests
           execute_script('ace.edit($(".files-wrapper .diff-file pre")[0]).setValue("Gregor Samsa woke from troubled dreams");')
@@ -169,19 +169,19 @@ feature 'Merge request > User resolves conflicts', :js do
 
   UNRESOLVABLE_CONFLICTS.each do |source_branch, description|
     context description do
-      given(:merge_request) { create_merge_request(source_branch) }
+      let(:merge_request) { create_merge_request(source_branch) }
 
-      background do
+      before do
         project.add_developer(user)
         sign_in(user)
         visit project_merge_request_path(project, merge_request)
       end
 
-      scenario 'does not show a link to the conflict resolution page' do
+      it 'does not show a link to the conflict resolution page' do
         expect(page).not_to have_link('conflicts', href: /\/conflicts\Z/)
       end
 
-      scenario 'shows an error if the conflicts page is visited directly' do
+      it 'shows an error if the conflicts page is visited directly' do
         visit current_url + '/conflicts'
         wait_for_requests
 
