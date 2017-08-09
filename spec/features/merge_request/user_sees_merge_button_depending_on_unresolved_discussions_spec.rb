@@ -2,11 +2,10 @@ require 'rails_helper'
 
 describe 'Merge request > User sees merge button depending on unresolved discussions', :js do
   let(:project)        { create(:project, :repository) }
-  let(:user)           { project.creator }
+  let(:user)           { project.owner }
   let!(:merge_request) { create(:merge_request_with_diff_notes, source_project: project, author: user) }
 
   before do
-    project.add_master(user)
     sign_in(user)
   end
 

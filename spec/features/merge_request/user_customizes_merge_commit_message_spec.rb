@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merge request < User customizes merge commit message', :js do
   let(:project) { create(:project, :public, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:issue_1) { create(:issue, project: project)}
   let(:issue_2) { create(:issue, project: project)}
   let(:merge_request) do
@@ -32,7 +32,6 @@ describe 'Merge request < User customizes merge commit message', :js do
   end
 
   before do
-    project.add_master(user)
     sign_in(user)
     visit project_merge_request_path(project, merge_request)
   end

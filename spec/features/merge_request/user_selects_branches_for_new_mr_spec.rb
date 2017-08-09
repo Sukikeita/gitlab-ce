@@ -2,11 +2,10 @@ require 'rails_helper'
 
 describe 'Merge request > User selects branches for new MR', :js do
   let(:project) { create(:project, :public, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
 
   before do
-    project.add_master(user)
-    sign_in user
+    sign_in(user)
   end
 
   it 'selects the source branch sha when a tag with the same name exists' do

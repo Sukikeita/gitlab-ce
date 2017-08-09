@@ -2,10 +2,9 @@ require 'rails_helper'
 
 describe 'Merge request > User sees empty state' do
   let(:project) { create(:project, :public, :repository) }
-  let(:user)    { project.creator }
+  let(:user)    { project.owner }
 
   before do
-    project.add_master(user)
     sign_in(user)
   end
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merge request > User sees closing issues message', :js do
   let(:project) { create(:project, :public, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:issue_1) { create(:issue, project: project)}
   let(:issue_2) { create(:issue, project: project)}
   let(:merge_request) do

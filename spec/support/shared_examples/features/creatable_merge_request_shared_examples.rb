@@ -1,16 +1,16 @@
 RSpec.shared_examples 'a creatable merge request' do
-  let(:user)        { create(:user) }
-  let(:user2)       { create(:user) }
-  let(:target_project) { create(:project, :public, :repository) }
+  # Can be overriden
   let(:source_project) { target_project }
-  let!(:milestone)   { create(:milestone, project: target_project) }
-  let!(:label)       { create(:label, project: target_project) }
-  let!(:label2)      { create(:label, project: target_project) }
+
+  let(:target_project) { create(:project, :public, :repository) }
+  let(:user) { source_project.owner }
+  let(:user2) { target_project.owner }
+  let!(:milestone) { create(:milestone, project: target_project) }
+  let!(:label) { create(:label, project: target_project) }
+  let!(:label2) { create(:label, project: target_project) }
 
   before do
-    source_project.add_master(user)
     target_project.add_master(user)
-    target_project.add_master(user2)
 
     sign_in(user)
     visit project_new_merge_request_path(

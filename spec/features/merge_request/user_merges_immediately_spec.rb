@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merge requests > User merges immediately', :js do
   let(:project) { create(:project, :public, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let!(:merge_request) do
     create(:merge_request_with_diffs, source_project: project,
                                       author: user,
@@ -19,7 +19,6 @@ describe 'Merge requests > User merges immediately', :js do
   context 'when there is active pipeline for merge request' do
     before do
       create(:ci_build, pipeline: pipeline)
-      project.add_master(user)
       sign_in(user)
       visit project_merge_request_path(project, merge_request)
     end

@@ -3,10 +3,9 @@ require 'rails_helper'
 describe 'Merge request > User toggles whitespace changes', :js do
   let(:merge_request) { create(:merge_request) }
   let(:project) { merge_request.project }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
 
   before do
-    project.add_master(user)
     sign_in(user)
     visit diffs_project_merge_request_path(project, merge_request)
   end

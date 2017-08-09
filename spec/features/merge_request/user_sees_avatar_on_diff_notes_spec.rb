@@ -4,7 +4,7 @@ describe 'Merge request > User sees avatars on diff notes', :js do
   include NoteInteractionHelpers
 
   let(:project)       { create(:project, :public, :repository) }
-  let(:user)          { project.creator }
+  let(:user)          { project.owner }
   let(:merge_request) { create(:merge_request_with_diffs, source_project: project, author: user, title: "Bug NS-04") }
   let(:path)          { "files/ruby/popen.rb" }
   let(:position) do
@@ -19,7 +19,6 @@ describe 'Merge request > User sees avatars on diff notes', :js do
   let!(:note) { create(:diff_note_on_merge_request, project: project, noteable: merge_request, position: position) }
 
   before do
-    project.add_master(user)
     sign_in user
 
     page.driver.set_cookie('sidebar_collapsed', 'true')
@@ -30,12 +29,7 @@ describe 'Merge request > User sees avatars on diff notes', :js do
       visit project_merge_request_path(project, merge_request)
     end
 
-    it 'does not show avatars on discussion tab' do
-      expect(page).not_to have_selector('.js-avatar-container')
-      expect(page).not_to have_selector('.diff-comment-avatar-holders')
-    end
-
-    it 'does not render avatars after commening on discussion tab' do
+    it 'does not show avatars on discussion tab and does not render avatars after commening on discussion tab' do
       click_button 'Reply...'
 
       page.within('.js-discussion-note-form') do
@@ -83,25 +77,12 @@ describe 'Merge request > User sees avatars on diff notes', :js do
         wait_for_requests
       end
 
-      it 'shows note avatar' do
+      it 'shows note avatar and comment and toggles comments when clicking avatar' do
         page.within find_line(position.line_code(project.repository)) do
           find('.diff-notes-collapse').click
 
           expect(page).to have_selector('img.js-diff-comment-avatar', count: 1)
-        end
-      end
-
-      it 'shows comment on note avatar' do
-        page.within find_line(position.line_code(project.repository)) do
-          find('.diff-notes-collapse').click
-
           expect(first('img.js-diff-comment-avatar')["data-original-title"]).to eq("#{note.author.name}: #{note.note.truncate(17)}")
-        end
-      end
-
-      it 'toggles comments when clicking avatar' do
-        page.within find_line(position.line_code(project.repository)) do
-          find('.diff-notes-collapse').click
         end
 
         expect(page).to have_selector('.notes_holder', visible: false)

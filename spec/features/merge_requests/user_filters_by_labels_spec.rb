@@ -4,9 +4,9 @@ describe'Merge Requests > User filters by labels', :js do
   include FilteredSearchHelpers
 
   let(:project) { create(:project, :public, :repository) }
-  let(:user)    { project.creator }
-  let(:mr1) { create(:merge_request, title: 'Bugfix1', source_project: project, target_project: project, source_branch: 'bugfix1') }
-  let(:mr2) { create(:merge_request, title: 'Bugfix2', source_project: project, target_project: project, source_branch: 'bugfix2') }
+  let(:user) { project.owner }
+  let(:mr1) { create(:merge_request, title: 'Bugfix1', source_project: project, source_branch: 'bugfix1') }
+  let(:mr2) { create(:merge_request, title: 'Bugfix2', source_project: project, source_branch: 'bugfix2') }
 
   before do
     bug_label = create(:label, project: project, title: 'bug')

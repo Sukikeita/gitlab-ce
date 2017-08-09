@@ -2,11 +2,10 @@ require 'rails_helper'
 
 describe'Merge requests > User mass updates', :js do
   let(:project) { create(:project, :repository) }
-  let(:user)    { project.creator }
-  let!(:merge_request) { create(:merge_request, source_project: project, target_project: project) }
+  let(:user) { project.owner }
+  let!(:merge_request) { create(:merge_request, source_project: project) }
 
   before do
-    project.add_master(user)
     sign_in(user)
   end
 

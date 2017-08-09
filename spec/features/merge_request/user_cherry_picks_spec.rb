@@ -2,12 +2,11 @@ require 'rails_helper'
 
 describe 'Merge request > User cherry-picks', :js do
   let(:group) { create(:group) }
-  let(:project) { create(:project, :repository, namespace: group) }
-  let(:user) { project.creator }
+  let(:project) { create(:project, :repository) }
+  let(:user) { project.owner }
   let(:merge_request) { create(:merge_request_with_diffs, source_project: project, author: user) }
 
   before do
-    project.add_master(user)
     sign_in(user)
   end
 

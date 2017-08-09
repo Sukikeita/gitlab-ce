@@ -2,11 +2,10 @@ require 'rails_helper'
 
 describe 'Merge request > User sees discussions' do
   let(:project) { create(:project, :public, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:merge_request) { create(:merge_request, source_project: project) }
 
   before do
-    project.add_master(user)
     sign_in(user)
   end
 

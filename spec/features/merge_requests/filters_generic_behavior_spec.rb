@@ -4,11 +4,11 @@ describe'Merge Requests > Filters generic behavior', :js do
   include FilteredSearchHelpers
 
   let(:project) { create(:project, :public, :repository) }
-  let(:user)    { project.creator }
+  let(:user) { project.owner }
   let(:bug) { create(:label, project: project, title: 'bug') }
-  let(:open_mr) { create(:merge_request, title: 'Bugfix1', source_project: project, target_project: project, source_branch: 'bugfix1') }
-  let(:merged_mr) { create(:merge_request, :merged, title: 'Bugfix2', source_project: project, target_project: project, source_branch: 'bugfix2') }
-  let(:closed_mr) { create(:merge_request, :closed, title: 'Feature', source_project: project, target_project: project, source_branch: 'improve/awesome') }
+  let(:open_mr) { create(:merge_request, title: 'Bugfix1', source_project: project, source_branch: 'bugfix1') }
+  let(:merged_mr) { create(:merge_request, :merged, title: 'Bugfix2', source_project: project, source_branch: 'bugfix2') }
+  let(:closed_mr) { create(:merge_request, :closed, title: 'Feature', source_project: project, source_branch: 'improve/awesome') }
 
   before do
     open_mr.labels << bug

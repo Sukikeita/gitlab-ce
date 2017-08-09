@@ -10,12 +10,11 @@ describe 'Merge request > User uses quick actions', :js do
 
   describe 'merge-request-only commands' do
     let(:project) { create(:project, :public, :repository) }
-    let(:user) { project.creator }
+    let(:user) { project.owner }
     let(:merge_request) { create(:merge_request, source_project: project) }
     let!(:milestone) { create(:milestone, project: project, title: 'ASAP') }
 
     before do
-      project.add_master(user)
       sign_in(user)
       visit project_merge_request_path(project, merge_request)
     end

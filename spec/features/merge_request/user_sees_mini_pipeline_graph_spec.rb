@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merge request < User sees mini pipeline graph', :js do
   let(:project) { create(:project, :public, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:merge_request) { create(:merge_request, source_project: project, head_pipeline: pipeline) }
   let(:pipeline) { create(:ci_empty_pipeline, project: project, ref: 'master', status: 'running', sha: project.commit.id) }
   let(:build) { create(:ci_build, pipeline: pipeline, stage: 'test', commands: 'test') }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merge request > User resolves conflicts', :js do
   let(:project) { create(:project, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
 
   before do
     # In order to have the diffs collapsed, we need to disable the increase feature

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Merge request > User posts diff notes', :js do
   let(:merge_request) { create(:merge_request) }
   let(:project) { merge_request.source_project }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:comment_button_class) { '.add-diff-note' }
   let(:notes_holder_input_class) { 'js-temp-notes-holder' }
   let(:notes_holder_input_xpath) { './following-sibling::*[contains(concat(" ", @class, " "), " notes_holder ")]' }
@@ -12,7 +12,6 @@ describe 'Merge request > User posts diff notes', :js do
   before do
     page.driver.set_cookie('sidebar_collapsed', 'true')
 
-    project.add_developer(user)
     sign_in(user)
   end
 

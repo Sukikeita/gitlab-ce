@@ -5,8 +5,7 @@ describe 'Merge request > User merges only if pipeline succeeds', :js do
   let(:project)       { merge_request.target_project }
 
   before do
-    project.add_master(merge_request.author)
-    sign_in(merge_request.author)
+    sign_in(project.owner)
   end
 
   context 'project does not have CI enabled' do

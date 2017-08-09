@@ -4,7 +4,7 @@ describe 'Merge request > User posts notes', :js do
   include NoteInteractionHelpers
 
   let(:project) { create(:project, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:merge_request) do
     create(:merge_request, source_project: project, target_project: project)
   end
@@ -14,7 +14,6 @@ describe 'Merge request > User posts notes', :js do
   end
 
   before do
-    project.add_master(user)
     sign_in(user)
     visit project_merge_request_path(project, merge_request)
   end

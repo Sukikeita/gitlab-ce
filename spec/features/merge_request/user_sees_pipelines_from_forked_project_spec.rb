@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merge request > User sees pipelines from forked project', :js do
   let(:target_project) { create(:project, :public, :repository) }
-  let(:user) { target_project.creator }
+  let(:user) { target_project.owner }
   let(:fork_project) { create(:project, :repository, forked_from_project: target_project) }
   let!(:merge_request) do
     create(:merge_request_with_diffs, source_project: fork_project,
@@ -17,8 +17,8 @@ describe 'Merge request > User sees pipelines from forked project', :js do
   end
 
   before do
-    create(:ci_build, pipeline: pipeline, name: 'rspec')
-    create(:ci_build, pipeline: pipeline, name: 'spinach')
+    create(:ci_build, pipeline: pipeline)
+    create(:ci_build, pipeline: pipeline)
 
     sign_in(user)
     visit project_merge_request_path(target_project, merge_request)

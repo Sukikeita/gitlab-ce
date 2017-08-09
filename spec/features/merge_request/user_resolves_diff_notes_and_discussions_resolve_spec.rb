@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merge request > User resolves diff notes and discussions', :js do
   let(:project)       { create(:project, :public, :repository) }
-  let(:user)          { project.creator }
+  let(:user)          { project.owner }
   let(:guest)         { create(:user) }
   let(:merge_request) { create(:merge_request_with_diffs, source_project: project, author: user, title: "Bug NS-04") }
   let!(:note)          { create(:diff_note_on_merge_request, project: project, noteable: merge_request) }
@@ -19,7 +19,6 @@ describe 'Merge request > User resolves diff notes and discussions', :js do
 
   context 'no discussions' do
     before do
-      project.add_master(user)
       sign_in(user)
       note.destroy
       visit_merge_request

@@ -4,11 +4,10 @@ describe 'Merge request > User sees pipelines', :js do
   describe 'pipeline tab' do
     let(:merge_request) { create(:merge_request) }
     let(:project) { merge_request.target_project }
-    let(:user) { project.creator }
+    let(:user) { project.owner }
 
     before do
-      project.add_master(user)
-      sign_in user
+      sign_in(user)
     end
 
     context 'with pipelines' do
@@ -48,7 +47,7 @@ describe 'Merge request > User sees pipelines', :js do
 
   describe 'race condition' do
     let(:project) { create(:project, :repository) }
-    let(:user) { project.creator }
+    let(:user) { project.owner }
     let(:build_push_data) { { ref: 'feature', checkout_sha: TestEnv::BRANCH_SHA['feature'] } }
 
     let(:merge_request_params) do

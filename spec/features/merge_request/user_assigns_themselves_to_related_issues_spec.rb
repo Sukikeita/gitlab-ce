@@ -1,15 +1,14 @@
 require 'rails_helper'
 
-describe 'Merge request > User assigns themselves', :js do
+describe 'Merge request > User assigns themselves to related issues', :js do
   let(:project) { create(:project, :public, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:issue1) { create(:issue, project: project) }
   let(:issue2) { create(:issue, project: project) }
   let(:merge_request) { create(:merge_request, :simple, source_project: project, author: user, description: "fixes #{issue1.to_reference} and #{issue2.to_reference}") }
 
   context 'logged in as a member of the project' do
     before do
-      project.add_master(user)
       sign_in(user)
       visit project_merge_request_path(project, merge_request)
     end
@@ -39,7 +38,7 @@ describe 'Merge request > User assigns themselves', :js do
 
   context 'logged in as a non-member of the project' do
     before do
-      sign_in(user)
+      sign_in(create(:user))
       visit project_merge_request_path(project, merge_request)
     end
 

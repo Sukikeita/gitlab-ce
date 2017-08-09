@@ -3,12 +3,11 @@ require 'rails_helper'
 describe 'Merge request > User sees merge widget', :js do
   let(:project) { create(:project, :repository) }
   let(:project_only_mwps) { create(:project, :repository, only_allow_merge_if_pipeline_succeeds: true) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:merge_request) { create(:merge_request, source_project: project) }
   let(:merge_request_in_only_mwps_project) { create(:merge_request, source_project: project_only_mwps) }
 
   before do
-    project.add_master(user)
     project_only_mwps.add_master(user)
     sign_in(user)
   end

@@ -3,14 +3,14 @@ require 'rails_helper'
 describe'Merge requests > User filters by multiple criteria', :js do
   include FilteredSearchHelpers
 
-  let!(:project)   { create(:project, :public, :repository) }
-  let(:user)       { project.creator }
+  let!(:project) { create(:project, :public, :repository) }
+  let(:user) { project.owner }
   let!(:milestone) { create(:milestone, title: 'v1.1', project: project) }
-  let!(:wontfix)   { create(:label, project: project, title: "Won't fix") }
+  let!(:wontfix) { create(:label, project: project, title: "Won't fix") }
 
   before do
     sign_in(user)
-    mr = create(:merge_request, title: 'Bugfix2', author: user, assignee: user, source_project: project, target_project: project, milestone: milestone)
+    mr = create(:merge_request, title: 'Bugfix2', author: user, assignee: user, source_project: project, milestone: milestone)
     mr.labels << wontfix
 
     visit project_merge_requests_path(project)

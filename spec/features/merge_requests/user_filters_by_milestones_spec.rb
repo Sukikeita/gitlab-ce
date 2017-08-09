@@ -3,8 +3,8 @@ require 'rails_helper'
 describe'Merge Requests > User filters by milestones', :js do
   include FilteredSearchHelpers
 
-  let(:project)   { create(:project, :public, :repository) }
-  let(:user)      { project.creator }
+  let(:project) { create(:project, :public, :repository) }
+  let(:user) { project.owner }
   let(:milestone) { create(:milestone, project: project) }
 
   before do

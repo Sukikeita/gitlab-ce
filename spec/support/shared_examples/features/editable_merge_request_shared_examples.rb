@@ -1,11 +1,10 @@
 RSpec.shared_examples 'an editable merge request' do
-  let(:user)        { create(:user) }
-  let(:user2)       { create(:user) }
-  let!(:milestone)   { create(:milestone, project: target_project) }
-  let!(:label)       { create(:label, project: target_project) }
-  let!(:label2)      { create(:label, project: target_project) }
-  let(:target_project) { create(:project, :public, :repository) }
+  # Can be overriden
   let(:source_project) { target_project }
+
+  let(:target_project) { create(:project, :public, :repository) }
+  let(:user) { source_project.owner }
+  let(:user2) { target_project.owner }
   let(:merge_request) do
     create(:merge_request,
       source_project: source_project,
@@ -13,11 +12,12 @@ RSpec.shared_examples 'an editable merge request' do
       source_branch: 'fix',
       target_branch: 'master')
   end
+  let!(:milestone)   { create(:milestone, project: target_project) }
+  let!(:label)       { create(:label, project: target_project) }
+  let!(:label2)      { create(:label, project: target_project) }
 
   before do
-    source_project.add_master(user)
     target_project.add_master(user)
-    target_project.add_master(user2)
 
     sign_in(user)
     visit edit_project_merge_request_path(target_project, merge_request)

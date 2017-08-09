@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merge request > User merges when pipeline succeeds', :js do
   let(:project) { create(:project, :public, :repository) }
-  let(:user) { project.creator }
+  let(:user) { project.owner }
   let(:merge_request) do
     create(:merge_request_with_diffs, source_project: project,
                                       author: user,
@@ -14,10 +14,6 @@ describe 'Merge request > User merges when pipeline succeeds', :js do
                          sha: merge_request.diff_head_sha,
                          ref: merge_request.source_branch,
                          head_pipeline_of: merge_request)
-  end
-
-  before do
-    project.add_master(user)
   end
 
   context 'when there is active pipeline for merge request' do
