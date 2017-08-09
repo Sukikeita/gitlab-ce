@@ -27,8 +27,12 @@ describe 'Merge request > User sees deployment widget', :js do
       let(:pipeline) { create(:ci_pipeline, project: project) }
       let(:build) { create(:ci_build, pipeline: pipeline) }
       let(:deployment) do
-        create(:deployment, environment: environment, ref: merge_request.target_branch,
-          sha: sha, deployable: build, on_stop: 'close_app')
+        create(:deployment,
+          environment: environment,
+          ref: merge_request.target_branch,
+          sha: sha,
+          deployable: build,
+          on_stop: 'close_app')
       end
 
       before do

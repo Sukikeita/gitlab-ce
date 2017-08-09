@@ -47,6 +47,8 @@ describe 'Merge request > User uses quick actions', :js do
       end
 
       context 'when the current user cannot toggle the WIP prefix' do
+        let(:guest) { create(:user) }
+
         before do
           project.add_guest(guest)
           sign_out(:user)
@@ -92,6 +94,8 @@ describe 'Merge request > User uses quick actions', :js do
       end
 
       context 'when the current user cannot merge the MR' do
+        let(:guest) { create(:user) }
+
         before do
           project.add_guest(guest)
           sign_out(:user)
@@ -175,6 +179,8 @@ describe 'Merge request > User uses quick actions', :js do
       end
 
       context 'when current user can not change target branch' do
+        let(:guest) { create(:user) }
+
         before do
           project.add_guest(guest)
           sign_out(:user)
