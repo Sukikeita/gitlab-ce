@@ -1,3 +1,5 @@
+# Added a test commit
+
 # GitLab
 
 [![Build status](https://gitlab.com/gitlab-org/gitlab-ce/badges/master/build.svg)](https://gitlab.com/gitlab-org/gitlab-ce/commits/master)
