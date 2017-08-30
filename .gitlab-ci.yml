@@ -45,6 +45,7 @@ stages:
 .dedicated-runner: &dedicated-runner
   tags:
     - gitlab-org
+  retry: 1
 
 .tests-metadata-state: &tests-metadata-state
   services: []
