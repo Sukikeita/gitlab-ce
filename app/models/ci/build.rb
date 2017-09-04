@@ -5,6 +5,8 @@ module Ci
     include Presentable
     include Importable
 
+    MissingDependenciesError = Class.new(StandardError)
+
     belongs_to :runner
     belongs_to :trigger_request
     belongs_to :erased_by, class_name: 'User'
@@ -112,8 +114,8 @@ module Ci
       end
 
       before_transition any => [:running] do |build|
-        if !build.empty_dependencies? && build.dependencies.empty?
-          raise Gitlab::Ci::Error::MissingDependencies
+        if build.specified_dependencies? && build.dependencies.empty?
+          raise MissingDependenciesError
         end
       end
     end
@@ -460,6 +462,10 @@ module Ci
 
     def empty_dependencies?
       options[:dependencies]&.empty?
+    end
+
+    def specified_dependencies?
+      options.has_key?(:dependencies) && options[:dependencies].any?
     end
 
     def hide_secrets(trace)
