@@ -1785,8 +1785,12 @@ describe Ci::Build do
 
         context 'when "artifacts" keyword is specified on depended job' do
           let!(:pre_stage_job) do
-            create(:ci_build, :artifacts, pipeline: pipeline, name: 'test', stage_idx: 0,
-                              options: { artifacts: { paths: ['binaries/'] } } )
+            create(:ci_build,
+                   :artifacts,
+                   pipeline: pipeline,
+                   name: 'test',
+                   stage_idx: 0,
+                   options: { artifacts: { paths: ['binaries/'] } } )
           end
 
           context 'when artifacts of depended job has existsed' do
