@@ -344,6 +344,15 @@ class Note < ActiveRecord::Base
     end
   end
 
+  def replies_to
+    if part_of_discussion?
+      previous_note = to_discussion.notes.where('id < ?', id).last
+      return previous_note if previous_note
+    end
+
+    noteable
+  end
+
   def expire_etag_cache
     return unless noteable&.discussions_rendered_on_frontend?
 

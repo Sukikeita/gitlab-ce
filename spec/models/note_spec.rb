@@ -725,6 +725,18 @@ describe Note do
     end
   end
 
+  describe '#replies_to' do
+    context 'when part of a discussion' do
+      subject { create(:discussion_note_on_issue) }
+      let(:note) { create(:discussion_note_on_issue, in_reply_to: subject) }
+    end
+
+    context 'when not part of a discussion' do
+      subject { create(:note) }
+      let(:note) { create(:note, in_reply_to: subject) }
+    end
+  end
+
   describe 'expiring ETag cache' do
     let(:note) { build(:note_on_issue) }
 
