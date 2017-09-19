@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   include FeatureGate
   include CreatedAtFilterable
   include IgnorableColumn
+  include BlocksJsonSerialization
 
   DEFAULT_NOTIFICATION_LEVEL = :participating
 
