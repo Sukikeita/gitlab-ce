@@ -14,7 +14,7 @@ engines:
       - "lib/api/v3/*"
   eslint:
     enabled: true
-  rubocop:
+  rubocop-gitlab:
     enabled: true
 ratings:
   paths:
