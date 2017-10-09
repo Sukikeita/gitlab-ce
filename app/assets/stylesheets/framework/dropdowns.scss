@@ -237,9 +237,13 @@
 
   .divider {
     height: 1px;
-    margin: 6px 10px;
+    margin: 6px 0;
     padding: 0;
     background-color: $dropdown-divider-color;
+
+    &:hover {
+      background-color: $dropdown-divider-color;
+    }
   }
 
   .separator {
@@ -335,12 +339,6 @@
 
     &.droplab-item-selected i {
       visibility: visible;
-    }
-
-    &.divider {
-      margin: 0 8px;
-      padding: 0;
-      border-top: $gray-darkest;
     }
 
     .icon {
@@ -755,14 +753,6 @@
 
       &:hover {
         background-color: transparent;
-      }
-
-      &.divider {
-        margin: 6px 0;
-
-        &:hover {
-          background-color: $dropdown-divider-color;
-        }
       }
 
       &.dropdown-header {
