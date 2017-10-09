@@ -153,14 +153,19 @@
 }
 
 @mixin dropdown-link {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   display: block;
   position: relative;
-  padding: 5px 8px;
+  padding: 8px 16px;
   color: $gl-text-color;
   line-height: initial;
-  border-radius: 2px;
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
+  text-align: left;
+  width: 100%;
 
   // make sure the text color is not overriden
   &.text-danger {
@@ -342,10 +347,7 @@
     > button {
       display: flex;
       margin: 0;
-      padding: 0;
-      border-radius: 0;
       text-overflow: inherit;
-      border: inherit;
       text-align: left;
 
       &.btn .fa:not(:last-child) {
@@ -767,17 +769,6 @@
 
       &:hover {
         background-color: transparent;
-      }
-
-      a,
-      button,
-      .menu-item {
-        border-radius: 0;
-        box-shadow: none;
-        padding: 8px 16px;
-        text-align: left;
-        white-space: normal;
-        width: 100%;
       }
     }
 
