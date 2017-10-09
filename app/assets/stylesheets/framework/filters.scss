@@ -50,8 +50,6 @@
 }
 
 .filtered-search-wrapper {
-  @include new-style-dropdown;
-
   display: -webkit-flex;
   display: flex;
 
@@ -162,16 +160,6 @@
 
   .value-container {
     box-shadow: inset 0 0 0 100px $filtered-search-term-shadow-color;
-  }
-}
-
-.droplab-dropdown li.filtered-search-token {
-  padding: 0;
-
-  &:hover,
-  &:focus {
-    background-color: inherit;
-    color: inherit;
   }
 }
 
@@ -358,21 +346,12 @@
 
 .filtered-search-history-dropdown-content {
   max-height: none;
-}
 
-.filtered-search-history-dropdown-item,
-.filtered-search-history-clear-button {
-  @include dropdown-link;
-
-  overflow: hidden;
-  width: 100%;
-  margin: 0.5em 0;
-
-  background-color: transparent;
-  border: 0;
-  text-align: left;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  .filtered-search-history-dropdown-item,
+  .filtered-search-history-clear-button {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
 .filtered-search-history-dropdown-token {
@@ -424,24 +403,9 @@
   }
 }
 
-%filter-dropdown-item-btn-hover {
-  text-decoration: none;
-  outline: 0;
-
-  .avatar {
-    border-color: $white-light;
-  }
-}
-
 .droplab-dropdown .dropdown-menu .filter-dropdown-item {
   .btn {
-    border: none;
-    width: 100%;
-    text-align: left;
-    padding: 8px 16px;
     text-overflow: ellipsis;
-    overflow: hidden;
-    border-radius: 0;
 
     .fa {
       width: 15px;
@@ -454,11 +418,6 @@
       border-width: 1px;
       width: 17px;
       height: 17px;
-    }
-
-    &:hover,
-    &:focus {
-      @extend %filter-dropdown-item-btn-hover;
     }
   }
 
@@ -482,15 +441,7 @@
   }
 }
 
-.filter-dropdown-item.droplab-item-active .btn {
-  @extend %filter-dropdown-item-btn-hover;
-}
-
 .filter-dropdown-loading {
   padding: 8px 16px;
   text-align: center;
-}
-
-.issues-details-filters {
-  @include new-style-dropdown;
 }
