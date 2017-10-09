@@ -182,6 +182,13 @@
 
   &.dropdown-menu-user-link {
     line-height: 16px;
+    padding-top: 10px;
+    padding-bottom: 7px;
+    white-space: nowrap;
+
+    .dropdown-menu-user-username {
+      display: block;
+    }
   }
 
   .icon-play {
@@ -445,11 +452,6 @@
     height: 2 * $gl-padding;
     margin: 0 10px 0 0;
   }
-}
-
-.dropdown-menu-user-link {
-  padding-top: 10px;
-  padding-bottom: 7px;
 }
 
 .dropdown-menu-user-full-name {
@@ -776,14 +778,6 @@
         text-align: left;
         white-space: normal;
         width: 100%;
-
-        &.dropdown-menu-user-link {
-          white-space: nowrap;
-
-          .dropdown-menu-user-username {
-            display: block;
-          }
-        }
       }
     }
 
