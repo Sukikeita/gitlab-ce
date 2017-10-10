@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Resolve outdated diff discussions', :js do
+feature 'Merge Request > User resolves outdated diff discussions', :js do
   let(:project) { create(:project, :repository, :public) }
 
   let(:merge_request) do

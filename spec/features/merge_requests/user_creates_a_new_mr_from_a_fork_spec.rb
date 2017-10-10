@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Creating a merge request from a fork', :js do
+feature 'Merge Requests > Creates a merge request from a fork', :js do
   include ProjectForksHelper
 
   let(:user) { create(:user) }

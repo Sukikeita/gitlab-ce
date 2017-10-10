@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe'Merge Requests > Filters generic behavior', :js do
+describe 'Merge Requests > User filters generic behavior', :js do
   include FilteredSearchHelpers
 
   let(:project) { create(:project, :public, :repository) }
