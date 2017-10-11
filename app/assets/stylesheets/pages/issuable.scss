@@ -480,12 +480,6 @@
     }
   }
 
-  .dropdown-content {
-    a:hover {
-      color: inherit;
-    }
-  }
-
   .dropdown-menu-toggle {
     width: 100%;
     padding-top: 6px;
@@ -502,10 +496,6 @@
   .issuable-sidebar {
     height: calc(100% - #{$header-height} - #{$performance-bar-height});
   }
-}
-
-.sidebar-move-issue-dropdown {
-  @include new-style-dropdown;
 }
 
 .sidebar-move-issue-confirmation-button {
@@ -635,8 +625,6 @@
 }
 
 .issuable-actions {
-  @include new-style-dropdown;
-
   padding-top: 10px;
 
   @media (min-width: $screen-sm-min) {

@@ -144,8 +144,6 @@ ul.related-merge-requests > li {
 }
 
 .issue-form {
-  @include new-style-dropdown;
-
   .select2-container {
     width: 250px !important;
   }
@@ -190,8 +188,6 @@ ul.related-merge-requests > li {
 }
 
 .create-mr-dropdown-wrap {
-  @include new-style-dropdown;
-
   .btn-group:not(.hide) {
     display: flex;
   }
