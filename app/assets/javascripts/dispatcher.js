@@ -23,7 +23,7 @@ import CILintEditor from './ci_lint_editor';
 /* global ProjectAvatar */
 /* global MergeRequest */
 import Compare from './compare';
-/* global CompareAutocomplete */
+import initCompareAutocomplete from './compare_autocomplete';
 /* global ProjectFindFile */
 /* global ProjectNew */
 /* global ProjectShow */
@@ -596,7 +596,7 @@ import Diff from './diff';
           new ProjectAvatar();
           switch (path[1]) {
             case 'compare':
-              new CompareAutocomplete();
+              initCompareAutocomplete();
               break;
             case 'edit':
               shortcut_handler = new ShortcutsNavigation();

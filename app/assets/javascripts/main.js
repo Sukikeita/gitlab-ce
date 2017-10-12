@@ -44,7 +44,6 @@ import './aside';
 import './autosave';
 import loadAwardsHandler from './awards_handler';
 import bp from './breakpoints';
-import './compare_autocomplete';
 import './confirm_danger_modal';
 import './copy_as_gfm';
 import './copy_to_clipboard';
