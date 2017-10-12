@@ -22,7 +22,7 @@ import CILintEditor from './ci_lint_editor';
 /* global Project */
 /* global ProjectAvatar */
 /* global MergeRequest */
-/* global Compare */
+import Compare from './compare';
 /* global CompareAutocomplete */
 /* global ProjectFindFile */
 /* global ProjectNew */
