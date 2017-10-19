@@ -79,3 +79,7 @@ elsif Gitlab::Database.mysql?
     NATIVE_DATABASE_TYPES[:datetime_with_timezone] = { name: 'timestamp' }
   end
 end
+
+if (ActiveRecord::Base.connection.active? rescue false)
+  ActiveRecord::Base.connection.send :reload_type_map
+end
