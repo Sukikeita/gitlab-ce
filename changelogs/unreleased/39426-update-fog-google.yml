@@ -1,0 +1,5 @@
+---
+title: Update fog-google to fix backing up to Google Cloud Storage
+merge_request: 15028
+author:
+type: fixed

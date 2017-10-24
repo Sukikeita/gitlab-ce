@@ -5,8 +5,8 @@
 An application data backup creates an archive file that contains the database,
 all repositories and all attachments.
 
-You can only restore a backup to **exactly the same version and type (CE/EE)** 
-of GitLab on which it was created. The best way to migrate your repositories 
+You can only restore a backup to **exactly the same version and type (CE/EE)**
+of GitLab on which it was created. The best way to migrate your repositories
 from one server to another is through backup restore.
 
 ## Backup
@@ -226,6 +226,26 @@ with the name of your bucket:
 }
 ```
 
+#### Using Google Cloud Storage
+
+If you want to use Google Cloud Storage to save backups, go to the storage
+settings page, select "Interoperability" and create an access key there.
+Copy "Access Key" and "Secret", fill the configurations in
+`/etc/gitlab/gitlab.rb`:
+
+```ruby
+gitlab_rails['backup_upload_connection'] = {
+  'provider' => 'Google',
+  'google_project' => 'my-project',
+  'google_storage_access_key_id' => 'Access Key',
+  'google_storage_secret_access_key' => 'Secret'
+}
+gitlab_rails['backup_upload_remote_directory'] = 'my.google.bucket'
+```
+
+Make sure you have project and bucket setting up correctly, and run
+`sudo gitlab-ctl reconfigure` after making the changes.
+
 ### Uploading to locally mounted shares
 
 You may also send backups to a mounted share (`NFS` / `CIFS` / `SMB` / etc.) by
@@ -377,7 +397,7 @@ The [restore prerequisites section](#restore-prerequisites) includes crucial
 information. Make sure to read and test the whole restore process at least once
 before attempting to perform it in a production environment.
 
-You can only restore a backup to **exactly the same version and type (CE/EE)** of 
+You can only restore a backup to **exactly the same version and type (CE/EE)** of
 GitLab that you created it on, for example CE 9.1.0.
 
 ### Restore prerequisites
@@ -457,7 +477,7 @@ sudo service gitlab restart
 
 This procedure assumes that:
 
-- You have installed the **exact same version and type (CE/EE)** of GitLab 
+- You have installed the **exact same version and type (CE/EE)** of GitLab
   Omnibus with which the backup was created.
 - You have run `sudo gitlab-ctl reconfigure` at least once.
 - GitLab is running.  If not, start it using `sudo gitlab-ctl start`.

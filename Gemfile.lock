@@ -1,3 +1,14 @@
+GIT
+  remote: git://github.com/fog/fog-google.git
+  revision: 2a1b341a029d8bb667860a2b560a7c337b0c6d77
+  ref: 2a1b341a029d8bb667860a2b560a7c337b0c6d77
+  specs:
+    fog-google (0.6.0)
+      fog-core
+      fog-json
+      fog-xml
+      google-api-client (~> 0.15)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -228,10 +239,6 @@ GEM
       builder
       excon (~> 0.49)
       formatador (~> 0.2)
-    fog-google (0.5.3)
-      fog-core
-      fog-json
-      fog-xml
     fog-json (1.0.2)
       fog-core (~> 1.0)
       multi_json (~> 1.10)
@@ -317,7 +324,7 @@ GEM
       json
       multi_json
       request_store (>= 1.0)
-    google-api-client (0.13.6)
+    google-api-client (0.15.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 0.5)
       httpclient (>= 2.8.1, < 3.0)
@@ -396,7 +403,7 @@ GEM
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    httpclient (2.8.2)
+    httpclient (2.8.3)
     i18n (0.8.6)
     ice_nine (0.11.2)
     influxdb (0.2.3)
@@ -836,10 +843,10 @@ GEM
       sidekiq (>= 4.2.1)
     sidekiq-limit_fetch (3.4.0)
       sidekiq (>= 4)
-    signet (0.7.3)
+    signet (0.8.1)
       addressable (~> 2.3)
       faraday (~> 0.9)
-      jwt (~> 1.5)
+      jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
     simple_po_parser (1.1.2)
     simplecov (0.14.1)
@@ -1018,7 +1025,7 @@ DEPENDENCIES
   fog-aliyun (~> 0.2.0)
   fog-aws (~> 1.4)
   fog-core (~> 1.44)
-  fog-google (~> 0.5)
+  fog-google (~> 0.6)!
   fog-local (~> 0.3)
   fog-openstack (~> 0.1)
   fog-rackspace (~> 0.1.1)
@@ -1038,7 +1045,7 @@ DEPENDENCIES
   gollum-lib (~> 4.2)
   gollum-rugged_adapter (~> 0.4.4)
   gon (~> 6.1.0)
-  google-api-client (~> 0.13.6)
+  google-api-client (~> 0.15)
   gpgme
   grape (~> 1.0)
   grape-entity (~> 0.6.0)

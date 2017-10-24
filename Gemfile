@@ -98,14 +98,20 @@ gem 'dropzonejs-rails', '~> 0.7.1'
 # for backups
 gem 'fog-aws', '~> 1.4'
 gem 'fog-core', '~> 1.44'
-gem 'fog-google', '~> 0.5'
+
+# rubocop:disable Cop/GemFetcher
+# Using branch: upgrade-google-client
+gem 'fog-google', '~> 0.6',
+  github: 'fog/fog-google', ref: '2a1b341a029d8bb667860a2b560a7c337b0c6d77'
+# rubocop:enable Cop/GemFetcher
+
 gem 'fog-local', '~> 0.3'
 gem 'fog-openstack', '~> 0.1'
 gem 'fog-rackspace', '~> 0.1.1'
 gem 'fog-aliyun', '~> 0.2.0'
 
 # for Google storage
-gem 'google-api-client', '~> 0.13.6'
+gem 'google-api-client', '~> 0.15'
 
 # for aws storage
 gem 'unf', '~> 0.1.4'
