@@ -30,6 +30,11 @@ module Gitlab
     MAXIMUM_GITALY_CALLS = 30
     CLIENT_NAME = (Sidekiq.server? ? 'gitlab-sidekiq' : 'gitlab-web').freeze
 
+    # The default timeout on all Gitaly calls
+    DEFAULT_TIMEOUT = Sidekiq.server? ? 0.seconds : 50.seconds
+    FAST_TIMEOUT = 15.seconds
+    MEDIUM_TIMEOUT = 30.seconds
+
     MUTEX = Mutex.new
     METRICS_MUTEX = Mutex.new
     private_constant :MUTEX, :METRICS_MUTEX
@@ -72,7 +77,7 @@ module Gitlab
           klass = Gitaly.const_get(name.to_s.camelcase.to_sym).const_get(:Stub)
           addr = address(storage)
           addr = addr.sub(%r{^tcp://}, '') if URI(addr).scheme == 'tcp'
-          klass.new(addr, :this_channel_is_insecure)
+          klass.new(addr, :this_channel_is_insecure, timeout: DEFAULT_TIMEOUT)
         end
       end
     end
@@ -117,11 +122,11 @@ module Gitlab
     #   kwargs.merge(deadline: Time.now + 10)
     # end
     #
-    def self.call(storage, service, rpc, request, remote_storage: nil)
+    def self.call(storage, service, rpc, request, remote_storage: nil, timeout: nil)
       start = Gitlab::Metrics::System.monotonic_time
       enforce_gitaly_request_limits(:call)
 
-      kwargs = request_kwargs(storage, remote_storage: remote_storage)
+      kwargs = request_kwargs(storage, timeout, remote_storage: remote_storage)
       kwargs = yield(kwargs) if block_given?
 
       stub(service, storage).__send__(rpc, request, kwargs) # rubocop:disable GitlabSecurity/PublicSend
@@ -140,7 +145,7 @@ module Gitlab
     end
     private_class_method :current_transaction_labels
 
-    def self.request_kwargs(storage, remote_storage: nil)
+    def self.request_kwargs(storage, timeout, remote_storage: nil)
       encoded_token = Base64.strict_encode64(token(storage).to_s)
       metadata = {
         'authorization' => "Bearer #{encoded_token}",
@@ -152,7 +157,9 @@ module Gitlab
       metadata['call_site'] = feature.to_s if feature
       metadata['gitaly-servers'] = address_metadata(remote_storage) if remote_storage
 
-      { metadata: metadata }
+      deadline = Time.now + timeout if !timeout.nil? && timeout > 0
+
+      { metadata: metadata, deadline: deadline }
     end
 
     def self.token(storage)
