@@ -122,7 +122,7 @@ module Gitlab
     #   kwargs.merge(deadline: Time.now + 10)
     # end
     #
-    def self.call(storage, service, rpc, request, remote_storage: nil, timeout: nil)
+    def self.call(storage, service, rpc, request, remote_storage: nil, timeout: DEFAULT_TIMEOUT)
       start = Gitlab::Metrics::System.monotonic_time
       enforce_gitaly_request_limits(:call)
 
