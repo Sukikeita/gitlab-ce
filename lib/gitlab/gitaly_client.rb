@@ -30,11 +30,6 @@ module Gitlab
     MAXIMUM_GITALY_CALLS = 30
     CLIENT_NAME = (Sidekiq.server? ? 'gitlab-sidekiq' : 'gitlab-web').freeze
 
-    # The default timeout on all Gitaly calls
-    DEFAULT_TIMEOUT = Sidekiq.server? ? 0.seconds : 50.seconds
-    FAST_TIMEOUT = 10.seconds
-    MEDIUM_TIMEOUT = 30.seconds
-
     MUTEX = Mutex.new
     METRICS_MUTEX = Mutex.new
     private_constant :MUTEX, :METRICS_MUTEX
@@ -122,7 +117,7 @@ module Gitlab
     #   kwargs.merge(deadline: Time.now + 10)
     # end
     #
-    def self.call(storage, service, rpc, request, remote_storage: nil, timeout: DEFAULT_TIMEOUT)
+    def self.call(storage, service, rpc, request, remote_storage: nil, timeout: nil)
       start = Gitlab::Metrics::System.monotonic_time
       enforce_gitaly_request_limits(:call)
 
@@ -159,7 +154,10 @@ module Gitlab
 
       result = { metadata: metadata }
 
-      return result unless !timeout.nil? && timeout > 0
+      # nil timeout indicates that we should use the default
+      timeout = default_timeout if timeout.nil?
+
+      return result unless timeout > 0
 
       # Do not use `Time.now` for deadline calculation, since it
       # will be affected by Timecop in some tests, but grpc's c-core
@@ -341,6 +339,26 @@ module Gitlab
     def self.encode_repeated(a)
       Google::Protobuf::RepeatedField.new(:bytes, a.map { |s| self.encode(s) } )
     end
+
+    # The default timeout on all Gitaly calls
+    def self.default_timeout
+      return 0 if Sidekiq.server?
+
+      timeout(:gitaly_timeout_default)
+    end
+
+    def self.fast_timeout
+      timeout(:gitaly_timeout_fast)
+    end
+
+    def self.medium_timeout
+      timeout(:gitaly_timeout_medium)
+    end
+
+    def self.timeout(timeout_name)
+      Gitlab::CurrentSettings.current_application_settings[timeout_name]
+    end
+    private_class_method :timeout
 
     # Count a stack. Used for n+1 detection
     def self.count_stack

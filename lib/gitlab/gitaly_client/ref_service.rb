@@ -46,7 +46,7 @@ module Gitlab
           commit_id: commit_id,
           prefix: ref_prefix
         )
-        response = GitalyClient.call(@storage, :ref_service, :find_ref_name, request)
+        response = GitalyClient.call(@storage, :ref_service, :find_ref_name, request, timeout: GitalyClient.medium_timeout)
         encode!(response.name.dup)
       end
 
