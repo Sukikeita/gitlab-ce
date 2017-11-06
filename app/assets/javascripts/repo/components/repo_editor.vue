@@ -41,6 +41,9 @@ export default {
               readOnly: false,
               contextmenu: true,
               scrollBeyondLastLine: false,
+              fixedOverflowWidgets: true,
+              folding: true,
+              renderIndentGuides: true,
             });
 
             this.languages = this.monaco.languages.getLanguages();

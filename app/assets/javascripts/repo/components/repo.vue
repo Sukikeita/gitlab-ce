@@ -35,6 +35,11 @@ export default {
       });
       return returnValue;
     };
+
+    // Make the repo editor fluid
+    document.querySelector('#content-body .container-limited').classList.remove('container-limited');
+    document.querySelector('.breadcrumbs.container-limited').classList.remove('container-limited');
+    document.querySelector('.content-wrapper').style.paddingBottom = '0';
   },
 };
 </script>

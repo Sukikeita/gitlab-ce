@@ -48,10 +48,11 @@
     display: -webkit-flex;
     display: flex;
     min-height: 300px;
+    height: calc(100vh - 160px)
   }
 
   .tree-content-holder-mini {
-    height: 100vh;
+    height: calc(100vh - 160px)
   }
 
   .panel-right {
@@ -245,6 +246,7 @@
   #sidebar {
     flex: 1;
     height: 100%;
+    overflow: auto;
 
     &.sidebar-mini {
       width: 20%;
