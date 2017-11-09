@@ -1,3 +1,5 @@
+/* global Project */
+
 import SmartInterval from '~/smart_interval';
 import Flash from '../flash';
 import {
@@ -140,6 +142,7 @@ export default {
             const el = document.createElement('div');
             el.innerHTML = res.body;
             document.body.appendChild(el);
+            Project.initRefSwitcher();
           }
         })
         .catch(() => {

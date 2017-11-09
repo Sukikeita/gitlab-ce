@@ -28,8 +28,8 @@ import Cookies from 'js-cookie';
 
         return $('.clone').text(url);
       });
-      // Ref switcher
-      this.initRefSwitcher();
+
+      Project.initRefSwitcher();
       $('.project-refs-select').on('change', function() {
         return $(this).parents('form').submit();
       });
@@ -59,7 +59,7 @@ import Cookies from 'js-cookie';
       return window.location = url;
     };
 
-    Project.prototype.initRefSwitcher = function() {
+    Project.initRefSwitcher = function() {
       var refListItem = document.createElement('li');
       var refLink = document.createElement('a');
 
