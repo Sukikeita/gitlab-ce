@@ -493,7 +493,7 @@ karma:
   script:
     - scripts/gitaly-test-spawn
     - bundle exec rake gettext:po_to_json
-    - sed -i "s/timeout: 2000/timeout: 60000/g" node_modules/karma/static/karma.js
+    - "sed -i 's/timeout: 2000/timeout: 60000/g' node_modules/karma/static/karma.js"
     - bundle exec rake karma
   coverage: '/^Statements *: (\d+\.\d+%)/'
   artifacts:
