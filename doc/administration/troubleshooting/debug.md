@@ -71,6 +71,26 @@ sudo yum install gdb
 Many of the tips to diagnose issues below apply to many different situations. We'll use one
 concrete example to illustrate what you can do to learn what is going wrong.
 
+### GitLab: API is not accessible
+
+This often occurs when gitlab-shell attempts to request authorization via the
+internal API (e.g. http://localhost:8080/api/v4/internal/allowed), and
+something in the check fails. There are many reasons why this may happen:
+
+1. Timeout connecting to a database (e.g. PostgreSQL or Redis)
+1. Error in Git hooks or push rules
+1. Error accessing the repository (e.g. stale NFS handles)
+
+One way to diagnose the problem is to attempt to reproduce the problem and
+run `strace` on all the Unicorn workers to see where the
+`/internal/allowed` endpoint gets stuck:
+
+```shell
+ps auwx | grep unicorn | awk '{ print " -p " $2}' | xargs strace -tt -T -f -s 1024 -o /tmp/unicorn.txt
+```
+
+The output in `/tmp/unicorn.txt` may help diagnose the root cause.
+
 ### 502 Gateway Timeout after unicorn spins at 100% CPU
 
 This error occurs when the Web server times out (default: 60 s) after not
