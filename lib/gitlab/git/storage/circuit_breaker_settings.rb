@@ -26,6 +26,10 @@ module Gitlab
           application_settings.circuitbreaker_backoff_threshold
         end
 
+        def cache_key
+          @cache_key ||= "#{Gitlab::Git::Storage::REDIS_KEY_PREFIX}#{storage}:#{hostname}"
+        end
+
         private
 
         def application_settings

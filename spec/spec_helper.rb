@@ -109,6 +109,10 @@ RSpec.configure do |config|
   end
 
   config.before(:example, :request_store) do
+    # Clear the request store before the spec. If we had a spec that used the
+    # request store before, we should clear it so we are sure were running with
+    # clean slate.
+    RequestStore.clear!
     RequestStore.begin!
   end
 
@@ -119,18 +123,6 @@ RSpec.configure do |config|
 
   config.before(:example, :mailer) do
     reset_delivered_emails!
-  end
-
-  # Stub the `ForkedStorageCheck.storage_available?` method unless
-  # `:broken_storage` metadata is defined
-  #
-  # This check can be slow and is unnecessary in a test environment where we
-  # know the storage is available, because we create it at runtime
-  config.before(:example) do |example|
-    unless example.metadata[:broken_storage]
-      allow(Gitlab::Git::Storage::ForkedStorageCheck)
-        .to receive(:storage_available?).and_return(true)
-    end
   end
 
   config.around(:each, :use_clean_rails_memory_store_caching) do |example|

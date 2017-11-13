@@ -17,7 +17,7 @@ describe Admin::HealthCheckController, broken_storage: true do
 
   describe 'POST reset_storage_health' do
     it 'resets all storage health information' do
-      expect(Gitlab::Git::Storage::CircuitBreaker).to receive(:reset_all!)
+      expect(Gitlab::Git::Storage::FailureInfo).to receive(:reset_all!)
 
       post :reset_storage_health
     end
