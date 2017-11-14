@@ -5,7 +5,11 @@
 
 - if @merge_request_diff&.empty?
   .nothing-here-block
-    No changes between #{@merge_request.source_branch} into #{@merge_request.target_branch}.
+    = succeed '.' do
+      No changes between
+      %span.ref-name= @merge_request.source_branch
+      and
+      %span.ref-name= @merge_request.target_branch
 - else
   - diff_viewable = @merge_request_diff ? @merge_request_diff.collected? || @merge_request_diff.overflow? : true
   - if diff_viewable
