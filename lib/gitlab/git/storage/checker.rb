@@ -6,12 +6,30 @@ module Gitlab
 
         attr_reader :storage_path, :storage, :hostname
 
+        def self.check_all
+          threads = []
+
+          Gitlab.config.repositories.storages.keys.each do |storage_name|
+            threads << Thread.new { new(storage_name).check_with_lease }
+          end
+        end
+
         def initialize(storage)
           @storage = storage
           config = Gitlab.config.repositories.storages[@storage]
           @storage_path = config['path']
 
           @hostname = Gitlab::Environment.hostname
+        end
+
+        def check_with_lease
+          lease_key = "storage_check:#{cache_key}"
+          lease = Gitlab::ExclusiveLease.new(lease_key, timeout: storage_timeout)
+          if uuid = lease.try_obtain
+            check
+
+            Gitlab::ExclusiveLease.cancel(lease_key, uuid)
+          end
         end
 
         def check

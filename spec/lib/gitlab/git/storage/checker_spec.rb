@@ -19,11 +19,35 @@ describe Gitlab::Git::Storage::Checker do
     end.first
   end
 
+  describe '.check_all' do
+    it 'calls a check for each storage' do
+      fake_checker_default = double
+      fake_checker_broken = double
+
+      expect(described_class).to receive(:new).with('default') { fake_checker_default }
+      expect(described_class).to receive(:new).with('broken') { fake_checker_broken }
+      expect(fake_checker_default).to receive(:check_with_lease)
+      expect(fake_checker_broken).to receive(:check_with_lease)
+
+      described_class.check_all
+    end
+  end
+
   describe '#initialize' do
     it 'assigns the settings' do
       expect(checker.hostname).to eq(hostname)
       expect(checker.storage).to eq('default')
       expect(checker.storage_path).to eq(TestEnv.repos_path)
+    end
+  end
+
+  describe '#check_with_lease' do
+    it 'only allows one check at a time' do
+      expect(checker).to receive(:check).once { sleep 1 }
+
+      thread = Thread.new { checker.check_with_lease }
+      checker.check_with_lease
+      thread.join
     end
   end
 

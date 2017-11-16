@@ -26,6 +26,11 @@ module Gitlab
           application_settings.circuitbreaker_backoff_threshold
         end
 
+        def circuitbreaker_check_interval
+          # TODO: move this to the database
+          10
+        end
+
         def cache_key
           @cache_key ||= "#{Gitlab::Git::Storage::REDIS_KEY_PREFIX}#{storage}:#{hostname}"
         end

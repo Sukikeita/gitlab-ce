@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'net/http'
+require 'json'
+
+url = 'http://localhost:8080/-/nfs_check'
+token = nil
+interval = 1
+
+def perform_request(url, token, interval)
+  uri = URI(url)
+
+  post = Net::HTTP::Post.new(uri)
+  post['Accept'] = 'application/json'
+  post['TOKEN'] = token if token
+
+  response = Net::HTTP.start(uri.hostname, uri.port) do |http|
+    http.request(post)
+  end
+  print '.'
+
+  JSON.parse(response.body)['check_interval']
+rescue => ex
+  puts "Request failed: #{ex}"
+  interval
+end
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: bin/nfs_check [options]"
+
+  opts.on('-u', '--url ', 'URL to trigger NFS check, default: http://localhost:8080/-/nfs_check') do |value|
+    url = value
+  end
+
+  opts.on('-t', '--token', 'Health token to use, default `nil`') { |value| token = value }
+  opts.on('-i', '--interval', 'Seconds between checks') { |value| interval = value.to_i }
+end.parse!
+
+puts "Checking #{url} every #{interval}"
+
+begin
+  loop do
+    previous_interval = interval
+    interval = perform_request(url, token, interval)
+
+    puts "\nInterval changed: #{interval}" if previous_interval != interval
+
+    sleep interval
+  end
+rescue Interrupt
+  puts "\nEnding NFS-check"
+end

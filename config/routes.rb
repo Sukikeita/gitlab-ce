@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   scope path: '-' do
     get 'liveness' => 'health#liveness'
     get 'readiness' => 'health#readiness'
+    post 'nfs_check' => 'health#nfs_check'
     resources :metrics, only: [:index]
     mount Peek::Railtie => '/peek'
 

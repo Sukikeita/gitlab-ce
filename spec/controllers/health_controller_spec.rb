@@ -14,6 +14,31 @@ describe HealthController do
     stub_env('IN_MEMORY_APPLICATION_SETTINGS', 'false')
   end
 
+  describe '#nfs_check' do
+    before do
+      allow(Gitlab::RequestContext).to receive(:client_ip).and_return(whitelisted_ip)
+
+      # Stub out all calls, because the threads started confuse rspec.
+      allow(Gitlab::Git::Storage::Checker).to receive(:check_all)
+    end
+
+    subject { post :nfs_check }
+
+    it 'checks all the configured storages' do
+      expect(Gitlab::Git::Storage::Checker).to receive(:check_all)
+
+      subject
+    end
+
+    it 'returns the check interval' do
+      stub_application_setting(circuitbreaker_check_interval: 10)
+
+      subject
+
+      expect(json_response['check_interval']).to eq(10)
+    end
+  end
+
   describe '#readiness' do
     shared_context 'endpoint responding with readiness data' do
       let(:request_params) { {} }
