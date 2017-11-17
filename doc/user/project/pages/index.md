@@ -1,18 +1,18 @@
 # GitLab Pages
 
-With GitLab Pages you can have a website live at no cost.
+With GitLab Pages you can host your website at no cost.
 
 Your files live in a GitLab project's [repository](../repository/index.md),
-from which you can deploy [static websites](#explore-gitlab-pages)
-to the GitLab Pages server. GitLab Pages supports all static site generators (SSGs).
+from which you can deploy [static websites](#explore-gitlab-pages).
+GitLab Pages supports all static site generators (SSGs).
 
 ## Getting Started
 
 _Minimum requirements to have your website live:_
 
-1. An account on GitLab
-1. A project with your website files
-1. Enabled GitLab Runners to deploy your website with GitLab CI/CD
+- An account on GitLab
+- A project with your website files
+- Enabled GitLab Runners to deploy your website with GitLab CI/CD
 
 _Minimum steps:_
 
@@ -26,7 +26,7 @@ The steps above shouldn't take more than 5 minutes to complete.
 _Further steps (optional):_
 
 - 5. Remove the [fork relationship](getting_started_part_two.md#fork-a-project-to-get-started-from) (_You don't need the relationship unless you intent to contribute back to the example project you forked from._)
-- 6. Make it a [user/group website](getting_started_part_one.md#gitlab-pages-domain)
+- 6. Make it a [user/group website](getting_started_part_one.md#user-and-group-websites)
 
 **Watch the video with the steps 1-6: https://www.youtube.com/watch?v=TWqh9MtT4Bg**
 
@@ -82,5 +82,5 @@ the [admin guide](../../../administration/pages/index.md).
 ## More information about GitLab Pages
 
 - For an overview, visit the [feature webpage](https://about.gitlab.com/features/pages/)
-- Announcement: ["We're bringing GitLab Pages to CE"](https://about.gitlab.com/2016/12/24/were-bringing-gitlab-pages-to-community-edition/)
-- Announcement: ["We are changing the IP of GitLab Pages on GitLab.com"](https://about.gitlab.com/2017/03/06/we-are-changing-the-ip-of-gitlab-pages-on-gitlab-com/)
+- Announcement (2016-12-24): ["We're bringing GitLab Pages to CE"](https://about.gitlab.com/2016/12/24/were-bringing-gitlab-pages-to-community-edition/)
+- Announcement (2017-03-06): ["We are changing the IP of GitLab Pages on GitLab.com"](https://about.gitlab.com/2017/03/06/we-are-changing-the-ip-of-gitlab-pages-on-gitlab-com/)
