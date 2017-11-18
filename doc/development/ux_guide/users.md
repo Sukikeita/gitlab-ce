@@ -2,6 +2,10 @@
 
 * [Nazim Ramesh](#nazim-ramesh)
     - Small to medium size organisations using GitLab CE
+* [Matthieu Poirier](#matthieu-poirier)
+    - Responsible for managing and maintaining GitLab installation
+    - Any size organisation
+    - Using CE or EE
 * [James Mackey](#james-mackey)
     - Medium to large size organisations using CE or EE
     - Small organisations using EE
@@ -72,6 +76,77 @@ GitLab’s interface initially attracted Nazim when he was comparing version con
 * To convince his colleagues to fully adopt GitLab CE, thus improving workflow and collaboration.
 * To use a feature rich version control platform that covers all stages of the development lifecycle, in order to reduce dependencies on other tools.
 * To use an intuitive and stable product, so he can spend more time on his core job responsibilities and less time bug-fixing, guiding colleagues, etc.
+
+---
+## Matthieu Poirier
+- Responsible for managing and maintaining GitLab installation
+- Any size organisation
+- Using CE or EE
+
+<img src="img/nazim-ramesh.png" width="300px">
+
+### Demographics
+
+- **Age**<br>42 years old
+- **Location**<br>France
+- **Education**<br>Masters Degree in Computer Science
+- **Occupation**<br>DevOps Engineer
+- **Programming experience**<br>Over 10 years
+- **Frequently used programming languages**<br>JavaScript, SQL, PHP and Node.js
+- **Hobbies / interests**<br>Functional programming, data analysis, building apps and tools.
+
+### Motivations
+Matthieu works in DevOps for a web services company which currently hires 90 staff. When Matthieu first joined the company, he was responsible for managing a custom built in-house bug tracking tool and release management system. Over time, as the company grew, his colleagues requested more features and tools to help them in their day-to-day work. To meet their needs, Matthieu was forced to “hack together” a solution. In his own words, Matthieu explains that it became:
+
+>
+"...a huge pain managing access to all the individual pieces. In addition, they didn’t have any integration with each other, nobody ended up using them and we couldn’t do any workflows with merge requests and the like. I was sick of managing all those separate parts and wanted to move to a single platform that would handle it all."
+>
+
+He further explains that he wanted to introduce “better, easier, more formal code reviews” and to start using continuous integration and deployment.
+
+Matthieu set out trying to find a platform which would consolidate the company’s existing tool set and centralise code, documentation and issues. He discovered GitHub, but price was an issue:
+
+>
+“We needed to host our code on-site and wanted GitHub Enterprise functionality without the GitHub Enterprise costs.”
+>
+
+Not only was GitLab cheaper than GitHub, it was also more cost-effective than maintaining multiple tools. Subsequently, Matthieu found it easy to sell the merits of GitLab to his manager.
+
+Matthieu describes GitLab as:
+
+>
+“the only tool that offers the real feeling of having everything you need in one place.”
+>
+
+He credits himself as being entirely responsible for moving his company to GitLab. 
+
+### Frustrations
+#### Updating to the latest release
+As Matthieu introduced his company to GitLab, he is responsible for maintaining and managing the company’s installation in addition to his day job. He feels updates are too frequent and he doesn’t always have sufficient time to update GitLab. Subsequently, he’s not up to date with releases. 
+
+Matthieu tried to set up automatic updates, however, as he isn’t a Systems Administrator, he wasn’t confident in his set-up. He feels he should be able to “upgrade without users even noticing” but hasn’t figured out how to do this yet. Matthieu would like the “update process to be triggered from the Admin Panel, perhaps accompanied with a changelog and the option to skip updates.”
+
+Matthieu is looking for confirmation that his update procedure is “secure and efficient” so more tutorials related to this topic would be useful to him.
+
+#### Configuration
+Matthieu dislikes using the combination of gitlab.rb and the UI for changing settings. He explains that it “would be nice to be able to configure more from the Admin UI rather than just the config files."
+
+#### Creating a backup
+Matthieu explains that the “backup solution is not well integrated into the UI”, for example, he “cannot see if backups succeeded” or whether they have been rolled back to via the UI.
+
+#### Onboarding
+It’s Matthieu’s responsibility to get teams across his organisation up and running with GitLab. He explains that whilst many teams might be leveraging GitLab, they are:
+
+>
+“..not aware of GitLab’s powerful CI or our omnibus install of Mattermost...It would be nice to have a tutorial type walkthrough available when a new user logs in on how to get started with all these features. AutoDevOps may solve some of this, but GitLab has many powerful features wrapped up into it and some [teams] may just think that it is only a Git repo similar to GitHub.”
+>
+
+He states that there has been: “a sluggishness of others to adapt” and it’s “a low-effort adaptation at that.”
+
+### Goals
+* To save time. One of the reasons Matthieu moved his company to GitLab was to reduce the effort it took him to manage and configure multiple tools, thus saving him time. He has to balance his day job in addition to managing the company’s GitLab installation and onboarding new teams to GitLab. 
+* To use a platform which is easy to manage. Matthieu isn’t a Systems Administrator and when updating GitLab, creating backups, etc he would prefer to work within GitLab’s UI. Explanations / guided instructions when configuring settings in GitLab’s interface would really help Matthieu. He needs reassurance that what he is about to change is 1) the right setting and 2) will provide him with the desired result he wants.
+* To educate his colleagues about GitLab. Matthieu’s colleagues won’t adopt GitLab as they’re unaware of it’s capabilities and the positive impact it could have on their work. Matthieu needs support in getting this message across to them.
 
 ---
 
