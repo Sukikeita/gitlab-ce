@@ -12,23 +12,22 @@ _Minimum requirements to have your website live:_
 
 - An account on GitLab
 - A project with your website files
-- Enabled GitLab Runners to deploy your website with GitLab CI/CD
+- GitLab CI/CD configured to deploy your site
 
 _Minimum steps:_
 
 - 1. [Fork](../../../gitlab-basics/fork-project.md#how-to-fork-a-project) an [example project](https://gitlab.com/pages)
-- 2. Enable [Shared Runners](../../../ci/quick_start/README.md#shared-runners) (_Navigate to your project_ **settings** > **CI/CD** > _expand_ **Runners settings** > _click_ **Enable shared runners**)
-- 3. Change a file
-- 4. Visit your project's **settings > Pages** to see your **website link**, and click on it. Bam! Your website is live.
+- 2. Change a file to trigger a GitLab CI/CD pipeline
+- 3. Visit your project's **settings > Pages** to see your **website link**, and click on it. Bam! Your website is live.
 
 The steps above shouldn't take more than 5 minutes to complete.
 
 _Further steps (optional):_
 
-- 5. Remove the [fork relationship](getting_started_part_two.md#fork-a-project-to-get-started-from) (_You don't need the relationship unless you intent to contribute back to the example project you forked from._)
-- 6. Make it a [user/group website](getting_started_part_one.md#user-and-group-websites)
+- 4. Remove the [fork relationship](getting_started_part_two.md#fork-a-project-to-get-started-from) (_You don't need the relationship unless you intent to contribute back to the example project you forked from_).
+- 5. Make it a [user/group website](getting_started_part_one.md#user-and-group-websites)
 
-**Watch the video with the steps 1-6: https://www.youtube.com/watch?v=TWqh9MtT4Bg**
+**Watch a video with the steps above: https://www.youtube.com/watch?v=TWqh9MtT4Bg**
 
 _Advanced options:_
 
