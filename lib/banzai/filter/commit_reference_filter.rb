@@ -23,9 +23,9 @@ module Banzai
       end
 
       def url_for_object(commit, project)
+        binding.pry
         h = Gitlab::Routing.url_helpers
-        h.project_commit_url(project, commit,
-                                        only_path: context[:only_path])
+        h.project_commit_url(project, commit, only_path: context[:only_path])
       end
 
       def object_link_text_extras(object, matches)

@@ -359,6 +359,18 @@ class Note < ActiveRecord::Base
     Gitlab::EtagCaching::Store.new.touch(key)
   end
 
+  def banzai_render_context(field)
+    return unless noteable_type == 'MergeRequest' && commit_id.present?
+    merge_request = noteable
+
+    # this will be used to reference these commit in the context of the MR
+    # the URL are built differently
+    {
+      merge_request_id: merge_request.id,
+      mr_commit_shas: merge_request.all_commit_shas
+    }
+  end
+
   private
 
   def keep_around_commit
