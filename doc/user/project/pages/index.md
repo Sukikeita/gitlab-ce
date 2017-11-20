@@ -18,7 +18,7 @@ _Minimum steps:_
 
 - 1. [Fork](../../../gitlab-basics/fork-project.md#how-to-fork-a-project) an [example project](https://gitlab.com/pages)
 - 2. Change a file to trigger a GitLab CI/CD pipeline
-- 3. Visit your project's **settings > Pages** to see your **website link**, and click on it. Bam! Your website is live.
+- 3. Visit your project's **Settings > Pages** to see your **website link**, and click on it. Bam! Your website is live.
 
 The steps above shouldn't take more than 5 minutes to complete.
 
