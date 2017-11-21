@@ -20,10 +20,6 @@ window._ = _;
 window.Dropzone = Dropzone;
 window.Sortable = Sortable;
 
-// templates
-import './templates/issuable_template_selector';
-import './templates/issuable_template_selectors';
-
 import './commit/image_file';
 
 // lib/utils
