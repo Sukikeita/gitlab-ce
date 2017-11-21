@@ -35,19 +35,21 @@
   }
 }
 
-.repository-view {
-  border: 1px solid $border-color;
-  border-radius: $border-radius-default;
+.ide-view {  
+  display: flex;
+  height: calc(100vh - #{$header-height});
+  margin-top: $header-height;
   color: $almost-black;
 
   .code.white pre .hll {
     background-color: $well-light-border !important;
   }
 
-  .tree-content-holder {
+  .ide-content-holder {
     display: -webkit-flex;
     display: flex;
-    min-height: 300px;
+    flex: 1;
+    height: 100vh;
   }
 
   .tree-content-holder-mini {
