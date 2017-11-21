@@ -809,42 +809,13 @@ module Gitlab
       end
 
       def cherry_pick(user:, commit:, branch_name:, message:, start_branch_name:, start_repository:)
-        OperationService.new(user, self).with_branch(
-          branch_name,
-          start_branch_name: start_branch_name,
-          start_repository: start_repository
-        ) do |start_commit|
-
-          Gitlab::Git.check_namespace!(commit, start_repository)
-
-          cherry_pick_tree_id = check_cherry_pick_content(commit, start_commit.sha)
-          raise CreateTreeError unless cherry_pick_tree_id
-
-          committer = user_to_committer(user)
-
-          create_commit(message: message,
-                        author: {
-                            email: commit.author_email,
-                            name: commit.author_name,
-                            time: commit.authored_date
-                        },
-                        committer: committer,
-                        tree: cherry_pick_tree_id,
-                        parents: [start_commit.sha])
+        gitaly_migrate(:cherry_pick) do |is_enabled|
+          if is_enabled
+            gitaly_operations_client.user_cherry_pick(user, commit, branch_name, message, start_branch_name, start_repository)
+          else
+            rugged_cherry_pick(user, commit, branch_name, message, start_branch_name, start_repository)
+          end
         end
-      end
-
-      def check_cherry_pick_content(target_commit, source_sha)
-        args = [target_commit.sha, source_sha]
-        args << 1 if target_commit.merge_commit?
-
-        cherry_pick_index = rugged.cherrypick_commit(*args)
-        return false if cherry_pick_index.conflicts?
-
-        tree_id = cherry_pick_index.write_tree(rugged)
-        return false unless diff_exists?(source_sha, tree_id)
-
-        tree_id
       end
 
       def diff_exists?(sha1, sha2)
@@ -1668,6 +1639,45 @@ module Gitlab
         end
       rescue Rugged::ReferenceError
         raise ArgumentError, 'Invalid merge source'
+      end
+
+      def rugged_cherry_pick(user, commit, branch_name, message, start_branch_name, start_repository)
+        OperationService.new(user, self).with_branch(
+          branch_name,
+          start_branch_name: start_branch_name,
+          start_repository: start_repository
+        ) do |start_commit|
+
+          Gitlab::Git.check_namespace!(commit, start_repository)
+
+          cherry_pick_tree_id = check_cherry_pick_content(commit, start_commit.sha)
+          raise CreateTreeError unless cherry_pick_tree_id
+
+          committer = user_to_committer(user)
+
+          create_commit(message: message,
+                        author: {
+                            email: commit.author_email,
+                            name: commit.author_name,
+                            time: commit.authored_date
+                        },
+                        committer: committer,
+                        tree: cherry_pick_tree_id,
+                        parents: [start_commit.sha])
+        end
+      end
+
+      def check_cherry_pick_content(target_commit, source_sha)
+        args = [target_commit.sha, source_sha]
+        args << 1 if target_commit.merge_commit?
+
+        cherry_pick_index = rugged.cherrypick_commit(*args)
+        return false if cherry_pick_index.conflicts?
+
+        tree_id = cherry_pick_index.write_tree(rugged)
+        return false unless diff_exists?(source_sha, tree_id)
+
+        tree_id
       end
     end
   end
