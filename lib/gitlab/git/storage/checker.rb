@@ -4,20 +4,21 @@ module Gitlab
       class Checker
         include CircuitBreakerSettings
 
-        attr_reader :storage_path, :storage, :hostname
+        attr_reader :storage_path, :storage, :hostname, :logger
 
-        def self.check_all
+        def self.check_all(logger = Rails.logger)
           threads = []
 
           Gitlab.config.repositories.storages.keys.each do |storage_name|
-            threads << Thread.new { new(storage_name).check_with_lease }
+            threads << Thread.new { new(storage_name, logger).check_with_lease }
           end
         end
 
-        def initialize(storage)
+        def initialize(storage, logger = Rails.logger)
           @storage = storage
           config = Gitlab.config.repositories.storages[@storage]
           @storage_path = config['path']
+          @logger = logger
 
           @hostname = Gitlab::Environment.hostname
         end
@@ -29,15 +30,17 @@ module Gitlab
             check
 
             Gitlab::ExclusiveLease.cancel(lease_key, uuid)
+          else
+            logger.warn("#{hostname}: #{storage}: Skipping check, previous check still running")
           end
         end
 
         def check
-          if Gitlab::Git::Storage::ForkedStorageCheck
-               .storage_available?(storage_path, storage_timeout, access_retries)
+          if Gitlab::Git::Storage::ForkedStorageCheck.storage_available?(storage_path, storage_timeout, access_retries)
             track_storage_accessible
           else
             track_storage_inaccessible
+            logger.error("#{hostname}: #{storage}: Not accessible.")
           end
         end
 

@@ -23,13 +23,14 @@ describe Gitlab::Git::Storage::Checker do
     it 'calls a check for each storage' do
       fake_checker_default = double
       fake_checker_broken = double
+      fake_logger = fake_logger
 
-      expect(described_class).to receive(:new).with('default') { fake_checker_default }
-      expect(described_class).to receive(:new).with('broken') { fake_checker_broken }
+      expect(described_class).to receive(:new).with('default', fake_logger) { fake_checker_default }
+      expect(described_class).to receive(:new).with('broken', fake_logger) { fake_checker_broken }
       expect(fake_checker_default).to receive(:check_with_lease)
       expect(fake_checker_broken).to receive(:check_with_lease)
 
-      described_class.check_all
+      described_class.check_all(fake_logger)
     end
   end
 
