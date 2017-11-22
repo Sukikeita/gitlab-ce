@@ -133,6 +133,9 @@ export default {
     hasUpdated() {
       return !!this.state.updatedAt;
     },
+    updateUrl() {
+      return `${this.endpoint}.json`;
+    },
   },
   components: {
     descriptionComponent,
@@ -256,6 +259,8 @@ export default {
         :description-text="state.descriptionText"
         :updated-at="state.updatedAt"
         :task-status="state.taskStatus"
+        :issuable-type="issuableType"
+        :update-url="updateUrl"
       />
       <edited-component
         v-if="hasUpdated"
