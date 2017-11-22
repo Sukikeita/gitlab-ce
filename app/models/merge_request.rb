@@ -864,16 +864,16 @@ class MergeRequest < ActiveRecord::Base
   # Note that this could also return SHA from now dangling commits
   #
   def all_commit_shas
-    if persisted?
-      column_shas = MergeRequestDiffCommit.where(merge_request_diff: merge_request_diffs).limit(10_000).pluck('sha')
-      serialised_shas = merge_request_diffs.where.not(st_commits: nil).flat_map(&:commit_shas)
+    @all_commit_shas ||= if persisted?
+                           column_shas = MergeRequestDiffCommit.where(merge_request_diff: merge_request_diffs).limit(10_000).pluck('sha')
+                           serialised_shas = merge_request_diffs.where.not(st_commits: nil).flat_map(&:commit_shas)
 
-      (column_shas + serialised_shas).uniq
-    elsif compare_commits
-      compare_commits.to_a.reverse.map(&:id)
-    else
-      [diff_head_sha]
-    end
+                           (column_shas + serialised_shas).uniq
+                         elsif compare_commits
+                           compare_commits.to_a.reverse.map(&:id)
+                         else
+                           [diff_head_sha]
+                         end
   end
 
   def merge_commit
