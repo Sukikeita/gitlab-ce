@@ -84,7 +84,7 @@ module API
       expose :id, :description, :default_branch
       # Avoids an N+1 query: https://github.com/mbleigh/acts-as-taggable-on/issues/91#issuecomment-168273770
       expose :tag_list do |project|
-        project.tags.map { |tag| tag.name }.sort
+        project.tags.order(:name).pluck(:name)
       end
       expose :ssh_url_to_repo, :http_url_to_repo, :web_url
       expose :name, :name_with_namespace
