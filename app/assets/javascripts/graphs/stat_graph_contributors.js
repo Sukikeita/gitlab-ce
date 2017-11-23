@@ -1,7 +1,7 @@
 /* eslint-disable func-names, space-before-function-paren, wrap-iife, no-var, one-var, camelcase, one-var-declaration-per-line, quotes, no-param-reassign, quote-props, comma-dangle, prefer-template, max-len, no-return-assign, no-shadow */
 
 import _ from 'underscore';
-import d3 from 'd3';
+import { timeFormat as d3TimeFormat } from 'd3';
 import { ContributorsGraph, ContributorsAuthorGraph, ContributorsMasterGraph } from './stat_graph_contributors_graph';
 import ContributorsStatGraphUtil from './stat_graph_contributors_util';
 import { n__ } from '../locale';
@@ -97,7 +97,7 @@ export default (function() {
   ContributorsStatGraph.prototype.change_date_header = function() {
     var print, print_date_format, x_domain;
     x_domain = ContributorsGraph.prototype.x_domain;
-    print_date_format = d3.time.format("%B %e %Y");
+    print_date_format = d3TimeFormat("%B %e %Y");
     print = print_date_format(x_domain[0]) + " - " + print_date_format(x_domain[1]);
     return $("#date_header").text(print);
   };
