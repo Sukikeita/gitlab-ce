@@ -52,15 +52,6 @@ module Gitlab
           failure_count > failure_count_threshold
         end
 
-        def backing_off?
-          return false if no_failures?
-
-          recent_failure = last_failure > failure_wait_time.seconds.ago
-          too_many_failures = failure_count > backoff_threshold
-
-          recent_failure && too_many_failures
-        end
-
         private
 
         # The circuitbreaker can be enabled for the entire fleet using a Feature
@@ -79,10 +70,6 @@ module Gitlab
         def check_storage_accessible!
           if circuit_broken?
             raise Gitlab::Git::Storage::CircuitOpen.new("Circuit for #{storage} is broken", failure_reset_time)
-          end
-
-          if backing_off?
-            raise Gitlab::Git::Storage::Failing.new("Backing off access to #{storage}", failure_wait_time)
           end
         end
       end

@@ -54,11 +54,10 @@ describe Gitlab::Git::Storage::CircuitBreaker, :broken_storage do
   context 'circuitbreaker settings' do
     before do
       stub_application_setting(circuitbreaker_failure_count_threshold: 0,
-                               circuitbreaker_failure_wait_time: 1,
+                               circuitbreaker_check_interval: 1,
                                circuitbreaker_failure_reset_time: 2,
                                circuitbreaker_storage_timeout: 3,
-                               circuitbreaker_access_retries: 4,
-                               circuitbreaker_backoff_threshold: 5)
+                               circuitbreaker_access_retries: 4)
     end
 
     describe '#failure_count_threshold' do
@@ -67,9 +66,9 @@ describe Gitlab::Git::Storage::CircuitBreaker, :broken_storage do
       end
     end
 
-    describe '#failure_wait_time' do
+    describe '#check_interval' do
       it 'reads the value from settings' do
-        expect(circuit_breaker.failure_wait_time).to eq(1)
+        expect(circuit_breaker.check_interval).to eq(1)
       end
     end
 
@@ -90,12 +89,6 @@ describe Gitlab::Git::Storage::CircuitBreaker, :broken_storage do
         expect(circuit_breaker.access_retries).to eq(4)
       end
     end
-
-    describe '#backoff_threshold' do
-      it 'reads the value from settings' do
-        expect(circuit_breaker.backoff_threshold).to eq(5)
-      end
-    end
   end
 
   describe '#perform' do
@@ -107,19 +100,6 @@ describe Gitlab::Git::Storage::CircuitBreaker, :broken_storage do
         .to raise_error do |exception|
         expect(exception).to be_kind_of(Gitlab::Git::Storage::CircuitOpen)
         expect(exception.retry_after).to eq(1800)
-      end
-    end
-
-    it 'raises the correct exception when backing off' do
-      Timecop.freeze do
-        set_in_redis(:last_failure, 1.second.ago.to_f)
-        set_in_redis(:failure_count, 90)
-
-        expect { |b| circuit_breaker.perform(&b) }
-          .to raise_error do |exception|
-          expect(exception).to be_kind_of(Gitlab::Git::Storage::Failing)
-          expect(exception.retry_after).to eq(30)
-        end
       end
     end
 
@@ -183,32 +163,6 @@ describe Gitlab::Git::Storage::CircuitBreaker, :broken_storage do
       set_in_redis(:failure_count, 200)
 
       expect(circuit_breaker.circuit_broken?).to be_truthy
-    end
-  end
-
-  describe '#backing_off?' do
-    it 'is true when there was a recent failure' do
-      Timecop.freeze do
-        set_in_redis(:last_failure, 1.second.ago.to_f)
-        set_in_redis(:failure_count, 90)
-
-        expect(circuit_breaker.backing_off?).to be_truthy
-      end
-    end
-
-    context 'the `failure_wait_time` is set to 0' do
-      before do
-        stub_application_setting(circuitbreaker_failure_wait_time: 0)
-      end
-
-      it 'is working even when there are failures' do
-        Timecop.freeze do
-          set_in_redis(:last_failure, 0.seconds.ago.to_f)
-          set_in_redis(:failure_count, 90)
-
-          expect(circuit_breaker.backing_off?).to be_falsey
-        end
-      end
     end
   end
 
