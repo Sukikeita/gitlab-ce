@@ -3,7 +3,7 @@ import {
   select as d3Select,
   scaleLinear as d3ScaleLinear,
   scaleThreshold as d3ScaleThreshold,
-} from 'd3';
+} from '../common_d3/index';
 
 const LOADING_HTML = `
   <div class="text-center">

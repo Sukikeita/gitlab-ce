@@ -1,7 +1,7 @@
 /* eslint-disable func-names, space-before-function-paren, wrap-iife, no-var, one-var, camelcase, one-var-declaration-per-line, quotes, no-param-reassign, quote-props, comma-dangle, prefer-template, max-len, no-return-assign, no-shadow */
 
 import _ from 'underscore';
-import { timeFormat as d3TimeFormat } from 'd3';
+import { timeFormat as d3TimeFormat } from '../common_d3/index';
 import { ContributorsGraph, ContributorsAuthorGraph, ContributorsMasterGraph } from './stat_graph_contributors_graph';
 import ContributorsStatGraphUtil from './stat_graph_contributors_util';
 import { n__ } from '../locale';
