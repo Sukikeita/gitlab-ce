@@ -84,7 +84,11 @@ module API
       expose :id, :description, :default_branch
       # Avoids an N+1 query: https://github.com/mbleigh/acts-as-taggable-on/issues/91#issuecomment-168273770
       expose :tag_list do |project|
-        project.tags.order(:name).pluck(:name)
+      # project.tags.order(:name).pluck(:name) is the most suitable option
+      # to avoid loading all the ActiveRecord objects but, if we use it here
+      # it override the preloaded associations and makes a query.
+      # This problem is fixed in https://github.com/rails/rails/pull/25976
+        project.tags.map(&:name).sort
       end
       expose :ssh_url_to_repo, :http_url_to_repo, :web_url
       expose :name, :name_with_namespace
