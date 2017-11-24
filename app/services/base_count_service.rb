@@ -12,6 +12,10 @@ class BaseCountService
     Rails.cache.fetch(cache_key, raw: raw?) { uncached_count }.to_i
   end
 
+  def count_stored?
+    Rails.cache.read(cache_key).present?
+  end
+
   def refresh_cache(&block)
     Rails.cache.write(cache_key, block_given? ? yield : uncached_count, raw: raw?)
   end
