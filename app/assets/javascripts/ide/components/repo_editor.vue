@@ -41,6 +41,10 @@ export default {
               readOnly: false,
               contextmenu: true,
               scrollBeyondLastLine: false,
+              minimap: {
+                enabled: true,
+                renderCharacters: false,
+              },
             });
 
             this.languages = this.monaco.languages.getLanguages();
