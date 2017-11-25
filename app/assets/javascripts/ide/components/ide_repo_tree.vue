@@ -10,6 +10,12 @@ export default {
     'repo-file': RepoFile,
     'repo-loading-file': RepoLoadingFile,
   },
+  props: {
+    treeId: {
+      type: String,
+      required: true,
+    },
+  },
   computed: {
     ...mapState([
       'loading',
@@ -29,7 +35,8 @@ export default {
 </script>
 
 <template>
-<div id="sidebar" :class="{'sidebar-mini' : isCollapsed}">
+<div>
+<div id="sidebar">
   <table class="table">
     <thead>
       <tr>
@@ -54,21 +61,23 @@ export default {
         </template>
       </tr>
     </thead>
-    <tbody>
+    <tbody
+      v-if="treeId">
       <repo-previous-directory
-        v-if="!isRoot && treeList.length"
+        v-if="!isRoot && treeList(treeId).length"
       />
       <repo-loading-file
-        v-if="!treeList.length && loading"
+        v-if="(!treeId || !treeList(treeId).length) && loading"
         v-for="n in 5"
         :key="n"
       />
       <repo-file
-        v-for="(file, index) in treeList"
+        v-for="(file, index) in treeList(treeId)"
         :key="file.key"
         :file="file"
       />
     </tbody>
   </table>
+</div>
 </div>
 </template>
