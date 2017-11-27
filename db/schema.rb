@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171121144800) do
+ActiveRecord::Schema.define(version: 20171127151038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1038,6 +1038,16 @@ ActiveRecord::Schema.define(version: 20171121144800) do
   add_index "merge_request_metrics", ["first_deployed_to_production_at"], name: "index_merge_request_metrics_on_first_deployed_to_production_at", using: :btree
   add_index "merge_request_metrics", ["merge_request_id"], name: "index_merge_request_metrics", using: :btree
   add_index "merge_request_metrics", ["pipeline_id"], name: "index_merge_request_metrics_on_pipeline_id", using: :btree
+
+  create_table "merge_request_statistics", force: :cascade do |t|
+    t.integer "merge_request_id", null: false
+    t.integer "merged_by_id"
+    t.datetime "merged_at"
+    t.integer "closed_by_id"
+    t.datetime "closed_at"
+  end
+
+  add_index "merge_request_statistics", ["merge_request_id"], name: "index_merge_request_statistics_on_merge_request_id", unique: true, using: :btree
 
   create_table "merge_requests", force: :cascade do |t|
     t.string "target_branch", null: false
