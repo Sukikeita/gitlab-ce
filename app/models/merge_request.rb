@@ -19,6 +19,7 @@ class MergeRequest < ActiveRecord::Base
 
   has_one :merge_request_diff,
     -> { order('merge_request_diffs.id DESC') }, inverse_of: :merge_request
+  has_one :statistics, class_name: 'MergeRequestStatistics'
 
   belongs_to :latest_merge_request_diff, class_name: 'MergeRequestDiff'
   manual_inverse_association :latest_merge_request_diff, :merge_request
@@ -51,6 +52,7 @@ class MergeRequest < ActiveRecord::Base
   serialize :merge_params, Hash # rubocop:disable Cop/ActiveRecordSerialize
 
   after_create :ensure_merge_request_diff, unless: :importing?
+  after_create :ensure_merge_request_statistics
   after_update :reload_diff_if_branch_changed
   after_commit :update_project_counter_caches, on: :destroy
 
@@ -465,6 +467,10 @@ class MergeRequest < ActiveRecord::Base
 
   def ensure_merge_request_diff
     merge_request_diff || create_merge_request_diff
+  end
+
+  def ensure_merge_request_statistics
+    statistics || create_statistics
   end
 
   def create_merge_request_diff

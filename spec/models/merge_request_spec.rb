@@ -73,6 +73,24 @@ describe MergeRequest do
     it { is_expected.to respond_to(:merge_when_pipeline_succeeds) }
   end
 
+  describe 'callbacks' do
+    describe '#ensure_merge_request_statistics' do
+      it 'creates a merge request statistics record' do
+        merge_request = build(:merge_request)
+
+        expect { merge_request.save! }
+          .to change(MergeRequestStatistics, :count).from(0).to(1)
+        expect(merge_request.statistics).to be_a(MergeRequestStatistics)
+      end
+
+      it 'does not create a new merge request statistics record if it already exists' do
+        merge_request = create(:merge_request)
+
+        expect { merge_request.save! }.not_to change(MergeRequestStatistics, :count).from(1)
+      end
+    end
+  end
+
   describe '.in_projects' do
     it 'returns the merge requests for a set of projects' do
       expect(described_class.in_projects(Project.all)).to eq([subject])
