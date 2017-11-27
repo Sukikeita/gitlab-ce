@@ -48,6 +48,8 @@ module Gitlab
         def initialize(storage, hostname)
           @storage = storage
           @hostname = hostname
+          @histogram = Gitlab::Metrics.histogram(:git_storage_circuitbreaker_check,
+                                                 "Circuitbreaker check execution timing.")
 
           config = Gitlab.config.repositories.storages[@storage]
           @storage_path = config['path']
@@ -99,14 +101,26 @@ module Gitlab
         def storage_available?
           return @storage_available if @storage_available
 
-          if @storage_available = Gitlab::Git::Storage::ForkedStorageCheck
-                                    .storage_available?(storage_path, storage_timeout, access_retries)
+          if @storage_available = perform_access_check
             track_storage_accessible
           else
             track_storage_inaccessible
           end
 
           @storage_available
+        end
+
+        def perform_access_check
+          start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+          check_result = Gitlab::Git::Storage::ForkedStorageCheck
+                           .storage_available?(storage_path, storage_timeout, access_retries)
+
+          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          total_time = end_time - start_time
+          @histogram.observe({ storage_shard: storage, host: hostname }, total_time)
+
+          check_result
         end
 
         def check_storage_accessible!
