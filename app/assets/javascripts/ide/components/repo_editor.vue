@@ -42,8 +42,7 @@ export default {
               contextmenu: true,
               scrollBeyondLastLine: false,
               minimap: {
-                enabled: true,
-                renderCharacters: false,
+                enabled: false,
               },
             });
 

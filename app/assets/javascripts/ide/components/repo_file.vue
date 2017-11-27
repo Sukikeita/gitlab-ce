@@ -15,11 +15,12 @@
         type: Object,
         required: true,
       },
+      collapsed: {
+        type: Boolean,
+        default: true,
+      }
     },
     computed: {
-      ...mapGetters([
-        'isCollapsed',
-      ]),
       isSubmodule() {
         return this.file.type === 'submodule';
       },
@@ -29,6 +30,9 @@
           [this.file.icon]: !this.file.loading,
           'fa-folder-open': !this.file.loading && this.file.opened,
         };
+      },
+      fileUrl() {
+        return this.file.url;
       },
       levelIndentation() {
         return {
@@ -43,13 +47,8 @@
       },
     },
     methods: {
-      ...mapActions([
-        'clickedTreeRow',
-      ]),
       clickFile(row) {
-        console.log('Going for Click : ' + `/project${row.url.replace('/blob/', '/edit/')}` + '/',this.$router.push);
-        this.$store.dispatch('getFileData', row);
-        // this.$router.push(`/project${row.url.replace('/blob/', '/edit/')}`);
+        this.$router.push(`/project${row.url}`);
       }
     },
   };
@@ -89,8 +88,9 @@
       </template>
     </td>
 
-    <template v-if="!isCollapsed && !isSubmodule">
+    <template v-if="!collapsed && !isSubmodule">
       <td class="hidden-sm hidden-xs">
+        {{ collapsed }}
         <a
           v-if="file.lastCommit.message"
           @click.stop
