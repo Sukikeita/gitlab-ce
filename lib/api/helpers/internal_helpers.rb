@@ -102,8 +102,9 @@ module API
 
       # Return the Gitaly Address if it is enabled
       def gitaly_payload(action)
-        feature = SSH_GITALY_FEATURES[action]
-        return unless feature && Gitlab::GitalyClient.feature_enabled?(feature)
+        return unless SSH_GITALY_FEATURES[action]
+        return unless Gitlab::GitalyClient.feature_enabled?(:ssh_upload_pack, status: Gitlab::GitalyClient::MigrationStatus::OPT_OUT)
+        return unless Gitlab::GitalyClient.feature_enabled?(:ssh_receive_pack)
 
         {
           repository: repository.gitaly_repository,
