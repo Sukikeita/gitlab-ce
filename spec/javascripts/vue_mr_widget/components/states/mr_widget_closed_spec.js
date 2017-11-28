@@ -4,13 +4,17 @@ import closedComponent from '~/vue_merge_request_widget/components/states/mr_wid
 const mr = {
   targetBranch: 'good-branch',
   targetBranchPath: '/good-branch',
-  closedEvent: {
-    author: {
+
+  statistics: {
+    mergedBy: {},
+    mergedAt: 'mergedUpdatedAt',
+    readableMergedAt: '',
+    closedBy: {,
       name: 'Fatih Acet',
       username: 'fatihacet',
     },
-    updatedAt: 'closedEventUpdatedAt',
-    formattedUpdatedAt: '',
+    closedAt: 'closedEventUpdatedAt',
+    readableClosedAt: '',
   },
   updatedAt: 'mrUpdatedAt',
   closedAt: '1 day ago',
