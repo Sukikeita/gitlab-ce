@@ -5,6 +5,7 @@ module MergeRequests
 
       if merge_request.reopen
         event_service.reopen_mr(merge_request, current_user)
+        update_statistics(merge_request)
         create_note(merge_request, 'reopened')
         notification_service.reopen_mr(merge_request, current_user)
         execute_hooks(merge_request, 'reopen')
@@ -15,6 +16,12 @@ module MergeRequests
       end
 
       merge_request
+    end
+
+    private
+
+    def update_statistics(merge_request)
+      merge_request.statistics.update!(closed_by_id: nil, closed_at: nil)
     end
   end
 end

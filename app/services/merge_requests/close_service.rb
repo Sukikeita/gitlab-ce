@@ -8,7 +8,8 @@ module MergeRequests
       merge_request.allow_broken = true
 
       if merge_request.close
-        event_service.close_mr(merge_request, current_user)
+        close_event = event_service.close_mr(merge_request, current_user)
+        update_statistics(merge_request, close_event)
         create_note(merge_request)
         notification_service.close_mr(merge_request, current_user)
         todo_service.close_merge_request(merge_request, current_user)
@@ -18,6 +19,13 @@ module MergeRequests
       end
 
       merge_request
+    end
+
+    private
+
+    def update_statistics(merge_request, close_event)
+      merge_request.statistics.update!(closed_by_id: close_event.author_id,
+                                       closed_at: close_event.created_at)
     end
   end
 end

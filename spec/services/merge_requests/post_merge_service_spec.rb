@@ -22,5 +22,15 @@ describe MergeRequests::PostMergeService do
       expect { service.execute(merge_request) }
         .to change { project.open_merge_requests_count }.from(1).to(0)
     end
+
+    it 'updates statistics' do
+      service = described_class.new(project, user, {})
+      service.execute(merge_request)
+
+      statistics = merge_request.statistics
+
+      expect(statistics.merged_by).to eq(user)
+      expect(statistics.merged_at).to be_present
+    end
   end
 end

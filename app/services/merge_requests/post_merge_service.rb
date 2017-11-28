@@ -9,7 +9,8 @@ module MergeRequests
       close_issues(merge_request)
       todo_service.merge_merge_request(merge_request, current_user)
       merge_request.mark_as_merged
-      create_merge_event(merge_request, current_user)
+      merge_event = create_merge_event(merge_request, current_user)
+      update_statistics(merge_request, merge_event)
       create_note(merge_request)
       notification_service.merge_mr(merge_request, current_user)
       execute_hooks(merge_request, 'merge')
@@ -33,6 +34,11 @@ module MergeRequests
 
     def create_merge_event(merge_request, current_user)
       EventCreateService.new.merge_mr(merge_request, current_user)
+    end
+
+    def update_statistics(merge_request, merge_event)
+      merge_request.statistics.update!(merged_by_id: merge_event.author_id,
+                                       merged_at: merge_event.created_at)
     end
   end
 end

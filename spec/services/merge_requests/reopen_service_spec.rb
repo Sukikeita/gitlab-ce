@@ -47,6 +47,16 @@ describe MergeRequests::ReopenService do
       end
     end
 
+    it 'updates statistics' do
+      statistics = merge_request.statistics
+      statistics.update!(closed_at: Time.now, closed_by: user)
+
+      described_class.new(project, user, {}).execute(merge_request)
+
+      expect(statistics.closed_by).to be_nil
+      expect(statistics.closed_at).to be_nil
+    end
+
     it 'refreshes the number of open merge requests for a valid MR' do
       service = described_class.new(project, user, {})
 

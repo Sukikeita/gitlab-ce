@@ -50,6 +50,13 @@ describe MergeRequests::CloseService do
       it 'marks todos as done' do
         expect(todo.reload).to be_done
       end
+
+      it 'updates statistics' do
+        statistics = merge_request.statistics
+
+        expect(statistics.closed_by).to eq(user)
+        expect(statistics.closed_at).to be_present
+      end
     end
 
     it 'refreshes the number of open merge requests for a valid MR', :use_clean_rails_memory_store_caching do
