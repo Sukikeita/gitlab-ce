@@ -548,14 +548,6 @@ class MergeRequest < ActiveRecord::Base
     end
   end
 
-  def merge_event
-    @merge_event ||= target_project.events.where(target_id: self.id, target_type: "MergeRequest", action: Event::MERGED).last
-  end
-
-  def closed_event
-    @closed_event ||= target_project.events.where(target_id: self.id, target_type: "MergeRequest", action: Event::CLOSED).last
-  end
-
   def work_in_progress?
     self.class.work_in_progress?(title)
   end

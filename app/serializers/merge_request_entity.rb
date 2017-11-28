@@ -20,9 +20,7 @@ class MergeRequestEntity < IssuableEntity
     merge_request.project.merge_requests_ff_only_enabled
   end
 
-  # Events
-  expose :merge_event, using: EventEntity
-  expose :closed_event, using: EventEntity
+  expose :statistics, using: MergeRequestStatisticsEntity
 
   # User entities
   expose :merge_user, using: UserEntity

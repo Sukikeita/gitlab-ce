@@ -37,9 +37,8 @@ export default class MergeRequestStore {
     }
 
     this.updatedAt = data.updated_at;
-    this.mergedEvent = MergeRequestStore.getEventObject(data.merge_event);
-    this.closedEvent = MergeRequestStore.getEventObject(data.closed_event);
-    this.setToMWPSBy = MergeRequestStore.getAuthorObject({ author: data.merge_user || {} });
+    this.statistics = MergeRequestStore.buildStatistics(data.statistics);
+    this.setToMWPSBy = MergeRequestStore.formatUserObject(data.merge_user || {});
     this.mergeUserId = data.merge_user_id;
     this.currentUserId = gon.current_user_id;
     this.sourceBranchPath = data.source_branch_path;
@@ -119,43 +118,38 @@ export default class MergeRequestStore {
     }
   }
 
-  static getEventObject(event) {
+  static buildStatistics(statistics) {
     return {
-      author: MergeRequestStore.getAuthorObject(event),
-      updatedAt: gl.utils.formatDate(MergeRequestStore.getEventUpdatedAtDate(event)),
-      formattedUpdatedAt: MergeRequestStore.getEventDate(event),
+      mergedBy: MergeRequestStore.formatUserObject(statistics.merged_by),
+      closedBy: MergeRequestStore.formatUserObject(statistics.closed_by),
+      mergedAt: gl.utils.formatDate(statistics.merged_at),
+      closedAt: gl.utils.formatDate(statistics.closed_at),
+      readableMergedAt: MergeRequestStore.getReadableDate(statistics.merged_at),
+      readableClosedAt: MergeRequestStore.getReadableDate(statistics.closed_at),
     };
   }
 
-  static getAuthorObject(event) {
-    if (!event) {
+  static formatUserObject(user) {
+    if (!user) {
       return {};
     }
 
     return {
-      name: event.author.name || '',
-      username: event.author.username || '',
-      webUrl: event.author.web_url || '',
-      avatarUrl: event.author.avatar_url || '',
+      name: user.name || '',
+      username: user.username || '',
+      webUrl: user.web_url || '',
+      avatarUrl: user.avatar_url || '',
     };
   }
 
-  static getEventUpdatedAtDate(event) {
-    if (!event) {
+  static getReadableDate(date) {
+    if (!date) {
       return '';
     }
 
-    return event.updated_at;
-  }
-
-  static getEventDate(event) {
     const timeagoInstance = new Timeago();
 
-    if (!event) {
-      return '';
-    }
-
-    return timeagoInstance.format(MergeRequestStore.getEventUpdatedAtDate(event));
+    return timeagoInstance.format(date);
   }
 
 }
