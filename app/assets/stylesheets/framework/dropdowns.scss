@@ -608,7 +608,7 @@
 }
 
 .dropdown-content {
-  max-height: 215px;
+  max-height: $dropdown-max-height;
   overflow-y: auto;
 }
 
