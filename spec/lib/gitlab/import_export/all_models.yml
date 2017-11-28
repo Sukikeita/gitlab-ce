@@ -85,6 +85,7 @@ merge_requests:
 - merge_request_diff
 - events
 - merge_requests_closing_issues
+- statistics
 - metrics
 - timelogs
 - head_pipeline
