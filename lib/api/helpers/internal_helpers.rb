@@ -2,8 +2,8 @@ module API
   module Helpers
     module InternalHelpers
       SSH_GITALY_FEATURES = {
-        'git-receive-pack' => :ssh_receive_pack,
-        'git-upload-pack' => :ssh_upload_pack
+        'git-receive-pack' => [:ssh_receive_pack, Gitlab::GitalyClient::MigrationStatus::OPT_IN],
+        'git-upload-pack' => [:ssh_upload_pack, Gitlab::GitalyClient::MigrationStatus::OPT_OUT]
       }.freeze
 
       def wiki?
@@ -102,9 +102,8 @@ module API
 
       # Return the Gitaly Address if it is enabled
       def gitaly_payload(action)
-        return unless SSH_GITALY_FEATURES[action]
-        return unless Gitlab::GitalyClient.feature_enabled?(:ssh_upload_pack, status: Gitlab::GitalyClient::MigrationStatus::OPT_OUT)
-        return unless Gitlab::GitalyClient.feature_enabled?(:ssh_receive_pack)
+        feature, status = SSH_GITALY_FEATURES[action]
+        return unless feature && Gitlab::GitalyClient.feature_enabled?(feature, status: status)
 
         {
           repository: repository.gitaly_repository,
