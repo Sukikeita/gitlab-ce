@@ -27,7 +27,7 @@ export default {
     <a
       :href="activeFile.rawPath"
       target="_blank"
-      class="btn btn-default raw"
+      class="btn btn-default btn-sm raw"
       rel="noopener noreferrer">
       {{ rawDownloadButtonLabel }}
     </a>
@@ -38,17 +38,17 @@ export default {
       aria-label="File actions">
       <a
         :href="activeFile.blamePath"
-        class="btn btn-default blame">
+        class="btn btn-default btn-sm blame">
         Blame
       </a>
       <a
         :href="activeFile.commitsPath"
-        class="btn btn-default history">
+        class="btn btn-default btn-sm history">
         History
       </a>
       <a
         :href="activeFile.permalink"
-        class="btn btn-default permalink">
+        class="btn btn-default btn-sm permalink">
         Permalink
       </a>
     </div>
