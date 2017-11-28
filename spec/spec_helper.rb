@@ -10,6 +10,10 @@ require 'shoulda/matchers'
 require 'rspec/retry'
 require 'rspec-parameterized'
 
+# $HOME controls Git (and Rugged) config resolution. We don't want to
+# pick up local developer gitconfig.
+ENV['HOME'] = Rails.root.join('tmp').to_s
+
 rspec_profiling_is_configured =
   ENV['RSPEC_PROFILING_POSTGRES_URL'].present? ||
   ENV['RSPEC_PROFILING']
