@@ -806,6 +806,7 @@ a.deploy-project-label {
         &:hover,
         &:focus {
           color: $gl-text-color;
+          text-decoration: underline;
         }
       }
     }
