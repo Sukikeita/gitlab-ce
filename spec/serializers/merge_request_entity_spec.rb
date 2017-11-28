@@ -11,6 +11,13 @@ describe MergeRequestEntity do
     described_class.new(resource, request: request).as_json
   end
 
+  it 'matches merge request statistics schema' do
+    resource.statistics.update!(merged_at: Time.now, merged_by: user)
+
+    expect(subject[:statistics].with_indifferent_access)
+      .to match_schema('entities/merge_request_statistics')
+  end
+
   it 'includes pipeline' do
     req = double('request', current_user: user)
     pipeline = build_stubbed(:ci_pipeline)
@@ -102,18 +109,6 @@ describe MergeRequestEntity do
         expect(subject[:diff_head_sha]).to eq('sha')
       end
     end
-  end
-
-  it 'includes merge_event' do
-    create(:event, :merged, author: user, project: resource.project, target: resource)
-
-    expect(subject[:merge_event]).to include(:author, :updated_at)
-  end
-
-  it 'includes closed_event' do
-    create(:event, :closed, author: user, project: resource.project, target: resource)
-
-    expect(subject[:closed_event]).to include(:author, :updated_at)
   end
 
   describe 'diverged_commits_count' do
