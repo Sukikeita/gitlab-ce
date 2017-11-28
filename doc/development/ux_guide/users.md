@@ -83,7 +83,7 @@ GitLab’s interface initially attracted Nazim when he was comparing version con
 - Any size organisation
 - Using CE or EE
 
-<img src="img/nazim-ramesh.png" width="300px">
+<img src="img/matthieu-poirier.png" width="300px">
 
 ### Demographics
 
