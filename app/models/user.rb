@@ -1143,9 +1143,9 @@ class User < ActiveRecord::Base
   # Determine the maximum access level for a group of projects in bulk.
   #
   # Returns a Hash mapping project ID -> maximum access level.
-  def max_member_access_for_project_ids(projects_ids)
-    max_member_access_for_resource_ids(Project, projects_ids) do
-      project_authorizations.where(project: projects_ids)
+  def max_member_access_for_project_ids(project_ids)
+    max_member_access_for_resource_ids(Project, project_ids) do |project_ids|
+      project_authorizations.where(project: project_ids)
                             .group(:project_id)
                             .maximum(:access_level)
     end
@@ -1158,9 +1158,9 @@ class User < ActiveRecord::Base
   # Determine the maximum access level for a group of groups in bulk.
   #
   # Returns a Hash mapping project ID -> maximum access level.
-  def max_member_access_for_group_ids(groups_ids)
-    max_member_access_for_resource_ids(Group, groups_ids) do
-      group_members.where(source: groups_ids).group(:source_id).maximum(:access_level)
+  def max_member_access_for_group_ids(group_ids)
+    max_member_access_for_resource_ids(Group, group_ids) do |group_ids|
+      group_members.where(source: group_ids).group(:source_id).maximum(:access_level)
     end
   end
 
@@ -1322,7 +1322,7 @@ class User < ActiveRecord::Base
 
     return access if resource_ids.empty?
 
-    resource_access = yield
+    resource_access = yield(resource_ids)
 
     access.merge!(resource_access)
 
