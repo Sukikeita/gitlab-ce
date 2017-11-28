@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PipelineQueue do
   let(:worker) do
     Class.new do
-      include Sidekiq::Worker
+      include ApplicationWorker
       include PipelineQueue
     end
   end

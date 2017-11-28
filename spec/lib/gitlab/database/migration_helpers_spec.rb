@@ -855,7 +855,7 @@ describe Gitlab::Database::MigrationHelpers do
   describe 'sidekiq migration helpers', :sidekiq, :redis do
     let(:worker) do
       Class.new do
-        include Sidekiq::Worker
+        include ApplicationWorker
         sidekiq_options queue: 'test'
       end
     end

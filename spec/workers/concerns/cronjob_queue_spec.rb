@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CronjobQueue do
   let(:worker) do
     Class.new do
-      include Sidekiq::Worker
+      include ApplicationWorker
       include CronjobQueue
     end
   end

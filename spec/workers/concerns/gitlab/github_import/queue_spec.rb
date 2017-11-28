@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Gitlab::GithubImport::Queue do
   it 'sets the Sidekiq options for the worker' do
     worker = Class.new do
-      include Sidekiq::Worker
+      include ApplicationWorker
       include Gitlab::GithubImport::Queue
     end
 

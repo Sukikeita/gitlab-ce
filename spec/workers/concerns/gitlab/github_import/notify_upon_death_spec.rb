@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Gitlab::GithubImport::NotifyUponDeath do
   let(:worker_class) do
     Class.new do
-      include Sidekiq::Worker
+      include ApplicationWorker
       include Gitlab::GithubImport::NotifyUponDeath
     end
   end

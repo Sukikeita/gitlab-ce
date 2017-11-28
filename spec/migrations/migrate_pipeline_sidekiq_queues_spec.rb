@@ -48,7 +48,7 @@ describe MigratePipelineSidekiqQueues, :sidekiq, :redis do
 
   def stubbed_worker(queue:)
     Class.new do
-      include Sidekiq::Worker
+      include ApplicationWorker
       sidekiq_options queue: queue
     end
   end

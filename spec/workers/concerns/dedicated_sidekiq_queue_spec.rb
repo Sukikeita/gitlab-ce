@@ -7,8 +7,7 @@ describe DedicatedSidekiqQueue do
         'Foo::Bar::DummyWorker'
       end
 
-      include Sidekiq::Worker
-      include DedicatedSidekiqQueue
+      include ApplicationWorker
     end
   end
 
