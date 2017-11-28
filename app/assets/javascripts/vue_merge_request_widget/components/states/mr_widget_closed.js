@@ -18,7 +18,7 @@ export default {
           actionText="Closed by"
           :author="mr.statistics.closedBy"
           :dateTitle="mr.statistics.closedAt"
-          :dateReadable="mr.closedEvent.readableClosedAt"
+          :dateReadable="mr.statistics.readableClosedAt"
         />
         <section class="mr-info-list">
           <p>
