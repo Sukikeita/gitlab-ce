@@ -3,21 +3,21 @@ require 'capybara-screenshot/spinach'
 # Give CI some extra time
 timeout = (ENV['CI'] || ENV['CI_SERVER']) ? 60 : 30
 
-Capybara.javascript_driver = :chrome
+# Toggle headless mode based on ENV
+headless = ENV['CHROME_HEADLESS'] !~ /^(false|no|0)$/i
+
 Capybara.register_driver :chrome do |app|
-  extra_args = []
-  extra_args << 'headless' unless ENV['CHROME_HEADLESS'] =~ /^(false|no|0)$/i
-
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: {
-      'args' => %w[no-sandbox disable-gpu --window-size=1240,1400] + extra_args
-    }
-  )
-
-  Capybara::Selenium::Driver
-    .new(app, browser: :chrome, desired_capabilities: capabilities)
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
+Capybara.register_driver :chrome_headless do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w[headless disable-gpu] }
+  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+end
+
+Capybara.javascript_driver = headless ? :chrome : :chrome_headless
 Capybara.default_max_wait_time = timeout
 Capybara.ignore_hidden_elements = false
 
