@@ -3,21 +3,38 @@ require 'capybara-screenshot/spinach'
 # Give CI some extra time
 timeout = (ENV['CI'] || ENV['CI_SERVER']) ? 60 : 30
 
-# Toggle headless mode based on ENV
-headless = ENV['CHROME_HEADLESS'] !~ /^(false|no|0)$/i
-
 Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
-end
-
-Capybara.register_driver :chrome_headless do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu] }
+    # This enables access to logs with `page.driver.manage.get_log(:browser)`
+    loggingPrefs: {
+      browser: "ALL",
+      client: "ALL",
+      driver: "ALL",
+      server: "ALL"
+    }
   )
-  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument("window-size=1240,1400")
+
+  # Run headless by default unless CHROME_HEADLESS specified
+  unless ENV['CHROME_HEADLESS'] =~ /^(false|no|0)$/i
+    options.add_argument("headless")
+
+    # Chrome documentation says this flag is needed for now
+    # https://developers.google.com/web/updates/2017/04/headless-chrome#cli
+    options.add_argument("disable-gpu")
+  end
+
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    desired_capabilities: capabilities,
+    options: options
+  )
 end
 
-Capybara.javascript_driver = headless ? :chrome : :chrome_headless
+Capybara.javascript_driver = :chrome
 Capybara.default_max_wait_time = timeout
 Capybara.ignore_hidden_elements = false
 
