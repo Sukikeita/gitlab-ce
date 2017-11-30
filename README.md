@@ -71,7 +71,7 @@ There are various other options to install GitLab, please refer to the [installa
 
 You can access a new installation with the login **`root`** and password **`5iveL!fe`**, after login you are required to set a unique password.
 
-您可以使用**`root`**登录和密码**`5iveL!fe`**访问新安装的Gitlab，登录后您需要设置唯一密码。
+您可以使用 **`root`** 登录和密码 **`5iveL!fe`** 访问新安装的Gitlab，登录后您需要设置唯一密码。
 
 ## Contributing 贡献
 
@@ -153,5 +153,6 @@ Please see [Getting help for GitLab](https://about.gitlab.com/getting-help/) on 
 
 Thanks for [asking this question](https://twitter.com/supersloth/status/489462789384056832) Joshua.
 [These people](https://twitter.com/gitlab/likes) seem to like it.
+
 谢谢你问这个问题约书亚。 这些人似乎喜欢它。
 
