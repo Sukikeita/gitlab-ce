@@ -27,29 +27,29 @@ Shortcuts to GitLab's most visited docs:
 
 | [GitLab CI/CD](ci/README.md) | Other |
 | :----- | :----- |
-| [Quick start guide](ci/quick_start/README.md) | [API](api/README.md) |
-| [Configuring `.gitlab-ci.yml`](ci/yaml/README.md) | [SSH authentication](ssh/README.md) |
-| [Using Docker images](ci/docker/using_docker_images.md) | [GitLab Pages](user/project/pages/index.md) |
+| [Quick start guide](ci/quick_start/README.md)快速入门指南 | [API](api/README.md) |
+| [Configuring `.gitlab-ci.yml`](ci/yaml/README.md)配置`.gitlab-ci.yml` | [SSH authentication](ssh/README.md)SSH认证 |
+| [Using Docker images](ci/docker/using_docker_images.md)使用Docker镜像 | [GitLab Pages](user/project/pages/index.md)GitLab主页 |
 
-- [User documentation](user/index.md)
-- [Administrator documentation](#administrator-documentation)
-- [Technical Articles](articles/index.md)
+- [User documentation](user/index.md)用户文档
+- [Administrator documentation](#administrator-documentation)管理文档
+- [Technical Articles](articles/index.md)技术文章
 
 ## Getting started with GitLab --开始使用GitLab
 
 - [GitLab Basics](gitlab-basics/README.md): Start working on your command line and on GitLab.在GitLab中使用命令行
 - [GitLab Workflow](workflow/README.md): Enhance your workflow with the best of GitLab Workflow.使用GitLab工作流
-  - See also [GitLab Workflow - an overview](https://about.gitlab.com/2016/10/25/gitlab-workflow-an-overview/).Gitlab概述
-- [GitLab Markdown](user/markdown.md): GitLab's advanced formatting system (GitLab Flavored Markdown).
-- [GitLab Quick Actions](user/project/quick_actions.md): Textual shortcuts for common actions on issues or merge requests that are usually done by clicking buttons or dropdowns in GitLab's UI.
-- [Auto DevOps](topics/autodevops/index.md)
+  - See also [GitLab Workflow - an overview](https://about.gitlab.com/2016/10/25/gitlab-workflow-an-overview/).Gitlab工作流概述
+- [GitLab Markdown](user/markdown.md): GitLab's advanced formatting system (GitLab Flavored Markdown).GitLab的高级格式化系统（GitLab Flavored Markdown）。
+- [GitLab Quick Actions](user/project/quick_actions.md): Textual shortcuts for common actions on issues or merge requests that are usually done by clicking buttons or dropdowns in GitLab's UI.issues和合并请求的文本快捷方式，通常通过单击按钮或下拉在GitLab的用户界面中的常见行动。
+- [Auto DevOps](topics/autodevops/index.md) DevOps
 
 ### User account 用户账户
 
 - [User account](user/profile/index.md): Manage your account 管理账号
-  - [Authentication](topics/authentication/index.md): Account security with two-factor authentication, setup your ssh keys and deploy keys for secure access to your projects.账号安全，两种认证方式，建立你的ssh密钥和部署密钥以安全地访问您的项目
-  - [Profile settings](user/profile/index.md#profile-settings): Manage your profile settings, two factor authentication and more.管理配置文件设置，两种认证或更多。
-- [User permissions](user/permissions.md): Learn what each role in a project (external/guest/reporter/developer/master/owner) can do.学习项目中的角色
+  - [Authentication](topics/authentication/index.md): Account security with two-factor authentication, setup your ssh keys and deploy keys for secure access to your projects.认证：两种安全的认证方式，建立你的ssh密钥和部署密钥以安全地访问您的项目
+  - [Profile settings](user/profile/index.md#profile-settings): Manage your profile settings, two factor authentication and more.管理配置文件设置，两种认证或更多方式。
+- [User permissions](user/permissions.md): Learn what each role in a project (external/guest/reporter/developer/master/owner) can do.用户权限：学习项目中每个角色的功能
 
 ### Projects and groups 项目和组
 
@@ -61,7 +61,7 @@ Shortcuts to GitLab's most visited docs:
   - [Project access](public_access/public_access.md): Setting up your project's visibility to public, internal, or private. 访问项目：设置项目的可视性（public、internal、provate）
   - [GitLab Pages](user/project/pages/index.md): Build, test, and deploy your static website with GitLab Pages.构建、测试、部署您的静态页面
 - [Groups](user/group/index.md): Organize your projects in groups. 以组的方式管理项目
-  - [Subgroups](user/group/subgroups/index.md) 子组
+  - [Subgroups](user/group/subgroups/index.md) 亚群
 - [Search through GitLab](user/search/index.md): Search for issues, merge requests, projects, groups, todos, and issues in Issue Boards. 使用Issue板
 - [Snippets](user/snippets.md): Snippets allow you to create little bits of code. Snippet允许你创建一些代码
 - [Wikis](user/project/wiki/index.md): Enhance your repository documentation with built-in wikis. 使用内置的wikes加强存储库的文档管理
@@ -83,18 +83,18 @@ Manage your [repositories](user/project/repository/index.md) from the UI (user i
   - [Protected branches](user/project/protected_branches.md#protected-branches) 保护分支
   - [Delete merged branches](user/project/repository/branches/index.md#delete-merged-branches) 删除已合并的分支
 - [Commits](user/project/repository/index.md#commits) 提交
-  - [Signing commits](user/project/repository/gpg_signed_commits/index.md): use GPG to sign your commits. Signing提交？
+  - [Signing commits](user/project/repository/gpg_signed_commits/index.md): use GPG to sign your commits. 签署提交
 
 ### Issues and Merge Requests (MRs)--Issue和合并请求
 
-- [Discussions](user/discussions/index.md): Threads, comments, and resolvable discussions in issues, commits, and  merge requests.
-- [Issues](user/project/issues/index.md)
-- [Project issue Board](user/project/issue_board.md)
-- [Issues and merge requests templates](user/project/description_templates.md): Create templates for submitting new issues and merge requests.
+- [Discussions](user/discussions/index.md): Threads, comments, and resolvable discussions in issues, commits, and  merge requests.issues、提交和合并请求中的主题、评论、可解决讨论
+- [Issues](user/project/issues/index.md) Issues
+- [Project issue Board](user/project/issue_board.md)项目的issue板
+- [Issues and merge requests templates](user/project/description_templates.md): Create templates for submitting new issues and merge requests.创建提交新问题和合并请求的模板；
 - [Labels](user/project/labels.md): Categorize your issues or merge requests based on descriptive titles.根据标题描述将issues和合并请求分录
 - [Merge Requests](user/project/merge_requests/index.md) 合并请求
-  - [Work In Progress Merge Requests](user/project/merge_requests/work_in_progress_merge_requests.md)
-  - [Merge Request discussion resolution](user/discussions/index.md#moving-a-single-discussion-to-a-new-issue): Resolve discussions, move discussions in a merge request to an issue, only allow merge requests to be merged if all discussions are resolved.解决讨论问题、将讨论从合并请求移到issue中，如果所有讨论已解决，则只允许合并请求
+  - [Work In Progress Merge Requests](user/project/merge_requests/work_in_progress_merge_requests.md)工作进行中发起合并请求
+  - [Merge Request discussion resolution](user/discussions/index.md#moving-a-single-discussion-to-a-new-issue): Resolve discussions, move discussions in a merge request to an issue, only allow merge requests to be merged if all discussions are resolved.合并请求讨论决议：解决讨论问题、将讨论从合并请求移到issue中，如果所有讨论已解决，则只允许合并请求
   - [Checkout merge requests locally](user/project/merge_requests/index.md#checkout-merge-requests-locally) 将合并请求检出到本地
   - [Cherry-pick](user/project/merge_requests/cherry_pick_changes.md)
 - [Milestones](user/project/milestones/index.md): Organize issues and merge requests into a cohesive group, optionally setting a due date. 里程碑：组织issue和合并请求到一个有凝聚力的组中，可选地设置截止日期
