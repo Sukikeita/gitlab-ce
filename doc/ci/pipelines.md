@@ -15,7 +15,7 @@ executed. You can access the pipelines page in your project's **Pipelines** tab.
 In the following image you can see that the pipeline consists of four stages
 (`build`, `test`, `staging`, `production`) each one having one or more jobs.
 
-在下面的图片中，您可以看到，管道包含四个阶段（构建，测试，分段，生产），每个阶段都有一个或多个作业。
+在下面的图片中，您可以看到，管道包含四个阶段（构建，测试，预发布，生产），每个阶段都有一个或多个作业。
 
 >**Note:**
 GitLab capitalizes the stages' names when shown in the [pipeline graphs](#pipeline-graphs).
