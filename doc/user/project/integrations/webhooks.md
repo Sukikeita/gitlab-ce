@@ -2,65 +2,90 @@
 
 >**Note:**
 Starting from GitLab 8.5:
-- the `repository` key is deprecated in favor of the `project` key
-- the `project.ssh_url` key is deprecated in favor of the `project.git_ssh_url` key
-- the `project.http_url` key is deprecated in favor of the `project.git_http_url` key
+自GitLab 8.5起：
+- the `repository` key is deprecated in favor of the `project` key--`repository`已弃用，改用`project`关键字
+- the `project.ssh_url` key is deprecated in favor of the `project.git_ssh_url` key--`project.ssh_url`已弃用，改用`project.git_ssh_url`关键字
+- the `project.http_url` key is deprecated in favor of the `project.git_http_url` key--`project.http_url`已弃用，改用`project.git_http_url`关键字
 
 Project webhooks allow you to trigger a URL if for example new code is pushed or
 a new issue is created. You can configure webhooks to listen for specific events
 like pushes, issues or merge requests. GitLab will send a POST request with data
 to the webhook URL.
 
+项目webhooks允许你触发一个URL，例如，如果新的代码被推送或创建一个新的问题。 您可以配置webhook来监听特定的事件，如推送，问题或合并请求。 GitLab将发送带有数据的POST请求到webhook URL。
+
 Webhooks can be used to update an external issue tracker, trigger CI jobs,
 update a backup mirror, or even deploy to your production server.
+
+Webhook可用于更新外部问题跟踪器，触发CI作业，更新备份镜像，甚至部署到生产服务器。
 
 Navigate to the webhooks page by going to your project's
 **Settings ➔ Integrations**.
 
-## Webhook endpoint tips
+webhooks页面位于：项目的**Settings ➔ Integrations**
+
+## Webhook endpoint tips--Webhook的短点提示
 
 If you are writing your own endpoint (web server) that will receive
 GitLab webhooks keep in mind the following things:
 
+如果你正在编写你自己的端点（web服务器）来接收GitLab的webhooks请记住以下几点：
+
 -   Your endpoint should send its HTTP response as fast as possible. If
     you wait too long, GitLab may decide the hook failed and retry it.
+    您的端点应尽可能快地发送HTTP响应。 如果您等待太久，GitLab可能会决定挂钩失败并重试。
+    
 -   Your endpoint should ALWAYS return a valid HTTP response. If you do
     not do this then GitLab will think the hook failed and retry it.
     Most HTTP libraries take care of this for you automatically but if
     you are writing a low-level hook this is important to remember.
--   GitLab ignores the HTTP status code returned by your endpoint.
+    你的端点应该总是返回一个有效的HTTP响应。 如果你不这样做，那么GitLab会认为挂钩失败并重试。 大多数HTTP库会自动为您处理，但是如果您正在编写低级别的钩子，这一点很重要。
+    
+-   GitLab ignores the HTTP status code returned by your endpoint.--GitLab会忽略端点返回的HTTP状态码。
 
-## Secret token
+
+## Secret token--密钥
 
 If you specify a secret token, it will be sent with the hook request in the
 `X-Gitlab-Token` HTTP header. Your webhook endpoint can check that to verify
 that the request is legitimate.
 
-## SSL verification
+如果您指定了一个秘密令牌，它将与X-Gitlab-Token HTTP头中的挂接请求一起发送。 您的webhook端点可以检查以确认该请求是合法的。
+
+
+## SSL verification--SSL验证
 
 By default, the SSL certificate of the webhook endpoint is verified based on
 an internal list of Certificate Authorities, which means the certificate cannot
 be self-signed.
 
+默认情况下，根据证书颁发机构的内部列表验证webhook端点的SSL证书，这意味着证书不能自签名。
+
 You can turn this off in the webhook settings in your GitLab projects.
+
+您可以在GitLab项目的webhook设置中关闭此功能。
 
 ![SSL Verification](img/webhooks_ssl.png)
 
-## Events
+## Events--事件
 
 Below are described the supported events.
 
-### Push events
+以下描述可支持的事件。
+
+### Push events-推送事件
 
 Triggered when you push to the repository except when pushing tags.
 
-**Request header**:
+当你推送（除了推送基线）到存储库时可触发钩子。
+
+**Request header--请求报文头**:
 
 ```
 X-Gitlab-Event: Push Hook
 ```
 
-**Request body:**
+**Request body--请求报文体:**
 
 ```json
 {
@@ -133,17 +158,19 @@ X-Gitlab-Event: Push Hook
 }
 ```
 
-### Tag events
+### Tag events--基线事件
 
 Triggered when you create (or delete) tags to the repository.
 
-**Request header**:
+当创建或删除基线到存储库可触发钩子。
+
+**Request header--请求报文头**:
 
 ```
 X-Gitlab-Event: Tag Push Hook
 ```
 
-**Request body:**
+**Request body:--请求报文体**
 
 ```json
 {
@@ -187,17 +214,19 @@ X-Gitlab-Event: Tag Push Hook
 }
 ```
 
-### Issues events
+### Issues events--Issues事件
 
 Triggered when a new issue is created or an existing issue was updated/closed/reopened.
 
-**Request header**:
+当新的issue创建或现有的issue更新/关闭/重开。
+
+**Request header--请求报文头**:
 
 ```
 X-Gitlab-Event: Issue Hook
 ```
 
-**Request body:**
+**Request body--请求报文体:**
 
 ```json
 {
@@ -304,14 +333,17 @@ X-Gitlab-Event: Issue Hook
 ```
 
 **Note**: `assignee` and `assignee_id` keys are deprecated and now show the first assignee only.
+`assignee` 和 `assignee_id`关键字以弃用，目前仅显示首个assignee。
 
-### Comment events
+### Comment events--评论事件
 
 Triggered when a new comment is made on commits, merge requests, issues, and code snippets.
 The note data will be stored in `object_attributes` (e.g. `note`, `noteable_type`). The
 payload will also include information about the target of the comment. For example,
 a comment on a issue will include the specific issue information under the `issue` key.
 Valid target types:
+
+当提交、合并请求、issues、代码片段有新的评论时可触发钩子。笔记数据将保存在`object_attributes` (例如： `note`, `noteable_type`)。有效载荷（payload）还将包括有关评论目标的信息。 例如，对问题的评论将包括问题关键字下的具体问题信息。 有效的目标类型：
 
 1. `commit`
 2. `merge_request`
@@ -895,6 +927,8 @@ X-Gitlab-Event: Wiki Page Hook
 
 Triggered on status change of Pipeline.
 
+当Pipeline状态改变时可触发钩子。
+
 **Request Header**:
 
 ```
@@ -1060,9 +1094,11 @@ X-Gitlab-Event: Pipeline Hook
 }
 ```
 
-### Build events
+### Build events--构建事件
 
 Triggered on status change of a Build.
+
+构建状态的改变可触发钩子。
 
 **Request Header**:
 
@@ -1117,48 +1153,71 @@ X-Gitlab-Event: Build Hook
 }
 ```
 
-## Testing webhooks
+## Testing webhooks--测试钩子
 
 You can trigger the webhook manually. Sample data from the project will be used.Sample data will take from the project.
 > For example: for triggering `Push Events` your project should have at least one commit.
 
+你可以手动触发钩子，将使用项目的样例数据。样例数据将从项目中去。
+例如：为了触发`Push Events`，你要在项目中只是提交一次。
+
 ![Webhook testing](img/webhook_testing.png)
 
-## Troubleshoot webhooks
+## Troubleshoot webhooks--钩子的疑难解答
 
 Gitlab stores each perform of the webhook.
+
+GigLab保存每个钩子的执行结果。
+
 You can find records for last 2 days in "Recent Deliveries" section on the edit page of each webhook.
+
+你可以在每个钩子的编辑页面的"Recent Deliveries"部分产看最新2天的纪录。
 
 ![Recent deliveries](img/webhook_logs.png)
 
 In this section you can see HTTP status code (green for 200-299 codes, red for the others, `internal error` for failed deliveries ), triggered event, a time when the event was called, elapsed time of the request.
 
+在此部分，你可以看到HTTP状态码（200-299码为绿色，其余为红色，`internal error`是提交失败）、被触发的时间、调用事件的时间、请求的时间。）
+
 If you need more information about execution, you can click `View details` link.
+如果你需要更多关于执行的信息，你可以点击`View details`链接。
+
 On this page, you can see data that GitLab sends (request headers and body) and data that it received (response headers and body).
+在本页面，你可以查看GitLab发送的请求报文和返回的报文数据
 
 From this page, you can repeat delivery with the same data by clicking `Resend Request` button.
+从此页，你可以点击`Resend Request`重复发送相同数据。
 
 >**Note:** If URL or secret token of the webhook were updated, data will be delivered to the new address.
+如果钩子的URL或密钥更新了，数据将被交付到新的地址。
 
-### Receiving duplicate or multiple web hook requests triggered by one event
+### Receiving duplicate or multiple web hook requests triggered by one even--接受多个或重复的钩子报文t
 
 When GitLab sends a webhook it expects a response in 10 seconds (set default value). If it does not receive one, it'll retry the webhook.
+当GitLab发送一个钩子，它期望在10秒内返回结果。如果没有返回，它将重发该钩子。
+
 If the endpoint doesn't send its HTTP response within those 10 seconds, GitLab may decide the hook failed and retry it.
+如果端点没有在10秒内发送HTTP返回报文，GitLab可决定该钩子失败或重新发送。
 
 If you are receiving multiple requests, you can try increasing the default value to wait for the HTTP response after sending the webhook 
+如果你接收到多个请求，你可以在发送完钩子后尝试增加等待HTTP返回报文的时间。
+
 by uncommenting or adding the following setting to your `/etc/gitlab/gitlab.rb`:
+通过删除注释或添加以下设置到`/etc/gitlab/gitlab.rb`文件：
 
 ```
 gitlab_rails['webhook_timeout'] = 10 
 ```
 
-## Example webhook receiver
+## Example webhook receive--钩子的接收样例r
 
 If you want to see GitLab's webhooks in action for testing purposes you can use
 a simple echo script running in a console session. For the following script to
 work you need to have Ruby installed.
+如果您想要查看GitLab的webhook以进行测试，可以使用在控制台会话中运行的简单echo脚本。 对于下面的脚本来说，你需要安装Ruby。
 
 Save the following file as `print_http_body.rb`:
+把以下文件保存为`print_http_body.rb`
 
 ```ruby
 require 'webrick'
@@ -1174,13 +1233,13 @@ end
 server.start
 ```
 
-Pick an unused port (e.g. 8000) and start the script: `ruby print_http_body.rb
-8000`.  Then add your server as a webhook receiver in GitLab as
-`http://my.host:8000/`.
+Pick an unused port (e.g. 8000) and start the script: `ruby print_http_body.r8000`.  Then add your server as a webhook receiver in GitLab a `http://my.host:8000/`.
+选取一个为使用的端口（如，8080）并启动`ruby print_http_body.r8000`，然后添加你的服务器`http://my.host:8000/`作为钩子的接收器
 
 When you press 'Test' in GitLab, you should see something like this in the
 console:
 
+当你在GitLab中按'Test' ，你应该在控制台看到类似以下的信息：
 ```
 {"before":"077a85dd266e6f3573ef7e9ef8ce3343ad659c4e","after":"95cd4a99e93bc4bbabacfa2cd10e6725b1403c60",<SNIP>}
 example.com - - [14/May/2014:07:45:26 EDT] "POST / HTTP/1.1" 200 0
