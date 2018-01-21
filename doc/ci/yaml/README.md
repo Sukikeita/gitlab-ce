@@ -890,25 +890,30 @@ deploy to production:
 
 >
 **Notes:**
-- [Introduced][ce-6669] in GitLab 8.13.
+- [Introduced][ce-6669] in GitLab 8.13.自GitLab 8.13引入on_stop
 - Starting with GitLab 8.14, when you have an environment that has a stop action
   defined, GitLab will automatically trigger a stop action when the associated
   branch is deleted.
+  自GitLab 8.14开始，当你有一个环境并且定义了stop操作，GitLab将自动触发一个stop操作，当关联的分支被删除时。
 
 Closing (stoping) environments can be achieved with the `on_stop` keyword defined under
 `environment`. It declares a different job that runs in order to close
 the environment.
+关闭（停止）环境可以通过`environment`设置`on_stop`关键词实现。这声明了一个为了关闭该环境的作业。
 
 Read the `environment:action` section for an example.
+阅读`environment:action`部分作为例子。
 
 #### environment:action
 
-> [Introduced][ce-6669] in GitLab 8.13.
+> [Introduced][ce-6669] in GitLab 8.13.自GitLab 8.13引入action。
 
 The `action` keyword is to be used in conjunction with `on_stop` and is defined
 in the job that is called to close the environment.
+`action`关键词用于与`on_stop`一起使用，并且在该作业中定义，以调用关闭环境。
 
 Take for instance:
+举个例子：
 
 ```yaml
 review_app:
@@ -933,26 +938,30 @@ Once the `review_app` job is successfully finished, it will trigger the
 `stop_review_app` job based on what is defined under `when`. In this case we
 set it up to `manual` so it will need a [manual action](#manual-actions) via
 GitLab's web interface in order to run.
+在上面的例子中，我们建立了`review_app`作业以部署到名为`review`的环境中，并且我们还可以在`on_stop`下定义一个`stop_review_app`的作业。一旦`review_app`作业运行成功，这将触发`stop_review_app`作业，该作业基于`when`中定义的内容。在这个例子中，我们设置`when`为'manual'，因此为了运行stop_review_app作业，我们需要通过GitLab页面手工启动。
 
 The `stop_review_app` job is **required** to have the following keywords defined:
+stop_review_app作业必须定义以下关键词：
 
-- `when` - [reference](#when)
-- `environment:name`
-- `environment:action`
+- `when` - [reference](#when) 条件
+- `environment:name` 环境名
+- `environment:action` 动作
 - `stage` should be the same as the `review_app` in order for the environment
-  to stop automatically when the branch is deleted
+  to stop automatically when the branch is deleted --stage应该与`review_app`的一致，这是为了当分支被删除时，将自动停止该环境。
 
-#### dynamic environments
+#### dynamic environments 动态环境
 
 >
 **Notes:**
-- [Introduced][ce-6323] in GitLab 8.12 and GitLab Runner 1.6.
-- The `$CI_ENVIRONMENT_SLUG` was [introduced][ce-7983] in GitLab 8.15.
+- [Introduced][ce-6323] in GitLab 8.12 and GitLab Runner 1.6.GitLab 8.12和GitLab Runner 1.6引入
+- The `$CI_ENVIRONMENT_SLUG` was [introduced][ce-7983] in GitLab 8.15.GitLab 8.15中引入`$CI_ENVIRONMENT_SLUG`
 - The `name` and `url` parameters can use any of the defined CI variables,
   including predefined, secure variables and `.gitlab-ci.yml` [`variables`](#variables).
-  You however cannot use variables defined under `script`.
+  You however cannot use variables defined under `script`.`name`和`url`参数可用任何已定义的CI变量，包括预定义、安全变量和`.gitlab-ci.yml`中的变量。但你不能使用`script`中定义的变量。
 
 For example:
+举个例子：
+
 
 ```yaml
 deploy as review app:
@@ -970,31 +979,39 @@ is an [environment variable][variables] set by the Runner. The
 for inclusion in URLs. In this case, if the `deploy as review app` job was run
 in a branch named `pow`, this environment would be accessible with an URL like
 `https://review-pow.example.com/`.
+`deploy as review app`作业将标记为部署到动态、创建`review/$CI_COMMIT_REF_NAME`环境，其中`$CI_COMMIT_REF_NAME`是Runner设置的环境变量。`$CI_ENVIRONMENT_SLUG`变量是基于环境名，但包含在URL中。在这种情况，如果`deploy as review app`作业在`pow`分支，此环境可通过`https://review-pow.example.com/`类似的url中访问。
 
 This of course implies that the underlying server which hosts the application
 is properly configured.
+这当然意味着托管应用程序的底层服务器已正确配置。
+
 
 The common use case is to create dynamic environments for branches and use them
 as Review Apps. You can see a simple example using Review Apps at
 <https://gitlab.com/gitlab-examples/review-apps-nginx/>.
+一般的用法是为分支创建动态环境，并使用作为Review Apps使用。你可以在链接中查看如何使用Review App的简单例子。
 
 ### artifacts
 
 >
 **Notes:**
-- Introduced in GitLab Runner v0.7.0 for non-Windows platforms.
-- Windows support was added in GitLab Runner v.1.0.0.
-- Prior to GitLab 9.2, caches were restored after artifacts.
-- From GitLab 9.2, caches are restored before artifacts.
-- Currently not all executors are supported.
-- Job artifacts are only collected for successful jobs by default.
+- Introduced in GitLab Runner v0.7.0 for non-Windows platforms. 自Runner v0.7.0引入artifacts，针对非Windows平台
+- Windows support was added in GitLab Runner v.1.0.0. Windows的支持在GitLab Runner v.1.0.0新增
+- Prior to GitLab 9.2, caches were restored after artifacts. GitLab 9.2前的版本，cache将在artifact后恢复
+- From GitLab 9.2, caches are restored before artifacts.从GitLab 9.2，cache将在artifact是前恢复
+- Currently not all executors are supported. 目前不支持所有的executor
+- Job artifacts are only collected for successful jobs by default. 作业artifact默认只收集成功的作业
 
 `artifacts` is used to specify a list of files and directories which should be
 attached to the job after success. You can only use paths that are within the
 project workspace. To pass artifacts between different jobs, see [dependencies](#dependencies).
+artifacts用于指定了要附加到作业（成功后）的文件和目录列表。你可以只使用在项目工作空间里的路径。为了通过不同作业之间的作业，请看dependicies部分。
+
 Below are some examples.
+以下是一些例子.
 
 Send all files in `binaries` and `.config`:
+发送所有`binaries`的文件 和 `.config`文件：
 
 ```yaml
 artifacts:
@@ -1004,6 +1021,7 @@ artifacts:
 ```
 
 Send all Git untracked files:
+发送所有Git为跟踪的文件：
 
 ```yaml
 artifacts:
@@ -1011,6 +1029,7 @@ artifacts:
 ```
 
 Send all Git untracked files and files in `binaries`:
+发送所有Git为追踪的文件和`binaries`目录下的文件：
 
 ```yaml
 artifacts:
@@ -1020,6 +1039,7 @@ artifacts:
 ```
 
 To disable artifact passing, define the job with empty [dependencies](#dependencies):
+为了禁用artifact passing，请在该作业定义空的dependencies。
 
 ```yaml
 job:
@@ -1030,8 +1050,10 @@ job:
 
 You may want to create artifacts only for tagged releases to avoid filling the
 build server storage with temporary build artifacts.
+你可能希望值为已标记的releases创建artifact，以避免临时的构建artifact塞满构建服务器存储。
 
 Create artifacts only for tags (`default-job` will not create artifacts):
+只为tags创建artifact（`default-job`将不创建artifact）：
 
 ```yaml
 default-job:
@@ -1052,22 +1074,25 @@ release-job:
 
 The artifacts will be sent to GitLab after the job finishes successfully and will
 be available for download in the GitLab UI.
+该artifact将在作业成功后被发送到GitLab，并且可在GitLab UI中可供下载。
 
-#### artifacts:name
+#### artifacts:name 指定归档名
 
-> Introduced in GitLab 8.6 and GitLab Runner v1.1.0.
+> Introduced in GitLab 8.6 and GitLab Runner v1.1.0.自GitLab 8.6 和GitLab Runner v1.1.0中引入。
 
 The `name` directive allows you to define the name of the created artifacts
 archive. That way, you can have a unique name for every archive which could be
 useful when you'd like to download the archive from GitLab. The `artifacts:name`
 variable can make use of any of the [predefined variables](../variables/README.md).
 The default name is `artifacts`, which becomes `artifacts.zip` when downloaded.
+`name`显示允许你定义要创建的artifact归档名。这样，每个档案都可以有一个唯一的名字，当你想要从GitLab下载档案的时候，这个名字是很有用的。`artifacts:name`参数可使用预定义变量中的任何值。默认的归档名为`artifacts`，下载的报名为`artifacts.zip`。
 
 ---
 
-**Example configurations**
+**Example configurations 配置例子**
 
 To create an archive with a name of the current job:
+为了创建以当前作业命名的归档：
 
 ```yaml
 job:
@@ -1077,6 +1102,7 @@ job:
 
 To create an archive with a name of the current branch or tag including only
 the files that are untracked by Git:
+为了创建一个以当前分支或tag命名的归档包，只包括Git为追踪的文件：
 
 ```yaml
 job:
@@ -1087,6 +1113,7 @@ job:
 
 To create an archive with a name of the current job and the current branch or
 tag including only the files that are untracked by Git:
+为了创建以当前作业和当前分支或tag命名的归档包，该包只包括Git未追踪的文件：
 
 ```yaml
 job:
@@ -1096,6 +1123,7 @@ job:
 ```
 
 To create an archive with a name of the current [stage](#stages) and branch name:
+为了创建以当前stage和分知名命名的归档包：
 
 ```yaml
 job:
@@ -1108,6 +1136,7 @@ job:
 
 If you use **Windows Batch** to run your shell scripts you need to replace
 `$` with `%`:
+如果你使用的是**Windows Batch** 运行你的Shell脚本，你需要将`$`替换为`%：
 
 ```yaml
 job:
@@ -1118,6 +1147,7 @@ job:
 
 If you use **Windows PowerShell** to run your shell scripts you need to replace
 `$` with `$env:`:
+如果你使用**Windows PowerShell**运行您的Shell脚本，你需要将`$`替换为`$env:`
 
 ```yaml
 job:
@@ -1126,24 +1156,27 @@ job:
     untracked: true
 ```
 
-#### artifacts:when
+#### artifacts:when 指定归档的条件
 
-> Introduced in GitLab 8.9 and GitLab Runner v1.3.0.
+> Introduced in GitLab 8.9 and GitLab Runner v1.3.0.自GitLab 8.和GitLab Runner v1.3.0引入
 
 `artifacts:when` is used to upload artifacts on job failure or despite the
 failure.
+`artifacts:when`用于在作业失败或不管是否失败时上次归档包。
 
 `artifacts:when` can be set to one of the following values:
+`artifacts:when`可设置为以下的可用值：
 
-1. `on_success` - upload artifacts only when the job succeeds. This is the default.
-1. `on_failure` - upload artifacts only when the job fails.
-1. `always` - upload artifacts regardless of the job status.
+1. `on_success` - upload artifacts only when the job succeeds. This is the default. 当作业成功时上传归档包，这是默认值。
+1. `on_failure` - upload artifacts only when the job fails. 当作业失败时上传归档包
+1. `always` - upload artifacts regardless of the job status. 不管作业的状态，上传归档包
 
 ---
 
-**Example configurations**
+**Example configurations 配置的例子**
 
 To upload artifacts only when job fails.
+当作业失败时，上传归档包：
 
 ```yaml
 job:
@@ -1151,22 +1184,26 @@ job:
     when: on_failure
 ```
 
-#### artifacts:expire_in
+#### artifacts:expire_in 指定归档的有效期
 
-> Introduced in GitLab 8.9 and GitLab Runner v1.3.0.
+> Introduced in GitLab 8.9 and GitLab Runner v1.3.0.自GitLab 8.9和GitLab Runner v1.3.0引入
 
 `artifacts:expire_in` is used to delete uploaded artifacts after the specified
 time. By default, artifacts are stored on GitLab forever. `expire_in` allows you
 to specify how long artifacts should live before they expire, counting from the
 time they are uploaded and stored on GitLab.
+`artifacts:expire_in`用于在指定的时间删除归档版。默认情况下，归档包将永久保存在GitLab服务器
 
 You can use the **Keep** button on the job page to override expiration and
 keep artifacts forever.
+你可以使用作业页面的**Keep**按钮覆盖有效期值，使该归档包永久保存。
 
 After expiry, artifacts are actually deleted hourly by default (via a cron job),
 but they are not accessible after expiry.
+在有效期后，默认地归档包将被删除（通过一个cron作业），但在有效期后不可访问。
 
 The value of `expire_in` is an elapsed time. Examples of parseable values:
+expire_in的值是经过的（elapsed）时间。 可解析值的示例：
 
 - '3 mins 4 sec'
 - '2 hrs 20 min'
@@ -1177,9 +1214,10 @@ The value of `expire_in` is an elapsed time. Examples of parseable values:
 
 ---
 
-**Example configurations**
+**Example configurations配置例子**
 
 To expire artifacts 1 week after being uploaded:
+指定归档的有限期为在上传后的一周：
 
 ```yaml
 job:
@@ -1187,14 +1225,16 @@ job:
     expire_in: 1 week
 ```
 
-### dependencies
+### dependencies 依赖
 
-> Introduced in GitLab 8.6 and GitLab Runner v1.1.1.
+> Introduced in GitLab 8.6 and GitLab Runner v1.1.1.自GitLab 8.6和GitLab Runner v1.1.1引入
 
 This feature should be used in conjunction with [`artifacts`](#artifacts) and
 allows you to define the artifacts to pass between different jobs.
+此功能应与artifact一起使用，并允许你定义该归档以在不同的作业进行传送。
 
 Note that `artifacts` from all previous [stages](#stages) are passed by default.
+注意，前一stages的归档模式是被传送的。
 
 To use this feature, define `dependencies` in context of the job and pass
 a list of all previous jobs from which the artifacts should be downloaded.
@@ -1203,6 +1243,7 @@ An error will be shown if you define jobs from the current stage or next ones.
 Defining an empty array will skip downloading any artifacts for that job.
 The status of the previous job is not considered when using `dependencies`, so
 if it failed or it is a manual job that was not run, no error occurs.
+为了使用此功能，可在该作业中定义`dependencies`，并传送前作业哪些归档需要被下载的列表。你可以只定义在当前stages以前执行的作业。如果你定义的作业时当前的或以后的阶段，那么将会报错。定义一个空的数组该作业将跳过任何归档的下载。当使用`dependencies`时，将不考虑前一作业的状态，因为如果作业失败或者手工作业没有运行，将不报任何错误。
 
 ---
 
@@ -1210,6 +1251,7 @@ In the following example, we define two jobs with artifacts, `build:osx` and
 `build:linux`. When the `test:osx` is executed, the artifacts from `build:osx`
 will be downloaded and extracted in the context of the build. The same happens
 for `test:linux` and artifacts from `build:linux`.
+在以下的例子中，我们定义了两个归档的作业，`build:osx`和`build:linux`。当执行`test:osx`时，`build:osx`的归档包将被下载，并且在该构建的上下文中被提取。同样地，也会在`test:linux`中发送，并且`build:linux`的归档。
 
 The job `deploy` will download artifacts from all previous jobs because of
 the [stage](#stages) precedence:
