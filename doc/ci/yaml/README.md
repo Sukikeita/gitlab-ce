@@ -478,46 +478,53 @@ For example, commands that contain a colon (`:`) need to be wrapped in quotes so
 that the YAML parser knows to interpret the whole thing as a string rather than
 a "key: value" pair. Be careful when using special characters:
 `:`, `{`, `}`, `[`, `]`, `,`, `&`, `*`, `#`, `?`, `|`, `-`, `<`, `>`, `=`, `!`, `%`, `@`, `` ` ``.
+有时，`script`命令将需要用单引号或双引号包装。 例如，包含冒号（:)的命令需要用引号括起来，以便YAML解析器知道将整个事件解释为字符串而不是“key：value”对。 使用特以下殊字符时要小心：：，{，}，[，]，,,＆，*，＃，？，|， - ，<，>，=，！，％，@，`
 
 ### stage
 
 `stage` allows to group jobs into different stages. Jobs of the same `stage`
 are executed in `parallel`. For more info about the use of `stage` please check
 [stages](#stages).
+阶段允许将工作分成不同的阶段。 同一阶段的工作是并行执行的。 有关`stage`使用的更多信息，请查看stages部分。
 
-### only and except (simplified)
+### only and except (simplified)只有和（简化）
 
 `only` and `except` are two parameters that set a job policy to limit when
 jobs are created:
+`only` 和 `except`是用于在作业创建时设置作业策略限制的两个参数。
 
-1. `only` defines the names of branches and tags for which the job will run.
+1. `only` defines the names of branches and tags for which the job will run.`only`定义作业要运行的分支和标签的名称。
 2. `except` defines the names of branches and tags for which the job will
-    **not** run.
+    **not** run.`except`定了了作业将不运行的分支名和标签名。
 
 There are a few rules that apply to the usage of job policy:
+使用作业侧策略有以下规则：
 
 * `only` and `except` are inclusive. If both `only` and `except` are defined
-   in a job specification, the ref is filtered by `only` and `except`.
-* `only` and `except` allow the use of regular expressions.
+   in a job specification, the ref is filtered by `only` and `except`.`only` 和 `except`是广泛的。 如果仅在作业规范中定义了`only` 和 `except`，则ref由 `only` 和 `except`进行过滤。
+
+* `only` and `except` allow the use of regular expressions. `only` 和 `except`允许使用正则表达式
 * `only` and `except` allow to specify a repository path to filter jobs for
-   forks.
+   forks.`only` 和 `except`运行指定一个存储库路径以过滤要复刻的作业。
 
 In addition, `only` and `except` allow the use of special keywords:
+除此之外，`only` 和 `except`允许使用一下特殊关键词：
 
 | **Value** |  **Description**  |
 | --------- |  ---------------- |
-| `branches`  | When a branch is pushed.  |
-| `tags`      | When a tag is pushed.  |
-| `api`       | When pipeline has been triggered by a second pipelines API (not triggers API).  |
-| `external`  | When using CI services other than GitLab. |
-| `pipelines` | For multi-project triggers, created using the API with `CI_JOB_TOKEN`. |
-| `pushes`    | Pipeline is triggered by a `git push` by the user. |
-| `schedules` | For [scheduled pipelines][schedules]. |
-| `triggers`  | For pipelines created using a trigger token. |
-| `web`       | For pipelines created using **Run pipeline** button in GitLab UI (under your project's **Pipelines**). |
+| `branches`  | When a branch is pushed.当推送分支时可使用  |
+| `tags`      | When a tag is pushed.当推送tag（基线）时可使用  |
+| `api`       | When pipeline has been triggered by a second pipelines API (not triggers API). 当pipeline由另一个pipelines API触发时 |
+| `external`  | When using CI services other than GitLab.当使用GitLab以外的CI服务时可用 |
+| `pipelines` | For multi-project triggers, created using the API with `CI_JOB_TOKEN`.对于多项目触发器使用`CI_JOB_TOKEN创建？？ |
+| `pushes`    | Pipeline is triggered by a `git push` by the user.用户通过`git push`触发Pileline |
+| `schedules` | For [scheduled pipelines][schedules].对于计划管道 |
+| `triggers`  | For pipelines created using a trigger token.对于使用触发器token创建的Pipelines |
+| `web`       | For pipelines created using **Run pipeline** button in GitLab UI (under your project's **Pipelines**).对于使用**Run pipeline**（在GitLab UI）按钮创建的Pipelines |
 
 In the example below, `job` will run only for refs that start with `issue-`,
 whereas all branches will be skipped:
+在下面的例子中，job只会运行以issue-开头的ref，而所有分支将被跳过：
 
 ```yaml
 job:
@@ -531,6 +538,7 @@ job:
 
 In this example, `job` will run only for refs that are tagged, or if a build is
 explicitly requested via an API trigger or a [Pipeline Schedule][schedules]:
+在这个例子中，作业将只运行标记的ref，或者通过API触发器或Pipeline Schedule显式请求构建：
 
 ```yaml
 job:
@@ -543,6 +551,7 @@ job:
 
 The repository path can be used to have jobs executed only for the parent
 repository and not forks:
+存储库路径可用于仅为父存储库执行作业，而不是分叉（forks）：
 
 ```yaml
 job:
@@ -554,27 +563,32 @@ job:
 
 The above example will run `job` for all branches on `gitlab-org/gitlab-ce`,
 except master.
+上面的例子将运行gitlab-org/gitlab-ce上除master之外的所有分支的作业。
 
-### only and except (complex)
+### only and except (complex) 进阶的only and except
 
-> Introduced in GitLab 10.0
+> Introduced in GitLab 10.0在GitLab 10.0中引入
 
 > This an _alpha_ feature, and it it subject to change at any time without
-  prior notice!
+  prior notice!这是一个alpha功能，它随时可能更改，恕不另行通知！
 
 Since GitLab 10.0 it is possible to define a more elaborate only/except job
 policy configuration.
+由于GitLab 10.0可以定义一个更详细的only/except作业策略配置。
 
 GitLab now supports both, simple and complex strategies, so it is possible to
 use an array and a hash configuration scheme.
+GitLab现在支持简单和复杂的策略，所以可以使用数组和哈希配置方案。
 
 Two keys are now available: `refs` and `kubernetes`. Refs strategy equals to
 simplified only/except configuration, whereas kubernetes strategy accepts only
 `active` keyword.
+现在有两个键：refs和kubernetes。 Refs战略等于仅简化only/except配置，而kubernetes策略只接受`active`关键字。
 
 See the example below. Job is going to be created only when pipeline has been
 scheduled or runs for a `master` branch, and only if kubernetes service is
 active in the project.
+看下面的例子。 只有在计划管道或为主分支运行时才会创建作业，并且只有在项目中激活了kubernetes服务时才会创建作业。
 
 ```yaml
 job:
@@ -585,15 +599,17 @@ job:
     kubernetes: active
 ```
 
-### Job variables
+### Job variables 作业变量
 
 It is possible to define job variables using a `variables` keyword on a job
 level. It works basically the same way as its [global-level equivalent](#variables),
 but allows you to define job-specific variables.
+可以使用作业级别的变量关键字来定义作业变量。 它的工作方式基本上与其全局级别相同，但允许您定义特定于作业的变量。
 
 When the `variables` keyword is used on a job level, it overrides the global YAML
 job variables and predefined ones. To turn off global defined variables
 in your job, define an empty hash:
+当在作业级别上使用`variables`关键字时，它将覆盖全局YAML作业变量和预定义变量。 要关闭作业中的全局定义变量，请定义一个空的散列：
 
 ```yaml
 job_name:
@@ -601,17 +617,21 @@ job_name:
 ```
 
 Job variables priority is defined in the [variables documentation][variables].
+作业变量优先级在变量文档中定义。
 
 ### tags
 
 `tags` is used to select specific Runners from the list of all Runners that are
 allowed to run this project.
+标签用于从允许运行此项目的所有runner列表中选择特定的runner。
 
 During the registration of a Runner, you can specify the Runner's tags, for
 example `ruby`, `postgres`, `development`.
+在注册Runner的过程中，你可以指定Runner的标签，例如ruby，postgres，development。
 
 `tags` allow you to run jobs with Runners that have the specified tags
 assigned to them:
+标签允许您使用分配有指定标签的runner运行作业：
 
 ```yaml
 job:
@@ -622,21 +642,25 @@ job:
 
 The specification above, will make sure that `job` is built by a Runner that
 has both `ruby` AND `postgres` tags defined.
+上面的规范将确保作业由一个Runner构建，该Runner同时定义了ruby和postgres标签。
 
-### allow_failure
+### allow_failure 允许失败
 
 `allow_failure` is used when you want to allow a job to fail without impacting
 the rest of the CI suite. Failed jobs don't contribute to the commit status.
+allow_failure用于允许一个作业失败而不影响CI套件其余部分。 失败的作业不参与提交状态。
 
 When enabled and the job fails, the pipeline will be successful/green for all
 intents and purposes, but a "CI build passed with warnings" message  will be
 displayed on the merge request or commit or job page. This is to be used by
 jobs that are allowed to fail, but where failure indicates some other (manual)
 steps should be taken elsewhere.
+当启用allow_failure并且作业失败时，该pipeline的状态将无条件是successful/green，但merge request或提交或作业页面将显示“CI构建通过但带警告”的信息。这就是允许作业失败，而失败的地方将显示需执行其他的步骤（手工）。
 
 In the example below, `job1` and `job2` will run in parallel, but if `job1`
 fails, it will not stop the next stage from running, since it's marked with
 `allow_failure: true`:
+在以下的例子当中，`job1`和`job2`将并行运行，但如果`job1`失败，它将不会影响下一阶段的运行，因为它将标记为：`allow_failure: true`：
 
 ```yaml
 job1:
@@ -660,18 +684,19 @@ job3:
 
 `when` is used to implement jobs that are run in case of failure or despite the
 failure.
-
+when用于作业失败或尽管失败的后续处理。
 `when` can be set to one of the following values:
+when可设置为以下列出的值：
 
 1. `on_success` - execute job only when all jobs from prior stages
-    succeed. This is the default.
+    succeed. This is the default.--仅当前一阶段所有作业都成功时才执行此作业
 1. `on_failure` - execute job only when at least one job from prior stages
-    fails.
-1. `always` - execute job regardless of the status of jobs from prior stages.
+    fails.--仅当前一阶段只是一个作业失败时才执行作业
+1. `always` - execute job regardless of the status of jobs from prior stages.--不管前一阶段作业的状态是什么，都执行作业
 1. `manual` - execute job manually (added in GitLab 8.10). Read about
-    [manual actions](#manual-actions) below.
+    [manual actions](#manual-actions) below.--手工执行作业。（自8.10新增）可阅读下面的手工执行部分。
 
-For example:
+For example 打个比方:
 
 ```yaml
 stages:
@@ -711,60 +736,71 @@ cleanup_job:
 ```
 
 The above script will:
+以上脚本将：
 
-1. Execute `cleanup_build_job` only when `build_job` fails.
+1. Execute `cleanup_build_job` only when `build_job` fails.只有当build_job失败时才执行cleanup_build_job；
 2. Always execute `cleanup_job` as the last step in pipeline regardless of
-   success or failure.
-3. Allow you to manually execute `deploy_job` from GitLab's UI.
+   success or failure.不管pipeline失败与否，总是执行 cleanup_job作业；
+3. Allow you to manually execute `deploy_job` from GitLab's UI.允许你在GitLab的UI页面手工执行deploy_job。
 
-#### Manual actions
+#### Manual actions 手工执行
 
-> Introduced in GitLab 8.10.
-> Blocking manual actions were introduced in GitLab 9.0
-> Protected actions were introduced in GitLab 9.2
+> Introduced in GitLab 8.10. 自Gitlab 8.10引入手工执行功能
+> Blocking manual actions were introduced in GitLab 9.0 自GitLab 9.0引入锁定手工执行功能
+> Protected actions were introduced in GitLab 9.2 子GitLab 9.2引入包含操作（protected actions）
 
 Manual actions are a special type of job that are not executed automatically;
 they need to be explicitly started by a user. Manual actions can be started
 from pipeline, build, environment, and deployment views.
+手工执行是针对不自动执行的作业；这些作业需要通过用户显式启动。手工执行可从pipeline、构建、环境和部署视图启动。
 
 An example usage of manual actions is deployment to production.
+一个手工执行作业的例子就是部署到生产环境。
 
 Read more at the [environments documentation][env-manual].
+详情可在环境文档中可读。
 
 Manual actions can be either optional or blocking. Blocking manual action will
 block execution of the pipeline at stage this action is defined in. It is
 possible to resume execution of the pipeline when someone executes a blocking
 manual actions by clicking a _play_ button.
+手工执行是可选项，也可以锁定。锁定手工操作将锁定pipeline中定义了锁住的阶段的执行。当某人通过点击_play_执行了一个锁定手工操作，可恢复该pipeline的执行。
 
 When pipeline is blocked it will not be merged if Merge When Pipeline Succeeds
 is set. Blocked pipelines also do have a special status, called _manual_.
+当pipeline被锁定，尽管Pipeline设置为成功，该Merge不会被合并。被锁定的pipeline确实还有个特殊的状态，叫_manual_。
 
 Manual actions are non-blocking by default. If you want to make manual action
 blocking, it is necessary to add `allow_failure: false` to the job's definition
 in `.gitlab-ci.yml`.
+手工操作默认是非锁定的。如果你想是手工操作被锁定，那必须在`.gitlab-ci.yml`定义该作业时添加`allow_failure: false`的设置。
 
 Optional manual actions have `allow_failure: true` set by default.
+可选的手工操作默认是`allow_failure: true`。
 
-**Statuses of optional actions do not contribute to overall pipeline status.**
+**Statuses of optional actions do not contribute to overall pipeline status.可选操作的状态不会影响pileline的整体状态**
 
 **Manual actions are considered to be write actions, so permissions for
 protected branches are used when user wants to trigger an action. In other
 words, in order to trigger a manual action assigned to a branch that the
-pipeline is running for, user needs to have ability to merge to this branch.**
+pipeline is running for, user needs to have ability to merge to this branch.
+手工操作被任务是写操作，因此当用户想触发一个操作时，请善用保护分支的访问权限。换句话说，为了触发一个pipeline正在服务的分支的手工操作，用户需要有该分支的合并权限。？？**
 
-### environment
+### environment 环境
 
 >
 **Notes:**
-- Introduced in GitLab 8.9.
+- Introduced in GitLab 8.9. 自GitLab 8.9引入环境的说法
 - You can read more about environments and find more examples in the
-  [documentation about environments][environment].
+  [documentation about environments][environment]. 读者可在链接中获取关于环境及其用法的例子。
 
 `environment` is used to define that a job deploys to a specific environment.
 If `environment` is specified and no environment under that name exists, a new
 one will be created automatically.
+`environment`用户定义一个部署到指定环境的作业。如果`environment`已被指定，并且没有同名的环境，将自动创建一个新的环境。
 
 In its simplest form, the `environment` keyword can be defined like:
+`environment`关键词可以下面简化的格式进行定义：
 
 ```yaml
 deploy to production:
@@ -776,20 +812,22 @@ deploy to production:
 
 In the above example, the `deploy to production` job will be marked as doing a
 deployment to the `production` environment.
+在上面的例子中，`deploy to production`作业将被标记为整治部署到`production`环境
 
-#### environment:name
+#### environment:name --环境名
 
 >
 **Notes:**
-- Introduced in GitLab 8.11.
+- Introduced in GitLab 8.11.--自GitLab 8.11引入
 - Before GitLab 8.11, the name of an environment could be defined as a string like
   `environment: production`. The recommended way now is to define it under the
-  `name` keyword.
+  `name` keyword.GitLab 8.11之前，环境名可以定义成 `environment: production'这样的字符串。但现在比较推荐读者将其定义到`name`关键词下。
 - The `name` parameter can use any of the defined CI variables,
   including predefined, secure variables and `.gitlab-ci.yml` [`variables`](#variables).
-  You however cannot use variables defined under `script`.
+  You however cannot use variables defined under `script`. `name`参数可使用任何一定义的CI变量，包括预定义的、安全变量和`.gitlab-ci.yml`的变量。然而的是，你不能使用定义在`script`下的变量。
 
 The `environment` name can contain:
+`environment`的名称可包括：
 
 - letters
 - digits
@@ -803,10 +841,12 @@ The `environment` name can contain:
 
 Common names are `qa`, `staging`, and `production`, but you can use whatever
 name works with your workflow.
+一般`environment`会定义为`qa`, `staging`, 和 `production`，但你可使用任何的名称。
 
 Instead of defining the name of the environment right after the `environment`
 keyword, it is also possible to define it as a separate value. For that, use
 the `name` keyword under `environment`:
+与其在`environment`关键字隔壁定义该环境名，还可以将其定义为一个分开的值。对此在那个在`environment`下使用`name`关键词。
 
 ```yaml
 deploy to production:
@@ -816,23 +856,26 @@ deploy to production:
     name: production
 ```
 
-#### environment:url
+#### environment:url 环境链接
 
 >
 **Notes:**
-- Introduced in GitLab 8.11.
+- Introduced in GitLab 8.11.-自GitLab 8.11引入
 - Before GitLab 8.11, the URL could be added only in GitLab's UI. The
-  recommended way now is to define it in `.gitlab-ci.yml`.
+  recommended way now is to define it in `.gitlab-ci.yml`.在GitLab 8.11之前，URL可在UI界面中添加。而现在推荐读者在`.gitlab-ci.yml`文件中定义。
 - The `url` parameter can use any of the defined CI variables,
   including predefined, secure variables and `.gitlab-ci.yml` [`variables`](#variables).
   You however cannot use variables defined under `script`.
+  'url'参数可以使用已定义的CI变量的任何值，包括预定义、安全变量和`.gitlab-ci.yml`中定义的变量。然而，你不能再url中使用在`script`下定义的变量。
 
 This is an optional value that when set, it exposes buttons in various places
 in GitLab which when clicked take you to the defined URL.
+这是可选设置项，GitLab中有多个按钮可连接到设置url。
 
 In the example below, if the job finishes successfully, it will create buttons
 in the merge requests and in the environments/deployments pages which will point
 to `https://prod.example.com`.
+在以下的例子中，如果该作业成功执行，将在merge request和environments/deployments页面中创建按钮，该按钮可指向`https://prod.example.com`。
 
 ```yaml
 deploy to production:
