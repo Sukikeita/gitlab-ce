@@ -1,20 +1,24 @@
-# Configuration of your jobs with .gitlab-ci.yml
+# Configuration of your jobs with .gitlab-ci.yml 使用.gitlab-ci.yml配置你的作业
 
 This document describes the usage of `.gitlab-ci.yml`, the file that is used by
 GitLab Runner to manage your project's jobs.
+本文档描述了.gitlab-ci.yml的使用，GitLab Runner使用该文件管理项目的作业。
 
 If you want a quick introduction to GitLab CI, follow our
 [quick start guide](../quick_start/README.md).
+如果您想快速了解GitLab CI，请参阅我们的快速入门指南。
 
 ## .gitlab-ci.yml
 
 From version 7.12, GitLab CI uses a [YAML](https://en.wikipedia.org/wiki/YAML)
 file (`.gitlab-ci.yml`) for the project configuration. It is placed in the root
 of your repository and contains definitions of how your project should be built.
+从版本7.12开始，GitLab CI使用YAML文件（.gitlab-ci.yml）作为项目配置。 它被放置在你的仓库的根目录，并包含你的项目应该如何构建的定义。
 
 The YAML file defines a set of jobs with constraints stating when they should
 be run. The jobs are defined as top-level elements with a name and always have
 to contain at least the `script` clause:
+YAML文件定义了一系列约束条件的作业，说明它们应该在何时运行。 作业被定义为具有名称的顶层元素，并且始终必须至少包含`script`子句：
 
 ```yaml
 job1:
@@ -26,16 +30,20 @@ job2:
 
 The above example is the simplest possible CI configuration with two separate
 jobs, where each of the jobs executes a different command.
+以上示例是具有两个独立作业的最简单的CI配置，其中每个作业执行不同的命令。
 
 Of course a command can execute code directly (`./configure;make;make install`)
 or run a script (`test.sh`) in the repository.
+当然，一个命令可以直接执行代码（./configure;make; make install）或者运行一个脚本（test.sh）到仓库中。
 
 Jobs are picked up by [Runners](../runners/README.md) and executed within the
 environment of the Runner. What is important, is that each job is run
 independently from each other.
+作业是由runner拿起并在runner的环境下执行的。 重要的是，每项工作都是相互独立的。
 
 The YAML syntax allows for using more complex job specifications than in the
 above example:
+YAML语法允许使用比上例更复杂的作业规范：
 
 ```yaml
 image: ruby:2.1
@@ -64,55 +72,65 @@ job1:
 ```
 
 There are a few reserved `keywords` that **cannot** be used as job names:
+有几个保留的关键字不能用作作业名称：
+
 
 | Keyword       | Required | Description |
 |---------------|----------|-------------|
-| image         | no | Use docker image, covered in [Use Docker](../docker/README.md) |
-| services      | no | Use docker services, covered in [Use Docker](../docker/README.md) |
-| stages        | no | Define build stages |
-| types         | no | Alias for `stages` (deprecated) |
-| before_script | no | Define commands that run before each job's script |
-| after_script  | no | Define commands that run after each job's script |
-| variables     | no | Define build variables |
-| cache         | no | Define list of files that should be cached between subsequent runs |
+| image         | no | Use docker image, covered in [Use Docker](../docker/README.md)使用Docker镜像，可查看链接中的docker使用部分 |
+| services      | no | Use docker services, covered in [Use Docker](../docker/README.md)使用Docker服务，可查看链接中的docker使用部分 |
+| stages        | no | Define build stages 定义构建阶段 |
+| types         | no | Alias for `stages` (deprecated)`stages`的别称（已启用） |
+| before_script | no | Define commands that run before each job's script 用于定义运行每个作业脚本前要执行的命令 |
+| after_script  | no | Define commands that run after each job's script 用于定义运行每个作业脚本后要执行的命令 |
+| variables     | no | Define build variables 定义构建变量 |
+| cache         | no | Define list of files that should be cached between subsequent runs 定义应在后续运行之间进行缓存的文件列表 |
 
-### image and services
+### image and services 镜像与服务
 
 This allows to specify a custom Docker image and a list of services that can be
 used for time of the job. The configuration of this feature is covered in
 [a separate document](../docker/README.md).
+这允许指定一个自定义的Docker镜像和一个可用于作业时间的服务列表。 该功能的配置在链接的文档中单独进行了介绍。
 
 ### before_script
 
 `before_script` is used to define the command that should be run before all
 jobs, including deploy jobs, but after the restoration of artifacts. This can
 be an array or a multi-line string.
+before_script用于定义在所有作业（包括部署作业）之前应该运行的命令，但是在恢复工件之后。 这可以是一个数组或一个多行字符串。
 
 ### after_script
 
-> Introduced in GitLab 8.7 and requires Gitlab Runner v1.2
+> Introduced in GitLab 8.7 and requires Gitlab Runner v1.2 在GitLab 8.7中引入，需要Gitlab Runner v1.2
 
 `after_script` is used to define the command that will be run after for all
 jobs. This has to be an array or a multi-line string.
+after_script用于定义将在所有作业之后运行的命令。 这必须是一个数组或一个多行字符串。
 
 > **Note:**
 The `before_script` and the main `script` are concatenated and run in a single context/container.
 The `after_script` is run separately, so depending on the executor, changes done
 outside of the working tree might not be visible, e.g. software installed in the
 `before_script`.
+before_script和主`script`是连接在一起的，只能在一个上下文/容器中运行。 after_script是分开运行的，所以根据执行者（executor）的不同，在工作树之外完成的改变可能是不可见的。 例如，软件安装在before_script中。
 
-### stages
+### stages 阶段
 
 `stages` is used to define stages that can be used by jobs.
 The specification of `stages` allows for having flexible multi stage pipelines.
+`stages`被用来定义可以被作业使用的阶段。`stages`的规格允许具有灵活的多级管线。
 
 The ordering of elements in `stages` defines the ordering of jobs' execution:
+`stages`元素的排序定义了作业执行的顺序：
 
-1. Jobs of the same stage are run in parallel.
+1. Jobs of the same stage are run in parallel. 同一阶段的工作是并行的。
 1. Jobs of the next stage are run after the jobs from the previous stage
-   complete successfully.
+   complete successfully.下一阶段的工作是在上一阶段的工作顺利完成之后运行的。
+
 
 Let's consider the following example, which defines 3 stages:
+我们来看下面的例子，它定义了3个阶段：
 
 ```yaml
 stages:
@@ -121,33 +139,37 @@ stages:
   - deploy
 ```
 
-1. First, all jobs of `build` are executed in parallel.
-1. If all jobs of `build` succeed, the `test` jobs are executed in parallel.
-1. If all jobs of `test` succeed, the `deploy` jobs are executed in parallel.
-1. If all jobs of `deploy` succeed, the commit is marked as `passed`.
+1. First, all jobs of `build` are executed in parallel. 首先，构建阶段的所有作业都是并行执行的。
+1. If all jobs of `build` succeed, the `test` jobs are executed in parallel. 如果构建阶段的所有作业都成功，则测试阶段的作业将并行执行。
+1. If all jobs of `test` succeed, the `deploy` jobs are executed in parallel. 如果所有测试阶段的作业都成功，则并行执行部署阶段的作业。
+1. If all jobs of `deploy` succeed, the commit is marked as `passed`.如果所有部署阶段的作业成功，则该提交被标记为已通过（`passed`）。
 1. If any of the previous jobs fails, the commit is marked as `failed` and no
-   jobs of further stage are executed.
+   jobs of further stage are executed. 如果之前的任务失败，则提交被标记为失败，并且不执行进一步阶段的任务。
 
 There are also two edge cases worth mentioning:
+还有两个边缘案例值得一提：
 
 1. If no `stages` are defined in `.gitlab-ci.yml`, then the `build`,
-   `test` and `deploy` are allowed to be used as job's stage by default.
-2. If a job doesn't specify a `stage`, the job is assigned the `test` stage.
+   `test` and `deploy` are allowed to be used as job's stage by default.如果在.gitlab-ci.yml中没有定义阶段，那么默认允许`build`,
+   `test` 和 `deploy`作为作业的阶段。
 
-### types
+2. If a job doesn't specify a `stage`, the job is assigned the `test` stage. 如果一个工作没有指定一个阶段，那么这个工作被分配到测试`test`阶段。
 
-> Deprecated, and could be removed in one of the future releases. Use [stages](#stages) instead.
+### types 类型（已弃用，请使用stages）
+
+> Deprecated, and could be removed in one of the future releases. Use [stages](#stages) instead. 
 
 Alias for [stages](#stages).
 
-### variables
+### variables 变量
 
-> Introduced in GitLab Runner v0.5.0.
+> Introduced in GitLab Runner v0.5.0. 在GitLab Runner v0.5.0中引入。
 
 GitLab CI allows you to add variables to `.gitlab-ci.yml` that are set in the
 job environment. The variables are stored in the Git repository and are meant
 to store non-sensitive project configuration, for example:
-
+GitLab CI允许您将变量添加到.gitlab-ci.yml中，用于设置作业的环境变量。 这些变量存储在Git仓库中，用于存储非敏感的项目配置，例如：
+设置数据库url变量：
 ```yaml
 variables:
   DATABASE_URL: "postgres://postgres@postgres/my_database"
@@ -155,40 +177,46 @@ variables:
 
 >**Note:**
 Integers (as well as strings) are legal both for variable's name and value.
-Floats are not legal and cannot be used.
+Floats are not legal and cannot be used.注意：整数（以及字符串）对变量的名称和值都是合法的。 浮点数是不合法的，不能使用。
+
 
 These variables can be later used in all executed commands and scripts.
 The YAML-defined variables are also set to all created service containers,
 thus allowing to fine tune them. Variables can be also defined on a
 [job level](#job-variables).
+这些变量稍后可以在所有执行的命令和脚本（script）中使用。 YAML定义的变量也被设置为所有创建的服务容器，从而允许对其进行微调。 变量也可以在作业级别上定义。
 
 Except for the user defined variables, there are also the ones set up by the
 Runner itself. One example would be `CI_COMMIT_REF_NAME` which has the value of
 the branch or tag name for which project is built. Apart from the variables
 you can set in `.gitlab-ci.yml`, there are also the so called secret variables
 which can be set in GitLab's UI.
+除了用户定义的变量外，还有由Runner自己设置的变量。 一个例子是CI_COMMIT_REF_NAME，它具有为其构建项目的分支或标签名称的值。 除了可以在.gitlab-ci.yml中设置的变量之外，还可以在GitLab的用户界面中设置所谓的秘密变量。
 
-[Learn more about variables.][variables]
+[Learn more about variables.][variables] 关于变量的更多知识，请查看链接。
 
-### cache
+### cache -缓存
 
 >
 **Notes:**
-- Introduced in GitLab Runner v0.7.0.
-- Prior to GitLab 9.2, caches were restored after artifacts.
-- From GitLab 9.2, caches are restored before artifacts.
+- Introduced in GitLab Runner v0.7.0. 在GitLab Runner v0.7.0中引入。
+- Prior to GitLab 9.2, caches were restored after artifacts. 在GitLab 9.2之前，缓存在工件之后被恢复。
+- From GitLab 9.2, caches are restored before artifacts. 在GitLab 9.2中，缓存在工件之前被恢复。
 
 `cache` is used to specify a list of files and directories which should be
 cached between jobs. You can only use paths that are within the project
 workspace.
+`cache`（缓存）用于指定应在作业之间缓存的文件和目录的列表。 您只能使用项目工作区内的路径。
 
 **By default caching is enabled and shared between pipelines and jobs,
-starting from GitLab 9.0**
+starting from GitLab 9.0** 默认情况下，从GitLab 9.0开始，在管道和作业之间启用和共享缓存
 
 If `cache` is defined outside the scope of jobs, it means it is set
 globally and all jobs will use that definition.
+如果缓存是在作业范围之外定义的，则表示它是全局设置的，所有作业将使用该定义。
 
 Cache all files in `binaries` and `.config`:
+缓存binaries/的文件和.config文件：
 
 ```yaml
 rspec:
@@ -200,6 +228,7 @@ rspec:
 ```
 
 Cache all Git untracked files:
+缓存所有Git未跟踪文件：
 
 ```yaml
 rspec:
@@ -209,6 +238,7 @@ rspec:
 ```
 
 Cache all Git untracked files and files in `binaries`:
+缓存所有Git未跟踪的文件和在binaries/中的文件：
 
 ```yaml
 rspec:
@@ -221,6 +251,7 @@ rspec:
 
 Locally defined cache overrides globally defined options. The following `rspec`
 job will cache only `binaries/`:
+本地定义的缓存将覆盖全局定义的选项。 以下rspec作业只会缓存binaries/的文件：
 
 ```yaml
 cache:
@@ -237,34 +268,41 @@ rspec:
 
 Note that since cache is shared between jobs, if you're using different
 paths for different jobs, you should also set a different **cache:key**
-otherwise cache content can be overwritten.
+otherwise cache content can be overwritten.请注意，由于缓存是在作业之间共享的，如果您为不同的作业使用不同的路径，则还应该设置不同的**cache:key**，否则可能会覆盖缓存内容。
 
 The cache is provided on a best-effort basis, so don't expect that the cache
 will be always present. For implementation details, please check GitLab Runner.
+缓存是尽力而为的，所以不要指望缓存会一直存在。 有关实现细节，请检查GitLab Runner。
 
 #### cache:key
 
-> Introduced in GitLab Runner v1.0.0.
+> Introduced in GitLab Runner v1.0.0.在GitLab Runner v1.0.0中引入。
 
 The `key` directive allows you to define the affinity of caching
 between jobs, allowing to have a single cache for all jobs,
 cache per-job, cache per-branch or any other way you deem proper.
+key指令允许您定义作业之间的缓存关系，允许为所有作业提供单个缓存、单个作业缓存，单个分支缓存或任何其他您认为合适的方式。
+
 
 This allows you to fine tune caching, allowing you to cache data between
 different jobs or even different branches.
+这使您可以微调缓存，允许您在不同的作业甚至不同的分支之间缓存数据。
 
 The `cache:key` variable can use any of the [predefined variables](../variables/README.md).
+cache：key变量可以使用任何预定义的变量。
 
 The default key is **default** across the project, therefore everything is
 shared between each pipelines and jobs by default, starting from GitLab 9.0.
+默认的key是整个项目的**default**，因此默认情况下，每个管道和作业之间的所有内容都是共享的，从GitLab 9.0开始。
 
->**Note:** The `cache:key` variable cannot contain the `/` character.
+>**Note:** The `cache:key` variable cannot contain the `/` character. 注意：cache：key变量不能包含/字符。
+
 
 ---
 
-**Example configurations**
+**Example configurations** 例子
 
-To enable per-job caching:
+To enable per-job caching: 为每个作业启动cache
 
 ```yaml
 cache:
@@ -272,7 +310,7 @@ cache:
   untracked: true
 ```
 
-To enable per-branch caching:
+To enable per-branch caching: 启动每个分支缓存：
 
 ```yaml
 cache:
@@ -280,7 +318,7 @@ cache:
   untracked: true
 ```
 
-To enable per-job and per-branch caching:
+To enable per-job and per-branch caching: 启动作业缓存和分支缓存：
 
 ```yaml
 cache:
@@ -288,7 +326,7 @@ cache:
   untracked: true
 ```
 
-To enable per-branch and per-stage caching:
+To enable per-branch and per-stage caching: 弃用分支缓存和阶段缓存
 
 ```yaml
 cache:
@@ -298,6 +336,7 @@ cache:
 
 If you use **Windows Batch** to run your shell scripts you need to replace
 `$` with `%`:
+如果你使用Windows Batch来运行你的shell脚本，你需要用％替换$：
 
 ```yaml
 cache:
@@ -307,6 +346,7 @@ cache:
 
 If you use **Windows PowerShell** to run your shell scripts you need to replace
 `$` with `$env:`:
+如果您使用Windows PowerShell运行您的shell脚本，则需要使用`$env:`替换$:
 
 ```yaml
 cache:
@@ -316,17 +356,21 @@ cache:
 
 ### cache:policy
 
-> Introduced in GitLab 9.4.
+> Introduced in GitLab 9.4.在GitLab 9.4中引入。
 
 The default behaviour of a caching job is to download the files at the start of
 execution, and to re-upload them at the end. This allows any changes made by the
 job to be persisted for future runs, and is known as the `pull-push` cache
 policy.
+作业缓存的默认行为是在开始执行时下载文件，并在最后重新上传文件。 这使得作业所做的任何更改都可以保留以供将来运行，并称为`pull-push`缓存策略。
+
 
 If you know the job doesn't alter the cached files, you can skip the upload step
 by setting `policy: pull` in the job specification. Typically, this would be
 twinned with an ordinary cache job at an earlier stage to ensure the cache
 is updated from time to time:
+
+如果您知道作业不会更改缓存的文件，则可以通过在作业规范设置`policy: pull`来跳过上载步骤。 通常情况下，这将与较早阶段的普通缓存作业相结合，以确保缓存不时更新：
 
 ```yaml
 stages:
@@ -356,16 +400,20 @@ rspec:
 This helps to speed up job execution and reduce load on the cache server,
 especially when you have a large number of cache-using jobs executing in
 parallel.
+这有助于加快作业执行并减少缓存服务器上的负载，特别是当您有大量并行执行的缓存使用作业时。
 
 Additionally, if you have a job that unconditionally recreates the cache without
 reference to its previous contents, you can use `policy: push` in that job to
 skip the download step.
+另外，如果您的作业无条件地重新创建缓存而不参考其以前的内容，则可以使用policy：push作为跳过下载步骤。
 
-## Jobs
+## Jobs 作业
 
 `.gitlab-ci.yml` allows you to specify an unlimited number of jobs. Each job
 must have a unique name, which is not one of the keywords mentioned above.
 A job is defined by a list of parameters that define the job behavior.
+
+.gitlab-ci.yml允许您指定无限数量的作业。 每个工作必须有一个独特的名字，这不是上面提到的关键字之一。 作业由定义作业行为的参数列表定义。
 
 ```yaml
 job_name:
@@ -408,6 +456,7 @@ job_name:
 ### script
 
 `script` is a shell script which is executed by the Runner. For example:
+`script`是一个由Runner执行的shell脚本。 例如：
 
 ```yaml
 job:
@@ -415,6 +464,7 @@ job:
 ```
 
 This parameter can also contain several commands using an array:
+这个参数也可以包含几个使用数组的命令：
 
 ```yaml
 job:
