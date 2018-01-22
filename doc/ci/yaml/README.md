@@ -537,9 +537,9 @@ are executed in `parallel`. For more info about the use of `stage` please check
 jobs are created:
 `only` 和 `except`是用于在作业创建时设置作业策略限制的两个参数。
 
-1. `only` defines the names of branches and tags for which the job will run.`only`定义作业要运行的分支和标签的名称。
+1. `only` defines the names of branches and tags for which the job will run.`only`定义触发作业的分支和标签的名称。
 2. `except` defines the names of branches and tags for which the job will
-    **not** run.`except`定了了作业将不运行的分支名和标签名。
+    **not** run.`except`定义了不触发作业的分支名和标签名。
 
 There are a few rules that apply to the usage of job policy:
 使用作业侧策略有以下规则：
@@ -547,28 +547,32 @@ There are a few rules that apply to the usage of job policy:
 * `only` and `except` are inclusive. If both `only` and `except` are defined
    in a job specification, the ref is filtered by `only` and `except`.`only` 和 `except`是广泛的。 如果仅在作业规范中定义了`only` 和 `except`，则ref由 `only` 和 `except`进行过滤。
 
-* `only` and `except` allow the use of regular expressions. `only` 和 `except`允许使用正则表达式
+* `only` and `except` allow the use of regular expressions.
+`only` 和 `except`允许使用正则表达式
 * `only` and `except` allow to specify a repository path to filter jobs for
-   forks.`only` 和 `except`运行指定一个存储库路径以过滤要复刻的作业。
+   forks.
+   `only` 和 `except`允许指定一个存储库路径以过滤要复刻的作业。
 
 In addition, `only` and `except` allow the use of special keywords:
 除此之外，`only` 和 `except`允许使用一下特殊关键词：
 
 | **Value** |  **Description**  |
 | --------- |  ---------------- |
-| `branches`  | When a branch is pushed.当推送分支时可使用  |
-| `tags`      | When a tag is pushed.当推送tag（基线）时可使用  |
+| `branches`  | When a branch is pushed.当推送分支时可触发作业  |
+| `tags`      | When a tag is pushed.当推送tag（基线）时可触发  |
 | `api`       | When pipeline has been triggered by a second pipelines API (not triggers API). 当pipeline由另一个pipelines API触发时 |
-| `external`  | When using CI services other than GitLab.当使用GitLab以外的CI服务时可用 |
+| `external`  | When using CI services other than GitLab.当使用GitLab以外的CI服务时可触发 |
 | `pipelines` | For multi-project triggers, created using the API with `CI_JOB_TOKEN`.对于多项目触发器使用`CI_JOB_TOKEN创建？？ |
 | `pushes`    | Pipeline is triggered by a `git push` by the user.用户通过`git push`触发Pileline |
-| `schedules` | For [scheduled pipelines][schedules].对于计划管道 |
+| `schedules` | For [scheduled pipelines][schedules].对于计划管道可触发作业 |
 | `triggers`  | For pipelines created using a trigger token.对于使用触发器token创建的Pipelines |
 | `web`       | For pipelines created using **Run pipeline** button in GitLab UI (under your project's **Pipelines**).对于使用**Run pipeline**（在GitLab UI）按钮创建的Pipelines |
 
-In the example below, `job` will run only for refs that start with `issue-`,
+In the example below, `job` will run only for refs that start with `
+-`,
 whereas all branches will be skipped:
-在下面的例子中，job只会运行以issue-开头的ref，而所有分支将被跳过：
+
+在下面的例子中，job只会为以issue-开头的ref运行，而对所有分支将跳过：
 
 ```yaml
 job:
@@ -582,7 +586,8 @@ job:
 
 In this example, `job` will run only for refs that are tagged, or if a build is
 explicitly requested via an API trigger or a [Pipeline Schedule][schedules]:
-在这个例子中，作业将只运行标记的ref，或者通过API触发器或Pipeline Schedule显式请求构建：
+
+在这个例子中，作业将只为已标记的ref，或者通过API触发器显式请求构建或Pipeline Schedule情况下触发：
 
 ```yaml
 job:
@@ -595,6 +600,7 @@ job:
 
 The repository path can be used to have jobs executed only for the parent
 repository and not forks:
+
 存储库路径可用于仅为父存储库执行作业，而不是分叉（forks）：
 
 ```yaml
@@ -607,26 +613,30 @@ job:
 
 The above example will run `job` for all branches on `gitlab-org/gitlab-ce`,
 except master.
-上面的例子将运行gitlab-org/gitlab-ce上除master之外的所有分支的作业。
+
+上面的例子中，gitlab-org/gitlab-ce上除master之外的所有分支可运行（触发）作业。
 
 ### only and except (complex) 进阶的only and except
 
-> Introduced in GitLab 10.0在GitLab 10.0中引入
+> Introduced in GitLab 10.0 在GitLab 10.0中引入
 
 > This an _alpha_ feature, and it it subject to change at any time without
   prior notice!这是一个alpha功能，它随时可能更改，恕不另行通知！
 
 Since GitLab 10.0 it is possible to define a more elaborate only/except job
 policy configuration.
-由于GitLab 10.0可以定义一个更详细的only/except作业策略配置。
+
+自GitLab 10.0，读者可以定义一个更详细的only/except作业策略配置。
 
 GitLab now supports both, simple and complex strategies, so it is possible to
 use an array and a hash configuration scheme.
+
 GitLab现在支持简单和复杂的策略，所以可以使用数组和哈希配置方案。
 
 Two keys are now available: `refs` and `kubernetes`. Refs strategy equals to
 simplified only/except configuration, whereas kubernetes strategy accepts only
 `active` keyword.
+
 现在有两个键：refs和kubernetes。 Refs战略等于仅简化only/except配置，而kubernetes策略只接受`active`关键字。
 
 See the example below. Job is going to be created only when pipeline has been
