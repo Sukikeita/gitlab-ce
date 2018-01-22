@@ -1255,6 +1255,7 @@ for `test:linux` and artifacts from `build:linux`.
 
 The job `deploy` will download artifacts from all previous jobs because of
 the [stage](#stages) precedence:
+`deploy`作业将从前面的作业中下载归档包，由于阶段的优先
 
 ```yaml
 build:osx:
@@ -1288,9 +1289,10 @@ deploy:
   script: make deploy
 ```
 
-### before_script and after_script
+### before_script and after_script 前脚本和后脚本
 
 It's possible to overwrite the globally defined `before_script` and `after_script`:
+可以通过定义`before_script`和`after_script`覆盖全局的
 
 ```yaml
 before_script:
@@ -1305,20 +1307,24 @@ job:
   - execute this after my script
 ```
 
-### coverage
+### coverage 覆盖率
 
 **Notes:**
-- [Introduced][ce-7447] in GitLab 8.17.
+- [Introduced][ce-7447] in GitLab 8.17.在GitLab 8.17中引入
 
 `coverage` allows you to configure how code coverage will be extracted from the
 job output.
+`coverage`允许你配置代码覆盖率是如何从作业输出中提取。
 
 Regular expressions are the only valid kind of value expected here. So, using
 surrounding `/` is mandatory in order to consistently and explicitly represent
 a regular expression string. You must escape special characters if you want to
 match them literally.
+正则表达式是这里唯一有效的值类型。 所以，使用周围的`/`是必须的，以便一致和明确地表示一个正则表达式字符串。 如果你想从字面上匹配，你必须转义特殊字符。
+
 
 A simple example:
+举个简单的例子：
 
 ```yaml
 job1:
@@ -1326,22 +1332,26 @@ job1:
   coverage: '/Code coverage: \d+\.\d+/'
 ```
 
-### retry
+### retry 重启
 
 **Notes:**
-- [Introduced][ce-3442] in GitLab 9.5.
+- [Introduced][ce-3442] in GitLab 9.5.在GitLab 9.5中引入
 
 `retry` allows you to configure how many times a job is going to be retried in
 case of a failure.
+`retry` 允许你配置作业被重新启动的次数，当作业失败时。
 
 When a job fails, and has `retry` configured it is going to be processed again
 up to the amount of times specified by the `retry` keyword.
+当一个作业失败，并且设置了`retry` 的次数，这将从新跑这个作业，直到`retry` 次数满。
 
 If `retry` is set to 2, and a job succeeds in a second run (first retry), it won't be retried
 again. `retry` value has to be a positive integer, equal or larger than 0, but
 lower or equal to 2 (two retries maximum, three runs in total).
+如果`retry` 设置为2，并且作业在第二次重跑后成功（第一次是重启），此作业将不在重跑。`retry` 的值必须是一个正整数，大于或等于0，但小于等于2（重启次数的最大值为2，总共将允许3次）。
 
 A simple example:
+举个简单例子：
 
 ```yaml
 test:
@@ -1349,21 +1359,25 @@ test:
   retry: 2
 ```
 
-## Git Strategy
+## Git Strategy Git策略
 
 > Introduced in GitLab 8.9 as an experimental feature.  May change or be removed
   completely in future releases. `GIT_STRATEGY=none` requires GitLab Runner
-  v1.7+.
+  v1.7+.自GitLab 8.9作为外部功能引入。可能会在未来的版本中变更或完全移除。`GIT_STRATEGY=none`要求 GitLab Runner
+  v1.7+的版本。
 
 You can set the `GIT_STRATEGY` used for getting recent application code, either
 in the global [`variables`](#variables) section or the [`variables`](#job-variables)
 section for individual jobs. If left unspecified, the default from project
 settings will be used.
+你可以设置`GIT_STRATEGY`用于获取最新的应用代码，要么在全局变量或作业变量设置。如果未指定具体的值，默认使用项目的设置。
 
 There are three possible values: `clone`, `fetch`, and `none`.
+`GIT_STRATEGY` 有三个可用的值：`clone`, `fetch`, and `none`。
 
 `clone` is the slowest option. It clones the repository from scratch for every
 job, ensuring that the project workspace is always pristine.
+clone是最慢的选项，它从头开始为每个作业克隆存储库，确保项目工作空间始终是原始的。
 
 ```yaml
 variables:
@@ -1373,6 +1387,7 @@ variables:
 `fetch` is faster as it re-uses the project workspace (falling back to `clone`
 if it doesn't exist). `git clean` is used to undo any changes made by the last
 job, and `git fetch` is used to retrieve commits made since the last job ran.
+fetch是最快的，因为它复用了该项目工作空间（如果本地无工作空间，将退到clone）。git clean 用于撤销最新作业所做的变更，而git fetch用于获取自上一次作业运行之后做的提交。
 
 ```yaml
 variables:
@@ -1384,32 +1399,37 @@ variables:
 for jobs that operate exclusively on artifacts (e.g., `deploy`). Git repository
 data may be present, but it is certain to be out of date, so you should only
 rely on files brought into the project workspace from cache or artifacts.
+none还可可复用该项目的工作空间，但跳过所有Git操作（包括GitLab Runner's的预克隆脚本，如果该脚本存在）。这对于专门用于工件的作业（例如`deploy`）最为有用。Git存储库数据可能存在，但肯定的是这些数据是过时的，所以您应该只依赖从缓存或工件带入项目工作区的文件。
+
 
 ```yaml
 variables:
   GIT_STRATEGY: none
 ```
 
-## Git Checkout
+## Git Checkout Git的检出
 
-> Introduced in GitLab Runner 9.3
+> Introduced in GitLab Runner 9.3.在GitLab Runner 9.3引入此命令。
 
 The `GIT_CHECKOUT` variable can be used when the `GIT_STRATEGY` is set to either
 `clone` or `fetch` to specify whether a `git checkout` should be run. If not
 specified, it defaults to true. Like `GIT_STRATEGY`, it can be set in either the
 global [`variables`](#variables) section or the [`variables`](#job-variables)
 section for individual jobs.
+`GIT_CHECKOUT`变量可在`GIT_STRATEGY`设置为clone或fectch以指定`GIT_CHECKOUT`是否允许。如果尚未指定，默认为true。与GIT_STRATEGY类似，单个作业的此变量可在全局变量或作业变量中设置。
 
 If set to `false`, the Runner will:
+如果此变量设置为false，Runner将：
 
 - when doing `fetch` - update the repository and leave working copy on
-  the current revision,
+  the current revision, 当fetch时，更新存储库并让工作副本保持当前的版本（revision）；
 - when doing `clone` - clone the repository and leave working copy on the
-  default branch.
+  default branch.当clone时，克隆存储库并保持工作副本更新到默认分支状态。
 
 Having this setting set to `true` will mean that for both `clone` and `fetch`
 strategies the Runner will checkout the working copy to a revision related
 to the CI pipeline:
+将此变量设置为true将意味着，对于clone和fetch策略，Runner将工作副本checkout到CI pipeline相关的版本：
 
 ```yaml
 variables:
@@ -1420,22 +1440,27 @@ script:
   - git merge $CI_BUILD_REF_NAME
 ```
 
-## Git Submodule Strategy
+## Git Submodule Strategy Git子模块策略
 
-> Requires GitLab Runner v1.10+.
+> Requires GitLab Runner v1.10+.要求GitLab Runner v1.10+的版本
 
 The `GIT_SUBMODULE_STRATEGY` variable is used to control if / how Git
 submodules are included when fetching the code before a build. Like
 `GIT_STRATEGY`, it can be set in either the global [`variables`](#variables)
 section or the [`variables`](#job-variables) section for individual jobs.
+`GIT_SUBMODULE_STRATEGY`变量用于控制在构建之前获取代码时是否包含Git子模块。 像GIT_STRATEGY一样，它可以在全局变量部分或个别作业的变量部分中设置。
+
 
 There are three possible values: `none`, `normal`, and `recursive`:
+`GIT_SUBMODULE_STRATEGY`可使用：`none`, `normal`和 `recursive`
 
 - `none` means that submodules will not be included when fetching the project
   code. This is the default, which matches the pre-v1.10 behavior.
+  none意味着fetch时不包括子模块。none是此变量的默认值，与1.10以前的版本保持一致。
 
 - `normal` means that only the top-level submodules will be included. It is
   equivalent to:
+  normal意味着只包含顶级子模块？？这等同于：
 
     ```
     git submodule sync
@@ -1444,6 +1469,7 @@ There are three possible values: `none`, `normal`, and `recursive`:
 
 - `recursive` means that all submodules (including submodules of submodules)
   will be included. It is equivalent to:
+  recursive意味着fetch时包括所有子模块，这等同于：
 
     ```
     git submodule sync --recursive
@@ -1452,6 +1478,7 @@ There are three possible values: `none`, `normal`, and `recursive`:
 
 Note that for this feature to work correctly, the submodules must be configured
 (in `.gitmodules`) with either:
+注意的是为了让此功能正确运行，该子模块必须配置成以下任意之一：
 
 - the HTTP(S) URL of a publicly-accessible repository, or
 - a relative path to another repository on the same GitLab server. See the
