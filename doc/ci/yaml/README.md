@@ -642,6 +642,7 @@ simplified only/except configuration, whereas kubernetes strategy accepts only
 See the example below. Job is going to be created only when pipeline has been
 scheduled or runs for a `master` branch, and only if kubernetes service is
 active in the project.
+
 看下面的例子。 只有在计划管道或为主分支运行时才会创建作业，并且只有在项目中激活了kubernetes服务时才会创建作业。
 
 ```yaml
@@ -658,11 +659,13 @@ job:
 It is possible to define job variables using a `variables` keyword on a job
 level. It works basically the same way as its [global-level equivalent](#variables),
 but allows you to define job-specific variables.
+
 可以使用作业级别的变量关键字来定义作业变量。 它的工作方式基本上与其全局级别相同，但允许您定义特定于作业的变量。
 
 When the `variables` keyword is used on a job level, it overrides the global YAML
 job variables and predefined ones. To turn off global defined variables
 in your job, define an empty hash:
+
 当在作业级别上使用`variables`关键字时，它将覆盖全局YAML作业变量和预定义变量。 要关闭作业中的全局定义变量，请定义一个空的散列：
 
 ```yaml
@@ -671,20 +674,24 @@ job_name:
 ```
 
 Job variables priority is defined in the [variables documentation][variables].
+
 作业变量优先级在变量文档中定义。
 
 ### tags
 
 `tags` is used to select specific Runners from the list of all Runners that are
 allowed to run this project.
+
 标签用于从允许运行此项目的所有runner列表中选择特定的runner。
 
 During the registration of a Runner, you can specify the Runner's tags, for
 example `ruby`, `postgres`, `development`.
+
 在注册Runner的过程中，你可以指定Runner的标签，例如ruby，postgres，development。
 
 `tags` allow you to run jobs with Runners that have the specified tags
 assigned to them:
+
 标签允许您使用分配有指定标签的runner运行作业：
 
 ```yaml
@@ -696,12 +703,14 @@ job:
 
 The specification above, will make sure that `job` is built by a Runner that
 has both `ruby` AND `postgres` tags defined.
+
 上面的规范将确保作业由一个Runner构建，该Runner同时定义了ruby和postgres标签。
 
 ### allow_failure 允许失败
 
 `allow_failure` is used when you want to allow a job to fail without impacting
 the rest of the CI suite. Failed jobs don't contribute to the commit status.
+
 allow_failure用于允许一个作业失败而不影响CI套件其余部分。 失败的作业不参与提交状态。
 
 When enabled and the job fails, the pipeline will be successful/green for all
@@ -709,11 +718,13 @@ intents and purposes, but a "CI build passed with warnings" message  will be
 displayed on the merge request or commit or job page. This is to be used by
 jobs that are allowed to fail, but where failure indicates some other (manual)
 steps should be taken elsewhere.
+
 当启用allow_failure并且作业失败时，该pipeline的状态将无条件是successful/green，但merge request或提交或作业页面将显示“CI构建通过但带警告”的信息。这就是允许作业失败，而失败的地方将显示需执行其他的步骤（手工）。
 
 In the example below, `job1` and `job2` will run in parallel, but if `job1`
 fails, it will not stop the next stage from running, since it's marked with
 `allow_failure: true`:
+
 在以下的例子当中，`job1`和`job2`将并行运行，但如果`job1`失败，它将不会影响下一阶段的运行，因为它将标记为：`allow_failure: true`：
 
 ```yaml
@@ -738,8 +749,10 @@ job3:
 
 `when` is used to implement jobs that are run in case of failure or despite the
 failure.
+
 when用于作业失败或尽管失败的后续处理。
 `when` can be set to one of the following values:
+
 when可设置为以下列出的值：
 
 1. `on_success` - execute job only when all jobs from prior stages
@@ -806,27 +819,33 @@ The above script will:
 Manual actions are a special type of job that are not executed automatically;
 they need to be explicitly started by a user. Manual actions can be started
 from pipeline, build, environment, and deployment views.
+
 手工执行是针对不自动执行的作业；这些作业需要通过用户显式启动。手工执行可从pipeline、构建、环境和部署视图启动。
 
 An example usage of manual actions is deployment to production.
+
 一个手工执行作业的例子就是部署到生产环境。
 
 Read more at the [environments documentation][env-manual].
+
 详情可在环境文档中可读。
 
 Manual actions can be either optional or blocking. Blocking manual action will
 block execution of the pipeline at stage this action is defined in. It is
 possible to resume execution of the pipeline when someone executes a blocking
 manual actions by clicking a _play_ button.
+
 手工执行是可选项，也可以锁定。锁定手工操作将锁定pipeline中定义了锁住的阶段的执行。当某人通过点击_play_执行了一个锁定手工操作，可恢复该pipeline的执行。
 
 When pipeline is blocked it will not be merged if Merge When Pipeline Succeeds
 is set. Blocked pipelines also do have a special status, called _manual_.
+
 当pipeline被锁定，尽管Pipeline设置为成功，该Merge不会被合并。被锁定的pipeline确实还有个特殊的状态，叫_manual_。
 
 Manual actions are non-blocking by default. If you want to make manual action
 blocking, it is necessary to add `allow_failure: false` to the job's definition
 in `.gitlab-ci.yml`.
+
 手工操作默认是非锁定的。如果你想是手工操作被锁定，那必须在`.gitlab-ci.yml`定义该作业时添加`allow_failure: false`的设置。
 
 Optional manual actions have `allow_failure: true` set by default.
@@ -838,6 +857,7 @@ Optional manual actions have `allow_failure: true` set by default.
 protected branches are used when user wants to trigger an action. In other
 words, in order to trigger a manual action assigned to a branch that the
 pipeline is running for, user needs to have ability to merge to this branch.
+
 手工操作被任务是写操作，因此当用户想触发一个操作时，请善用保护分支的访问权限。换句话说，为了触发一个pipeline正在服务的分支的手工操作，用户需要有该分支的合并权限。？？**
 
 ### environment 环境
@@ -851,9 +871,11 @@ pipeline is running for, user needs to have ability to merge to this branch.
 `environment` is used to define that a job deploys to a specific environment.
 If `environment` is specified and no environment under that name exists, a new
 one will be created automatically.
+
 `environment`用户定义一个部署到指定环境的作业。如果`environment`已被指定，并且没有同名的环境，将自动创建一个新的环境。
 
 In its simplest form, the `environment` keyword can be defined like:
+
 `environment`关键词可以下面简化的格式进行定义：
 
 ```yaml
@@ -866,6 +888,7 @@ deploy to production:
 
 In the above example, the `deploy to production` job will be marked as doing a
 deployment to the `production` environment.
+
 在上面的例子中，`deploy to production`作业将被标记为整治部署到`production`环境
 
 #### environment:name --环境名
@@ -878,7 +901,9 @@ deployment to the `production` environment.
   `name` keyword.GitLab 8.11之前，环境名可以定义成 `environment: production'这样的字符串。但现在比较推荐读者将其定义到`name`关键词下。
 - The `name` parameter can use any of the defined CI variables,
   including predefined, secure variables and `.gitlab-ci.yml` [`variables`](#variables).
-  You however cannot use variables defined under `script`. `name`参数可使用任何一定义的CI变量，包括预定义的、安全变量和`.gitlab-ci.yml`的变量。然而的是，你不能使用定义在`script`下的变量。
+  You however cannot use variables defined under `script`. 
+  
+  `name`参数可使用任何一定义的CI变量，包括预定义的、安全变量和`.gitlab-ci.yml`的变量。然而的是，你不能使用定义在`script`下的变量。
 
 The `environment` name can contain:
 `environment`的名称可包括：
@@ -895,11 +920,13 @@ The `environment` name can contain:
 
 Common names are `qa`, `staging`, and `production`, but you can use whatever
 name works with your workflow.
+
 一般`environment`会定义为`qa`, `staging`, 和 `production`，但你可使用任何的名称。
 
 Instead of defining the name of the environment right after the `environment`
 keyword, it is also possible to define it as a separate value. For that, use
 the `name` keyword under `environment`:
+
 与其在`environment`关键字隔壁定义该环境名，还可以将其定义为一个分开的值。对此在那个在`environment`下使用`name`关键词。
 
 ```yaml
@@ -920,15 +947,18 @@ deploy to production:
 - The `url` parameter can use any of the defined CI variables,
   including predefined, secure variables and `.gitlab-ci.yml` [`variables`](#variables).
   You however cannot use variables defined under `script`.
+  
   'url'参数可以使用已定义的CI变量的任何值，包括预定义、安全变量和`.gitlab-ci.yml`中定义的变量。然而，你不能再url中使用在`script`下定义的变量。
 
 This is an optional value that when set, it exposes buttons in various places
 in GitLab which when clicked take you to the defined URL.
+
 这是可选设置项，GitLab中有多个按钮可连接到设置url。
 
 In the example below, if the job finishes successfully, it will create buttons
 in the merge requests and in the environments/deployments pages which will point
 to `https://prod.example.com`.
+
 在以下的例子中，如果该作业成功执行，将在merge request和environments/deployments页面中创建按钮，该按钮可指向`https://prod.example.com`。
 
 ```yaml
@@ -948,14 +978,17 @@ deploy to production:
 - Starting with GitLab 8.14, when you have an environment that has a stop action
   defined, GitLab will automatically trigger a stop action when the associated
   branch is deleted.
+  
   自GitLab 8.14开始，当你有一个环境并且定义了stop操作，GitLab将自动触发一个stop操作，当关联的分支被删除时。
 
 Closing (stoping) environments can be achieved with the `on_stop` keyword defined under
 `environment`. It declares a different job that runs in order to close
 the environment.
+
 关闭（停止）环境可以通过`environment`设置`on_stop`关键词实现。这声明了一个为了关闭该环境的作业。
 
 Read the `environment:action` section for an example.
+
 阅读`environment:action`部分作为例子。
 
 #### environment:action
@@ -964,6 +997,7 @@ Read the `environment:action` section for an example.
 
 The `action` keyword is to be used in conjunction with `on_stop` and is defined
 in the job that is called to close the environment.
+
 `action`关键词用于与`on_stop`一起使用，并且在该作业中定义，以调用关闭环境。
 
 Take for instance:
@@ -992,6 +1026,7 @@ Once the `review_app` job is successfully finished, it will trigger the
 `stop_review_app` job based on what is defined under `when`. In this case we
 set it up to `manual` so it will need a [manual action](#manual-actions) via
 GitLab's web interface in order to run.
+
 在上面的例子中，我们建立了`review_app`作业以部署到名为`review`的环境中，并且我们还可以在`on_stop`下定义一个`stop_review_app`的作业。一旦`review_app`作业运行成功，这将触发`stop_review_app`作业，该作业基于`when`中定义的内容。在这个例子中，我们设置`when`为'manual'，因此为了运行stop_review_app作业，我们需要通过GitLab页面手工启动。
 
 The `stop_review_app` job is **required** to have the following keywords defined:
@@ -1011,7 +1046,9 @@ stop_review_app作业必须定义以下关键词：
 - The `$CI_ENVIRONMENT_SLUG` was [introduced][ce-7983] in GitLab 8.15.GitLab 8.15中引入`$CI_ENVIRONMENT_SLUG`
 - The `name` and `url` parameters can use any of the defined CI variables,
   including predefined, secure variables and `.gitlab-ci.yml` [`variables`](#variables).
-  You however cannot use variables defined under `script`.`name`和`url`参数可用任何已定义的CI变量，包括预定义、安全变量和`.gitlab-ci.yml`中的变量。但你不能使用`script`中定义的变量。
+  You however cannot use variables defined under `script`.
+  
+  `name`和`url`参数可用任何已定义的CI变量，包括预定义、安全变量和`.gitlab-ci.yml`中的变量。但你不能使用`script`中定义的变量。
 
 For example:
 举个例子：
@@ -1033,16 +1070,19 @@ is an [environment variable][variables] set by the Runner. The
 for inclusion in URLs. In this case, if the `deploy as review app` job was run
 in a branch named `pow`, this environment would be accessible with an URL like
 `https://review-pow.example.com/`.
+
 `deploy as review app`作业将标记为部署到动态、创建`review/$CI_COMMIT_REF_NAME`环境，其中`$CI_COMMIT_REF_NAME`是Runner设置的环境变量。`$CI_ENVIRONMENT_SLUG`变量是基于环境名，但包含在URL中。在这种情况，如果`deploy as review app`作业在`pow`分支，此环境可通过`https://review-pow.example.com/`类似的url中访问。
 
 This of course implies that the underlying server which hosts the application
 is properly configured.
+
 这当然意味着托管应用程序的底层服务器已正确配置。
 
 
 The common use case is to create dynamic environments for branches and use them
 as Review Apps. You can see a simple example using Review Apps at
 <https://gitlab.com/gitlab-examples/review-apps-nginx/>.
+
 一般的用法是为分支创建动态环境，并使用作为Review Apps使用。你可以在链接中查看如何使用Review App的简单例子。
 
 ### artifacts
@@ -1059,12 +1099,15 @@ as Review Apps. You can see a simple example using Review Apps at
 `artifacts` is used to specify a list of files and directories which should be
 attached to the job after success. You can only use paths that are within the
 project workspace. To pass artifacts between different jobs, see [dependencies](#dependencies).
+
 artifacts用于指定了要附加到作业（成功后）的文件和目录列表。你可以只使用在项目工作空间里的路径。为了通过不同作业之间的作业，请看dependicies部分。
 
 Below are some examples.
+
 以下是一些例子.
 
 Send all files in `binaries` and `.config`:
+
 发送所有`binaries`的文件 和 `.config`文件：
 
 ```yaml
@@ -1075,7 +1118,8 @@ artifacts:
 ```
 
 Send all Git untracked files:
-发送所有Git为跟踪的文件：
+
+发送所有Git未跟踪的文件：
 
 ```yaml
 artifacts:
@@ -1083,7 +1127,8 @@ artifacts:
 ```
 
 Send all Git untracked files and files in `binaries`:
-发送所有Git为追踪的文件和`binaries`目录下的文件：
+
+发送所有Git未追踪的文件和`binaries`目录下的文件：
 
 ```yaml
 artifacts:
@@ -1093,6 +1138,7 @@ artifacts:
 ```
 
 To disable artifact passing, define the job with empty [dependencies](#dependencies):
+
 为了禁用artifact passing，请在该作业定义空的dependencies。
 
 ```yaml
@@ -1104,9 +1150,11 @@ job:
 
 You may want to create artifacts only for tagged releases to avoid filling the
 build server storage with temporary build artifacts.
+
 你可能希望值为已标记的releases创建artifact，以避免临时的构建artifact塞满构建服务器存储。
 
 Create artifacts only for tags (`default-job` will not create artifacts):
+
 只为tags创建artifact（`default-job`将不创建artifact）：
 
 ```yaml
@@ -1128,6 +1176,7 @@ release-job:
 
 The artifacts will be sent to GitLab after the job finishes successfully and will
 be available for download in the GitLab UI.
+
 该artifact将在作业成功后被发送到GitLab，并且可在GitLab UI中可供下载。
 
 #### artifacts:name 指定归档名
@@ -1139,6 +1188,7 @@ archive. That way, you can have a unique name for every archive which could be
 useful when you'd like to download the archive from GitLab. The `artifacts:name`
 variable can make use of any of the [predefined variables](../variables/README.md).
 The default name is `artifacts`, which becomes `artifacts.zip` when downloaded.
+
 `name`显示允许你定义要创建的artifact归档名。这样，每个档案都可以有一个唯一的名字，当你想要从GitLab下载档案的时候，这个名字是很有用的。`artifacts:name`参数可使用预定义变量中的任何值。默认的归档名为`artifacts`，下载的报名为`artifacts.zip`。
 
 ---
@@ -1156,7 +1206,8 @@ job:
 
 To create an archive with a name of the current branch or tag including only
 the files that are untracked by Git:
-为了创建一个以当前分支或tag命名的归档包，只包括Git为追踪的文件：
+
+为了创建一个以当前分支或tag命名的归档包，只包括Git未追踪的文件：
 
 ```yaml
 job:
@@ -1167,6 +1218,7 @@ job:
 
 To create an archive with a name of the current job and the current branch or
 tag including only the files that are untracked by Git:
+
 为了创建以当前作业和当前分支或tag命名的归档包，该包只包括Git未追踪的文件：
 
 ```yaml
@@ -1177,7 +1229,8 @@ job:
 ```
 
 To create an archive with a name of the current [stage](#stages) and branch name:
-为了创建以当前stage和分知名命名的归档包：
+
+为了创建以当前stage和分支名命名的归档包：
 
 ```yaml
 job:
@@ -1190,6 +1243,7 @@ job:
 
 If you use **Windows Batch** to run your shell scripts you need to replace
 `$` with `%`:
+
 如果你使用的是**Windows Batch** 运行你的Shell脚本，你需要将`$`替换为`%：
 
 ```yaml
@@ -1201,6 +1255,7 @@ job:
 
 If you use **Windows PowerShell** to run your shell scripts you need to replace
 `$` with `$env:`:
+
 如果你使用**Windows PowerShell**运行您的Shell脚本，你需要将`$`替换为`$env:`
 
 ```yaml
@@ -1230,6 +1285,7 @@ failure.
 **Example configurations 配置的例子**
 
 To upload artifacts only when job fails.
+
 当作业失败时，上传归档包：
 
 ```yaml
@@ -1240,23 +1296,27 @@ job:
 
 #### artifacts:expire_in 指定归档的有效期
 
-> Introduced in GitLab 8.9 and GitLab Runner v1.3.0.自GitLab 8.9和GitLab Runner v1.3.0引入
+> Introduced in GitLab 8.9 and GitLab Runner v1.3.0. 自GitLab 8.9和GitLab Runner v1.3.0引入
 
 `artifacts:expire_in` is used to delete uploaded artifacts after the specified
 time. By default, artifacts are stored on GitLab forever. `expire_in` allows you
 to specify how long artifacts should live before they expire, counting from the
 time they are uploaded and stored on GitLab.
-`artifacts:expire_in`用于在指定的时间删除归档版。默认情况下，归档包将永久保存在GitLab服务器
+
+`artifacts:expire_in`用于在指定的时间删除归档版。默认情况下，归档包将永久保存在GitLab服务器。
 
 You can use the **Keep** button on the job page to override expiration and
 keep artifacts forever.
+
 你可以使用作业页面的**Keep**按钮覆盖有效期值，使该归档包永久保存。
 
 After expiry, artifacts are actually deleted hourly by default (via a cron job),
 but they are not accessible after expiry.
+
 在有效期后，默认地归档包将被删除（通过一个cron作业），但在有效期后不可访问。
 
 The value of `expire_in` is an elapsed time. Examples of parseable values:
+
 expire_in的值是经过的（elapsed）时间。 可解析值的示例：
 
 - '3 mins 4 sec'
@@ -1271,6 +1331,7 @@ expire_in的值是经过的（elapsed）时间。 可解析值的示例：
 **Example configurations配置例子**
 
 To expire artifacts 1 week after being uploaded:
+
 指定归档的有限期为在上传后的一周：
 
 ```yaml
@@ -1285,10 +1346,11 @@ job:
 
 This feature should be used in conjunction with [`artifacts`](#artifacts) and
 allows you to define the artifacts to pass between different jobs.
+
 此功能应与artifact一起使用，并允许你定义该归档以在不同的作业进行传送。
 
 Note that `artifacts` from all previous [stages](#stages) are passed by default.
-注意，前一stages的归档模式是被传送的。
+注意，前一stages的归档默认是被传送的。
 
 To use this feature, define `dependencies` in context of the job and pass
 a list of all previous jobs from which the artifacts should be downloaded.
@@ -1297,6 +1359,7 @@ An error will be shown if you define jobs from the current stage or next ones.
 Defining an empty array will skip downloading any artifacts for that job.
 The status of the previous job is not considered when using `dependencies`, so
 if it failed or it is a manual job that was not run, no error occurs.
+
 为了使用此功能，可在该作业中定义`dependencies`，并传送前作业哪些归档需要被下载的列表。你可以只定义在当前stages以前执行的作业。如果你定义的作业时当前的或以后的阶段，那么将会报错。定义一个空的数组该作业将跳过任何归档的下载。当使用`dependencies`时，将不考虑前一作业的状态，因为如果作业失败或者手工作业没有运行，将不报任何错误。
 
 ---
@@ -1305,10 +1368,12 @@ In the following example, we define two jobs with artifacts, `build:osx` and
 `build:linux`. When the `test:osx` is executed, the artifacts from `build:osx`
 will be downloaded and extracted in the context of the build. The same happens
 for `test:linux` and artifacts from `build:linux`.
+
 在以下的例子中，我们定义了两个归档的作业，`build:osx`和`build:linux`。当执行`test:osx`时，`build:osx`的归档包将被下载，并且在该构建的上下文中被提取。同样地，也会在`test:linux`中发送，并且`build:linux`的归档。
 
 The job `deploy` will download artifacts from all previous jobs because of
 the [stage](#stages) precedence:
+
 `deploy`作业将从前面的作业中下载归档包，由于阶段的优先
 
 ```yaml
@@ -1346,6 +1411,7 @@ deploy:
 ### before_script and after_script 前脚本和后脚本
 
 It's possible to overwrite the globally defined `before_script` and `after_script`:
+
 可以通过定义`before_script`和`after_script`覆盖全局的
 
 ```yaml
@@ -1368,12 +1434,14 @@ job:
 
 `coverage` allows you to configure how code coverage will be extracted from the
 job output.
+
 `coverage`允许你配置代码覆盖率是如何从作业输出中提取。
 
 Regular expressions are the only valid kind of value expected here. So, using
 surrounding `/` is mandatory in order to consistently and explicitly represent
 a regular expression string. You must escape special characters if you want to
 match them literally.
+
 正则表达式是这里唯一有效的值类型。 所以，使用周围的`/`是必须的，以便一致和明确地表示一个正则表达式字符串。 如果你想从字面上匹配，你必须转义特殊字符。
 
 
@@ -1393,15 +1461,18 @@ job1:
 
 `retry` allows you to configure how many times a job is going to be retried in
 case of a failure.
+
 `retry` 允许你配置作业被重新启动的次数，当作业失败时。
 
 When a job fails, and has `retry` configured it is going to be processed again
 up to the amount of times specified by the `retry` keyword.
+
 当一个作业失败，并且设置了`retry` 的次数，这将从新跑这个作业，直到`retry` 次数满。
 
 If `retry` is set to 2, and a job succeeds in a second run (first retry), it won't be retried
 again. `retry` value has to be a positive integer, equal or larger than 0, but
 lower or equal to 2 (two retries maximum, three runs in total).
+
 如果`retry` 设置为2，并且作业在第二次重跑后成功（第一次是重启），此作业将不在重跑。`retry` 的值必须是一个正整数，大于或等于0，但小于等于2（重启次数的最大值为2，总共将允许3次）。
 
 A simple example:
@@ -1417,20 +1488,25 @@ test:
 
 > Introduced in GitLab 8.9 as an experimental feature.  May change or be removed
   completely in future releases. `GIT_STRATEGY=none` requires GitLab Runner
-  v1.7+.自GitLab 8.9作为外部功能引入。可能会在未来的版本中变更或完全移除。`GIT_STRATEGY=none`要求 GitLab Runner
+  v1.7+.
+  
+  自GitLab 8.9作为外部功能引入。可能会在未来的版本中变更或完全移除。`GIT_STRATEGY=none`要求 GitLab Runner
   v1.7+的版本。
 
 You can set the `GIT_STRATEGY` used for getting recent application code, either
 in the global [`variables`](#variables) section or the [`variables`](#job-variables)
 section for individual jobs. If left unspecified, the default from project
 settings will be used.
+
 你可以设置`GIT_STRATEGY`用于获取最新的应用代码，要么在全局变量或作业变量设置。如果未指定具体的值，默认使用项目的设置。
 
 There are three possible values: `clone`, `fetch`, and `none`.
+
 `GIT_STRATEGY` 有三个可用的值：`clone`, `fetch`, and `none`。
 
 `clone` is the slowest option. It clones the repository from scratch for every
 job, ensuring that the project workspace is always pristine.
+
 clone是最慢的选项，它从头开始为每个作业克隆存储库，确保项目工作空间始终是原始的。
 
 ```yaml
@@ -1441,6 +1517,7 @@ variables:
 `fetch` is faster as it re-uses the project workspace (falling back to `clone`
 if it doesn't exist). `git clean` is used to undo any changes made by the last
 job, and `git fetch` is used to retrieve commits made since the last job ran.
+
 fetch是最快的，因为它复用了该项目工作空间（如果本地无工作空间，将退到clone）。git clean 用于撤销最新作业所做的变更，而git fetch用于获取自上一次作业运行之后做的提交。
 
 ```yaml
@@ -1453,6 +1530,7 @@ variables:
 for jobs that operate exclusively on artifacts (e.g., `deploy`). Git repository
 data may be present, but it is certain to be out of date, so you should only
 rely on files brought into the project workspace from cache or artifacts.
+
 none还可可复用该项目的工作空间，但跳过所有Git操作（包括GitLab Runner's的预克隆脚本，如果该脚本存在）。这对于专门用于工件的作业（例如`deploy`）最为有用。Git存储库数据可能存在，但肯定的是这些数据是过时的，所以您应该只依赖从缓存或工件带入项目工作区的文件。
 
 
@@ -1470,9 +1548,11 @@ The `GIT_CHECKOUT` variable can be used when the `GIT_STRATEGY` is set to either
 specified, it defaults to true. Like `GIT_STRATEGY`, it can be set in either the
 global [`variables`](#variables) section or the [`variables`](#job-variables)
 section for individual jobs.
+
 `GIT_CHECKOUT`变量可在`GIT_STRATEGY`设置为clone或fectch以指定`GIT_CHECKOUT`是否允许。如果尚未指定，默认为true。与GIT_STRATEGY类似，单个作业的此变量可在全局变量或作业变量中设置。
 
 If set to `false`, the Runner will:
+
 如果此变量设置为false，Runner将：
 
 - when doing `fetch` - update the repository and leave working copy on
@@ -1483,6 +1563,7 @@ If set to `false`, the Runner will:
 Having this setting set to `true` will mean that for both `clone` and `fetch`
 strategies the Runner will checkout the working copy to a revision related
 to the CI pipeline:
+
 将此变量设置为true将意味着，对于clone和fetch策略，Runner将工作副本checkout到CI pipeline相关的版本：
 
 ```yaml
@@ -1502,6 +1583,7 @@ The `GIT_SUBMODULE_STRATEGY` variable is used to control if / how Git
 submodules are included when fetching the code before a build. Like
 `GIT_STRATEGY`, it can be set in either the global [`variables`](#variables)
 section or the [`variables`](#job-variables) section for individual jobs.
+
 `GIT_SUBMODULE_STRATEGY`变量用于控制在构建之前获取代码时是否包含Git子模块。 像GIT_STRATEGY一样，它可以在全局变量部分或个别作业的变量部分中设置。
 
 
@@ -1510,10 +1592,12 @@ There are three possible values: `none`, `normal`, and `recursive`:
 
 - `none` means that submodules will not be included when fetching the project
   code. This is the default, which matches the pre-v1.10 behavior.
+  
   none意味着fetch时不包括子模块。none是此变量的默认值，与1.10以前的版本保持一致。
 
 - `normal` means that only the top-level submodules will be included. It is
   equivalent to:
+  
   normal意味着只包含顶级子模块？？这等同于：
 
     ```
@@ -1523,6 +1607,7 @@ There are three possible values: `none`, `normal`, and `recursive`:
 
 - `recursive` means that all submodules (including submodules of submodules)
   will be included. It is equivalent to:
+  
   recursive意味着fetch时包括所有子模块，这等同于：
 
     ```
@@ -1532,6 +1617,7 @@ There are three possible values: `none`, `normal`, and `recursive`:
 
 Note that for this feature to work correctly, the submodules must be configured
 (in `.gitmodules`) with either:
+
 注意的是为了让此功能正确运行，该子模块必须配置成以下任意之一：
 
 - the HTTP(S) URL of a publicly-accessible repository, or
