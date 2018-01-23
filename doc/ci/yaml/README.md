@@ -1623,24 +1623,33 @@ Note that for this feature to work correctly, the submodules must be configured
 - the HTTP(S) URL of a publicly-accessible repository, or
 - a relative path to another repository on the same GitLab server. See the
   [Git submodules](../git_submodules.md) documentation.
+  
+  HTTP（s）url是可公共访问的地址或者是同一GitLab服务器的另一存储库的相对路径。请查看Git子模块文档。
 
 
-## Job stages attempts
+## Job stages attempts 作业阶段的attempts？
 
 > Introduced in GitLab, it requires GitLab Runner v1.9+.
+
+要求GitLab Runner v1.9+版本。
 
 You can set the number for attempts the running job will try to execute each
 of the following stages:
 
+你可以设置这是attempts的值，正在运行的作业将尝试执行每一个以下的阶段：
+
 | Variable                        | Description |
 |-------------------------------- |-------------|
-| **GET_SOURCES_ATTEMPTS**        | Number of attempts to fetch sources running a job |
-| **ARTIFACT_DOWNLOAD_ATTEMPTS**  | Number of attempts to download artifacts running a job |
-| **RESTORE_CACHE_ATTEMPTS**      | Number of attempts to restore the cache running a job |
+| **GET_SOURCES_ATTEMPTS**        | Number of attempts to fetch sources running a job 运行作业时尝试fetch源码的次数 |
+| **ARTIFACT_DOWNLOAD_ATTEMPTS**  | Number of attempts to download artifacts running a job 运行作业时尝试下载构件的次数 |
+| **RESTORE_CACHE_ATTEMPTS**      | Number of attempts to restore the cache running a job 运行作业时恢复缓存（cache）的次数 |
 
 The default is one single attempt.
 
+默认次数为1次。
+
 Example:
+举个例子：
 
 ```yaml
 variables:
@@ -1650,19 +1659,27 @@ variables:
 You can set them in the global [`variables`](#variables) section or the
 [`variables`](#job-variables) section for individual jobs.
 
-## Shallow cloning
+你可以在全局变量或作业级别变量中中设置此值。
+
+## Shallow cloning 克隆影子
 
 > Introduced in GitLab 8.9 as an experimental feature. May change in future
 releases or be removed completely.
+
+在GitLab 8.9中作业外部功能引入。未来的版本中可能会被修改或完全移除。
 
 You can specify the depth of fetching and cloning using `GIT_DEPTH`. This allows
 shallow cloning of the repository which can significantly speed up cloning for
 repositories with a large number of commits or old, large binaries. The value is
 passed to `git fetch` and `git clone`.
 
+你可以指定fetch和clone的深度，通过设置`GIT_DEPTH`。这允许对存储库进行浅层克隆，可以大大加快克隆大量提交的存储库或旧的大型二进制文件的速度。`GIT_DEPTH`的值将传给`git fetch`和`git clone`命令。
+
 >**Note:**
 If you use a depth of 1 and have a queue of jobs or retry
 jobs, jobs may fail.
+
+如果你使用的深度为1，并且有作业列表或作业重启，作业将失败。
 
 Since Git fetching and cloning is based on a ref, such as a branch name, Runners
 can't clone a specific commit SHA. If there are multiple jobs in the queue, or
@@ -1671,22 +1688,33 @@ Git history that is cloned. Setting too small a value for `GIT_DEPTH` can make
 it impossible to run these old commits. You will see `unresolved reference` in
 job logs. You should then reconsider changing `GIT_DEPTH` to a higher value.
 
+由于Git的fetch和clone是基于ref的，例如分支名，因此，Runners不能克隆某个特定的commit。如果有多个不同的作业在等待，或者你在重启一个旧的作业，要验证的提交（commit）需要在Git克隆的历史记录中。将 `GIT_DEPTH`设置为较小的值将不能运行旧的commit？？你将在作业日志中看到`unresolved reference`。鉴于此，编者建议大家将`GIT_DEPTH`设置一个较高的值。
+
 Jobs that rely on `git describe` may not work correctly when `GIT_DEPTH` is
 set since only part of the Git history is present.
 
+那些依赖`git describe`的作业可能不能正确地工作，当设置了`GIT_DEPTH`，由于只存在Git的部分历史记录。
+
 To fetch or clone only the last 3 commits:
+
+只fetch或clone最新的3个commit：
 
 ```yaml
 variables:
   GIT_DEPTH: "3"
 ```
 
-## Hidden keys (jobs)
+## Hidden keys (jobs) （作业）的隐藏key
 
 > Introduced in GitLab 8.6 and GitLab Runner v1.1.1.
 
+自GitLab 8.6 and GitLab Runner v1.1.1引入
+
 If you want to temporarily 'disable' a job, rather than commenting out all the
 lines where the job is defined:
+
+如果你想临时“禁用”一项作业，而不是注释掉定义作业的所有行：
+
 
 ```
 #hidden_job:
@@ -1696,6 +1724,8 @@ lines where the job is defined:
 
 you can instead start its name with a dot (`.`) and it will not be processed by
 GitLab CI. In the following example, `.hidden_job` will be ignored:
+
+你可在希望禁用的部分加上(`.`)，这样GitLab CI就不会处理该部分。在下面的例子中，`.hidden_job`将被CI忽略：
 
 ```yaml
 .hidden_job:
@@ -1707,15 +1737,22 @@ Use this feature to ignore jobs, or use the
 [special YAML features](#special-yaml-features) and transform the hidden keys
 into templates.
 
-## Special YAML features
+可使用此功能来忽略作业，或者使用连接中的方法将隐藏key转换为临时内容。
+
+## Special YAML features--YAML的特殊用法
 
 It's possible to use special YAML features like anchors (`&`), aliases (`*`)
 and map merging (`<<`), which will allow you to greatly reduce the complexity
 of `.gitlab-ci.yml`.
 
+
+适当地使用YAML的anchors (`&`), aliases (`*`)和map merging (`<<`)等可大大地减少`.gitlab-ci.yml`的复杂性。
+
 Read more about the various [YAML features](https://learnxinyminutes.com/docs/yaml/).
 
-### Anchors
+可在链接中阅读更多的内容。
+
+### Anchors 
 
 > Introduced in GitLab 8.6 and GitLab Runner v1.1.1.
 
@@ -1724,9 +1761,13 @@ content across your document. Anchors can be used to duplicate/inherit
 properties, and is a perfect example to be used with [hidden keys](#hidden-keys-jobs)
 to provide templates for your jobs.
 
+YAML有一个方便的功能叫：anchors，可以当大家在文档中使用重复的内容。anchors可用于重复/继承属性，链接中有一个优秀的例子供你参考。
+
 The following example uses anchors and map merging. It will create two jobs,
 `test1` and `test2`, that will inherit the parameters of `.job_template`, each
 having their own custom `script` defined:
+
+以下例子使用anchor和map merging。该例子创建了两个作业：`test1`和`test2`，这两个作业继承了`.job_template`的参数，每个作业有他们各自的script：
 
 ```yaml
 .job_template: &job_definition  # Hidden key that defines an anchor named 'job_definition'
