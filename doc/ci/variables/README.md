@@ -1,32 +1,52 @@
-# GitLab CI/CD Variables
+# GitLab CI/CD Variables--CI变量用法
 
 When receiving a job from GitLab CI, the [Runner] prepares the build environment.
 It starts by setting a list of **predefined variables** (environment variables)
 and a list of **user-defined variables**.
 
-## Priority of variables
+当从GitLab CI接收到作业后，Runner将开始准备构建环境。通过设置一系列的预定义变量（又称环境变量）和一系列的用户变量。
+
+## Priority of variables 变量的优先级
 
 The variables can be overwritten and they take precedence over each other in
 this order:
+变量可以被覆盖，并且不同变量的优先级的顺序如下：
 
 1. [Trigger variables][triggers] or [scheduled pipeline variables](../../user/project/pipelines/schedules.md#making-use-of-scheduled-pipeline-variables) (take precedence over all)
+
+触发的变量或计划Pipeline变量（优先级最高）
 1. Project-level [secret variables](#secret-variables) or [protected secret variables](#protected-secret-variables)
+
+项目级别的秘密变量或受保护的秘密变量
 1. Group-level [secret variables](#secret-variables) or [protected secret variables](#protected-secret-variables)
+
+组级别的秘密变量或受保护的秘密变量
 1. YAML-defined [job-level variables](../yaml/README.md#job-variables)
+
+YAML文件中定义的作业级别变量
 1. YAML-defined [global variables](../yaml/README.md#variables)
+
+YAML文件中定义的全局变量
 1. [Deployment variables](#deployment-variables)
+
+部署变量
 1. [Predefined variables](#predefined-variables-environment-variables) (are the
-   lowest in the chain)
+   lowest in the chain)
+预定义变量（预定义的环境变量），优先级别最低。
 
 For example, if you define `API_TOKEN=secure` as a secret variable and
 `API_TOKEN=yaml` in your `.gitlab-ci.yml`, the `API_TOKEN` will take the value
 `secure` as the secret variables are higher in the chain.
 
-## Predefined variables (Environment variables)
+打个比方，如果你定义了API_TOKEN=secure作为秘密变量，并且在YAML文件中设置了API_TOKEN=yaml，那么API_TOKEN=secure的值将取secure，因为秘密变量的优先级最高。
+
+## Predefined variables (Environment variables) 预定义变量（环境变量）
 
 Some of the predefined environment variables are available only if a minimum
 version of [GitLab Runner][runner] is used. Consult the table below to find the
 version of Runner required.
+
+如果你安装的是mini版的GitLab Runner，只有一些预定义的环境变量是可用的。查询下面的表以获取变量要求的版本。
 
 >**Note:**
 Starting with GitLab 9.0, we have deprecated some variables. Read the
@@ -34,32 +54,34 @@ Starting with GitLab 9.0, we have deprecated some variables. Read the
 strongly advised to use the new variables as we will remove the old ones in
 future GitLab releases.**
 
+注意，自GitLab 9.0开始，我们已经废弃了部分变量。可阅读链接的内容查看他们的最新替换。强烈建议你使用最新的变量名，因为我们将在未来的版本中移除这些就的变量。
+
 | Variable                        | GitLab | Runner | Description |
 |-------------------------------- |--------|--------|-------------|
-| **CI**                          | all    | 0.4    | Mark that job is executed in CI environment |
-| **CI_COMMIT_REF_NAME**          | 9.0    | all    | The branch or tag name for which project is built |
-| **CI_COMMIT_REF_SLUG**          | 9.0    | all    | `$CI_COMMIT_REF_NAME` lowercased, shortened to 63 bytes, and with everything except `0-9` and `a-z` replaced with `-`. No leading / trailing `-`. Use in URLs, host names and domain names. |
-| **CI_COMMIT_SHA**               | 9.0    | all    | The commit revision for which project is built |
-| **CI_COMMIT_TAG**               | 9.0    | 0.5    | The commit tag name. Present only when building tags. |
-| **CI_CONFIG_PATH**              | 9.4    | 0.5    | The path to CI config file. Defaults to `.gitlab-ci.yml` |
-| **CI_DEBUG_TRACE**              | all    | 1.7    | Whether [debug tracing](#debug-tracing) is enabled |
-| **CI_DISPOSABLE_ENVIRONMENT**   | all    | 10.1   | Marks that the job is executed in a disposable environment (something that is created only for this job and disposed of/destroyed after the execution - all executors except `shell` and `ssh`). If the environment is disposable, it is set to true, otherwise it is not defined at all. |
-| **CI_ENVIRONMENT_NAME**         | 8.15   | all    | The name of the environment for this job |
-| **CI_ENVIRONMENT_SLUG**         | 8.15   | all    | A simplified version of the environment name, suitable for inclusion in DNS, URLs, Kubernetes labels, etc. |
-| **CI_ENVIRONMENT_URL**          | 9.3    | all    | The URL of the environment for this job |
-| **CI_JOB_ID**                   | 9.0    | all    | The unique id of the current job that GitLab CI uses internally |
-| **CI_JOB_MANUAL**               | 8.12   | all    | The flag to indicate that job was manually started |
-| **CI_JOB_NAME**                 | 9.0    | 0.5    | The name of the job as defined in `.gitlab-ci.yml` |
-| **CI_JOB_STAGE**                | 9.0    | 0.5    | The name of the stage as defined in `.gitlab-ci.yml` |
-| **CI_JOB_TOKEN**                | 9.0    | 1.2    | Token used for authenticating with the GitLab Container Registry |
-| **CI_REPOSITORY_URL**           | 9.0    | all    | The URL to clone the Git repository |
-| **CI_RUNNER_DESCRIPTION**       | 8.10   | 0.5    | The description of the runner as saved in GitLab |
-| **CI_RUNNER_ID**                | 8.10   | 0.5    | The unique id of runner being used |
-| **CI_RUNNER_TAGS**              | 8.10   | 0.5    | The defined runner tags |
-| **CI_PIPELINE_ID**              | 8.10   | 0.5    | The unique id of the current pipeline that GitLab CI uses internally |
-| **CI_PIPELINE_TRIGGERED**       | all    | all    | The flag to indicate that job was [triggered] |
-| **CI_PIPELINE_SOURCE**          | 10.0   | all    | The source for this pipeline, one of: push, web, trigger, schedule, api, external. Pipelines created before 9.5 will have unknown as source |
-| **CI_PROJECT_DIR**              | all    | all    | The full path where the repository is cloned and where the job is run |
+| **CI**                          | all    | 0.4    | Mark that job is executed in CI environment 用于标记作业时在CI环境中执行的 |
+| **CI_COMMIT_REF_NAME**          | 9.0    | all    | The branch or tag name for which project is built 保存项目构建的分支名或基线名 |
+| **CI_COMMIT_REF_SLUG**          | 9.0    | all    | `$CI_COMMIT_REF_NAME` lowercased, shortened to 63 bytes, and with everything except `0-9` and `a-z` replaced with `-`. No leading / trailing `-`. Use in URLs, host names and domain names. 保存$CI_COMMIT_REF_NAME的小写，缩写到63位，除了0-9和a-z外的字符以-代替。不以-开头和结尾，使用的违反是URL、IP或域名中 |
+| **CI_COMMIT_SHA**               | 9.0    | all    | The commit revision for which project is built 项目构建的commit版本 |
+| **CI_COMMIT_TAG**               | 9.0    | 0.5    | The commit tag name. Present only when building tags.提交的基线名，目前只在构建tag时可用 |
+| **CI_CONFIG_PATH**              | 9.4    | 0.5    | The path to CI config file. Defaults to `.gitlab-ci.yml` CI配置文件的路径。默认是.gitlab-ci.yml |
+| **CI_DEBUG_TRACE**              | all    | 1.7    | Whether [debug tracing](#debug-tracing) is enabled 显示是否启用调试模式 |
+| **CI_DISPOSABLE_ENVIRONMENT**   | all    | 10.1   | Marks that the job is executed in a disposable environment (something that is created only for this job and disposed of/destroyed after the execution - all executors except `shell` and `ssh`). If the environment is disposable, it is set to true, otherwise it is not defined at all.标记该作业在一次性环境中执行（一次性环境指的是为了此作业而创建的，作业执行后将被删除）-针对所有除了shell和ssh的执行器。如果该环境被废弃了，则此值设置为true，否则不建立此值 |
+| **CI_ENVIRONMENT_NAME**         | 8.15   | all    | The name of the environment for this job 针对此作业的环境名 |
+| **CI_ENVIRONMENT_SLUG**         | 8.15   | all    | A simplified version of the environment name, suitable for inclusion in DNS, URLs, Kubernetes labels, etc.环境名的简成，适合DNS、URL、Kubernetes label等等 |
+| **CI_ENVIRONMENT_URL**          | 9.3    | all    | The URL of the environment for this job 针对此作业的环境URL地址 |
+| **CI_JOB_ID**                   | 9.0    | all    | The unique id of the current job that GitLab CI uses internally 当前作业的id，读一乌尔的，仅在GitLab CI内部使用 |
+| **CI_JOB_MANUAL**               | 8.12   | all    | The flag to indicate that job was manually started 显示作业是否手工启动的标志 |
+| **CI_JOB_NAME**                 | 9.0    | 0.5    | The name of the job as defined in `.gitlab-ci.yml` 保存定义在gitlab-ci.yml的作业名 |
+| **CI_JOB_STAGE**                | 9.0    | 0.5    | The name of the stage as defined in `.gitlab-ci.yml`阶段名，定义在.gitlab-ci.yml |
+| **CI_JOB_TOKEN**                | 9.0    | 1.2    | Token used for authenticating with the GitLab Container Registry 注册GitLab容器的验证码 |
+| **CI_REPOSITORY_URL**           | 9.0    | all    | The URL to clone the Git repository 克隆Git存储库的URL |
+| **CI_RUNNER_DESCRIPTION**       | 8.10   | 0.5    | The description of the runner as saved in GitLab 显示runner的描述，保存在GitLab中的 |
+| **CI_RUNNER_ID**                | 8.10   | 0.5    | The unique id of runner being used 已使用Runner的ID |
+| **CI_RUNNER_TAGS**              | 8.10   | 0.5    | The defined runner tags -runner的标签名 |
+| **CI_PIPELINE_ID**              | 8.10   | 0.5    | The unique id of the current pipeline that GitLab CI uses internally 保存当前pileline ID，在CI内部使用 |
+| **CI_PIPELINE_TRIGGERED**       | all    | all    | The flag to indicate that job was [triggered] 指示该作业是否触发的 |
+| **CI_PIPELINE_SOURCE**          | 10.0   | all    | The source for this pipeline, one of: push, web, trigger, schedule, api, external. Pipelines created before 9.5 will have unknown as source 显示此pileline的源码，可能是 push, web, trigger, schedule, api, external其中之一，9.5版本以前创建的pipeline的此值是unknown |
+| **CI_PROJECT_DIR**              | all    | all    | The full path where the repository is cloned and where the job is run 保存克隆存储库的绝对路径，以及作业运行的路径 |
 | **CI_PROJECT_ID**               | all    | all    | The unique id of the current project that GitLab CI uses internally |
 | **CI_PROJECT_NAME**             | 8.10   | 0.5    | The project name that is currently being built (actually it is project folder name) |
 | **CI_PROJECT_NAMESPACE**        | 8.10   | 0.5    | The project namespace (username or groupname) that is currently being built |
@@ -85,16 +107,19 @@ future GitLab releases.**
 | **GITLAB_USER_NAME**            | 10.0   | all    | The real name of the user who started the job |
 | **RESTORE_CACHE_ATTEMPTS**      | 8.15   | 1.9    | Number of attempts to restore the cache running a job |
 
-## 9.0 Renaming
+## 9.0 Renaming 重命名
 
 To follow conventions of naming across GitLab, and to futher move away from the
 `build` term and toward `job` CI variables have been renamed for the 9.0
 release.
 
+为了遵循GitLab中的命名约定，为了进一步将`build`命名为`job`，CI变量已经被重新命名为9.0版本。
 >**Note:**
 Starting with GitLab 9.0, we have deprecated the `$CI_BUILD_*` variables. **You are
 strongly advised to use the new variables as we will remove the old ones in
 future GitLab releases.**
+
+注意，从GitLab 9.0，我们废弃了CI_BUILD变量。强烈建议你们使用较新的变量，因为在GitLab未来的版本中，我们可能移除旧变量。
 
 | 8.x name              | 9.0+ name               |
 | --------------------- |------------------------ |
@@ -110,18 +135,24 @@ future GitLab releases.**
 | `CI_BUILD_MANUAL`     | `CI_JOB_MANUAL`         |
 | `CI_BUILD_TOKEN`      | `CI_JOB_TOKEN`          |
 
-## `.gitlab-ci.yaml` defined variables
+## `.gitlab-ci.yaml` defined variables --YAML文件定义的变量
 
 >**Note:**
 This feature requires GitLab Runner 0.5.0 or higher and GitLab CI 7.14 or higher.
+
+此功能要求GitLab Runner 0.5.0或更高版本和GitLab CI是7.14以上的版本。
 
 GitLab CI allows you to add to `.gitlab-ci.yml` variables that are set in the
 build environment. The variables are hence saved in the repository, and they
 are meant to store non-sensitive project configuration, e.g., `RAILS_ENV` or
 `DATABASE_URL`.
 
+GitLab的CI允许你把构建过程的变量定义在.gitlab-ci.yml中。因此变量是保存在存储库中，这意味着这些变量应该保存非敏感信息，例如RAILS_ENV或DATABASE_URL
+
 For example, if you set the variable below globally (not inside a job), it will
 be used in all executed commands and scripts:
+
+举个例子，如果你定义了以下的全局变量（不是在某个作业中定义），那么这些变量可在所有要执行的命令和脚本中被使用：
 
 ```yaml
 variables:
@@ -132,8 +163,12 @@ The YAML-defined variables are also set to all created
 [service containers](../docker/using_docker_images.md), thus allowing to fine
 tune them.
 
+YAML定义的变量还可以为服务容器而设，因此允许微调这些变量：
+
 Variables can be defined at a global level, but also at a job level. To turn off
 global defined variables in your job, define an empty hash:
+
+变量可在全局中定义，但也可以在作业中定义。为了在作业中关闭全局定义的变量，请定义一个空的hash：
 
 ```yaml
 job_name:
