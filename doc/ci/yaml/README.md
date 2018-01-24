@@ -1761,7 +1761,7 @@ content across your document. Anchors can be used to duplicate/inherit
 properties, and is a perfect example to be used with [hidden keys](#hidden-keys-jobs)
 to provide templates for your jobs.
 
-YAML有一个方便的功能叫：anchors，可以当大家在文档中使用重复的内容。anchors可用于重复/继承属性，链接中有一个优秀的例子供你参考。
+YAML有一个方便的功能叫：anchors，可以在文档中使用重复的内容。anchors可用于重复/继承属性，链接中有一个优秀的例子供你参考。
 
 The following example uses anchors and map merging. It will create two jobs,
 `test1` and `test2`, that will inherit the parameters of `.job_template`, each
@@ -1770,7 +1770,7 @@ having their own custom `script` defined:
 以下例子使用anchor和map merging。该例子创建了两个作业：`test1`和`test2`，这两个作业继承了`.job_template`的参数，每个作业有他们各自的script：
 
 ```yaml
-.job_template: &job_definition  # Hidden key that defines an anchor named 'job_definition'
+.job_template: &job_definition  # Hidden key that defines an anchor named 'job_definition' 
   image: ruby:2.1
   services:
     - postgres
@@ -1790,6 +1790,8 @@ test2:
 `&` sets up the name of the anchor (`job_definition`), `<<` means "merge the
 given hash into the current one", and `*` includes the named anchor
 (`job_definition` again). The expanded version looks like this:
+
+&设置了该anchor名为job_definition，《《意味着合并给定的hash到当前作业。而`*`再次将anchor名（job_definition）包含进来。扩展版长这样：
 
 ```yaml
 .job_template:
@@ -1820,6 +1822,8 @@ of services. This will create two jobs, `test:postgres` and `test:mysql`, that
 will share the `script` directive defined in `.job_template`, and the `services`
 directive defined in `.postgres_services` and `.mysql_services` respectively:
 
+我们在看一个例子。这次我们将使用anchors来定义两个服务集。对此，我们创建了2个作业`test:postgres`和`test:mysql`，这些作业均共享`.job_template`中定义的`script`，而各自定义services的内容：
+
 ```yaml
 .job_template: &job_definition
   script:
@@ -1845,6 +1849,7 @@ test:mysql:
 ```
 
 The expanded version looks like this:
+展开后的例子如下：
 
 ```yaml
 .job_template:
@@ -1878,25 +1883,35 @@ test:mysql:
 
 You can see that the hidden keys are conveniently used as templates.
 
-## Triggers
+您可以看到隐藏的键可以方便地用作模板。
+
+## Triggers 触发器
 
 Triggers can be used to force a rebuild of a specific branch, tag or commit,
 with an API call.
 
+触发此可用于特定分支、tag、提交的强制重构，通过API调用。
+
 [Read more in the triggers documentation.](../triggers/README.md)
 
-### pages
+阅读链接中的更多内容。
+
+### pages 主页
 
 `pages` is a special job that is used to upload static content to GitLab that
 can be used to serve your website. It has a special syntax, so the two
 requirements below must be met:
 
-1. Any static content must be placed under a `public/` directory
-1. `artifacts` with a path to the `public/` directory must be defined
+pages是一个特殊的作业，用于上载静态内容到GitLab以加载你的网页。它有特定的语法，因此必须按照以下两个必填项。
+
+1. Any static content must be placed under a `public/` directory  任何静态内容均需要放在public/目录下；
+1. `artifacts` with a path to the `public/` directory must be defined 必须在artifacts中指定pblic目录；
 
 The example below simply moves all files from the root of the project to the
 `public/` directory. The `.public` workaround is so `cp` doesn't also copy
 `public/` to itself in an infinite loop:
+
+以下例子只简单地移动根目录下的所有文件到项目的public目录。使用.public的原因是这样cp不会复制public/自己在一个无限循环：
 
 ```
 pages:
@@ -1914,25 +1929,35 @@ pages:
 
 Read more on [GitLab Pages user documentation](../../user/project/pages/index.md).
 
-## Validate the .gitlab-ci.yml
+可在链接中阅读关于Pages的更多内容。
+
+## Validate the .gitlab-ci.yml 使.gitlab-ci.yml生效
 
 Each instance of GitLab CI has an embedded debug tool called Lint.
 You can find the link under `/ci/lint` of your gitlab instance.
 
-## Using reserved keywords
+每个GitLab CI实例都有一个叫Lint的调试工具。你可以在gitlab实例的`/ci/lint`目录下找到该链接。
+
+## Using reserved keywords 使用保留的关键词
 
 If you get validation error when using specific values (e.g., `true` or `false`),
 try to quote them, or change them to a different form (e.g., `/bin/true`).
 
-## Skipping jobs
+如果你在使用某个特定值时收到验证错误。（如，true或false），请尝试将这些值加上引号，或将其改为另一种格式（如：`/bin/true`）。
+
+## Skipping jobs 跳过作业
 
 If your commit message contains `[ci skip]` or `[skip ci]`, using any
 capitalization, the commit will be created but the jobs will be skipped.
 
-## Examples
+如果你的提交日志包含`[ci skip]` or `[skip ci]`字眼，不区分大小写，该commit将被创建但跳过ci作业。
+
+## Examples 举个例子
 
 Visit the [examples README][examples] to see a list of examples using GitLab
 CI with various languages.
+
+访问链接中的例子以查看一系列如何在不同语言中使用GitLab CI。
 
 [env-manual]: ../environments.md#manually-deploying-to-environments
 [examples]: ../examples/README.md
