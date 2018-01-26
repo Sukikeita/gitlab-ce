@@ -11,119 +11,119 @@ integral part of your workflow. GitLab comes with built-in Continuous
 Integration, Continuous Deployment, and Continuous Delivery support to build,
 test, and deploy your application.
 
-³ÖĞø¼¯³ÉµÄºÃ´¦ÊÇ¾Ş´óµÄ£¬µ±×Ô¶¯»¯°çÑİÄãµÄ¹¤×÷Á÷³ÌµÄÒ»¸ö×é³É²¿·Ö¡£ GitLabÄÚÖÃ³ÖĞø¼¯³É£¬³ÖĞø²¿ÊğºÍ³ÖĞø½»¸¶Ö§³ÖÀ´¹¹½¨£¬²âÊÔºÍ²¿ÊğÓ¦ÓÃ³ÌĞò¡£
+æŒç»­é›†æˆçš„å¥½å¤„æ˜¯å·¨å¤§çš„ï¼Œå½“è‡ªåŠ¨åŒ–æ‰®æ¼”ä½ çš„å·¥ä½œæµç¨‹çš„ä¸€ä¸ªç»„æˆéƒ¨åˆ†ã€‚ GitLabå†…ç½®æŒç»­é›†æˆï¼ŒæŒç»­éƒ¨ç½²å’ŒæŒç»­äº¤ä»˜æ”¯æŒæ¥æ„å»ºï¼Œæµ‹è¯•å’Œéƒ¨ç½²åº”ç”¨ç¨‹åºã€‚
 
 Here's some info we've gathered to get you started.
 
-ÒÔÏÂÊÇÎÒÃÇÊÕ¼¯µÄÒ»Ğ©ĞÅÏ¢£¬ÒÔ°ïÖúÄúÈëÃÅ¡£
+ä»¥ä¸‹æ˜¯æˆ‘ä»¬æ”¶é›†çš„ä¸€äº›ä¿¡æ¯ï¼Œä»¥å¸®åŠ©æ‚¨å…¥é—¨ã€‚
 
-## Getting started--¿ªÊ¼À²
+## Getting started--å¼€å§‹å•¦
 
 The first steps towards your GitLab CI journey.
 
-×ßÏòGitLab CIÂÃ³ÌµÄµÚÒ»²½¡£
+èµ°å‘GitLab CIæ—…ç¨‹çš„ç¬¬ä¸€æ­¥ã€‚
 
-- [Getting started with GitLab CI ¿ìËÙÈëÃÅÖ¸ÄÏ](quick_start/README.md)
-- [Pipelines and jobs Á÷Ë®ÏßºÍ×÷Òµ](pipelines.md)
-- [Configure a Runner, the application that runs your jobs ÅäÖÃRunnerÔËĞĞ×÷Òµ](runners/README.md)
-- **ArticlesÎÄÕÂ:**
-  - [Getting started with GitLab and GitLab CI - Intro to CI CI¼ò½é](https://about.gitlab.com/2015/12/14/getting-started-with-gitlab-and-gitlab-ci/)
-  - [Continuous Integration, Delivery, and Deployment with GitLab - Intro to CI/CD Ê¹ÓÃGitLab³ÖĞø¼¯³É¡¢½»¸¶ºÍ²¿Êğ](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/)
-  - [GitLab CI: Run jobs sequentially, in parallel, or build a custom pipeline ÏßĞÔÔËĞĞ×÷Òµ¡¢²¢ĞĞÔËĞĞ×÷Òµ»ò¹¹¼ş×Ô¶¨ÒåµÄÁ÷Ë®Ïß](https://about.gitlab.com/2016/07/29/the-basics-of-gitlab-ci/)
-  - [Setting up GitLab Runner For Continuous Integration°²×°GitLab-Runner×ö³ÖĞø¼¯³É](https://about.gitlab.com/2016/03/01/gitlab-runner-with-docker/)
-  - [GitLab CI: Deployment & environments ²¿ÊğºÍ»·¾³](https://about.gitlab.com/2016/08/26/ci-deployment-and-environments/)
-- **VideosÊÓÆµ:**
+- [Getting started with GitLab CI å¿«é€Ÿå…¥é—¨æŒ‡å—](quick_start/README.md)
+- [Pipelines and jobs æµæ°´çº¿å’Œä½œä¸š](pipelines.md)
+- [Configure a Runner, the application that runs your jobs é…ç½®Runnerè¿è¡Œä½œä¸š](runners/README.md)
+- **Articlesæ–‡ç« :**
+  - [Getting started with GitLab and GitLab CI - Intro to CI CIç®€ä»‹](https://about.gitlab.com/2015/12/14/getting-started-with-gitlab-and-gitlab-ci/)
+  - [ ] [Continuous Integration, Delivery, and Deployment with GitLab - Intro to CI/CD ä½¿ç”¨GitLabæŒç»­é›†æˆã€äº¤ä»˜å’Œéƒ¨ç½²](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/)
+  - [GitLab CI: Run jobs sequentially, in parallel, or build a custom pipeline çº¿æ€§è¿è¡Œä½œä¸šã€å¹¶è¡Œè¿è¡Œä½œä¸šæˆ–æ„ä»¶è‡ªå®šä¹‰çš„æµæ°´çº¿](https://about.gitlab.com/2016/07/29/the-basics-of-gitlab-ci/)
+  - [Setting up GitLab Runner For Continuous Integrationå®‰è£…GitLab-RunneråšæŒç»­é›†æˆ](https://about.gitlab.com/2016/03/01/gitlab-runner-with-docker/)
+  - [GitLab CI: Deployment & environments éƒ¨ç½²å’Œç¯å¢ƒ](https://about.gitlab.com/2016/08/26/ci-deployment-and-environments/)
+- **Videosè§†é¢‘:**
   - [Demo (Streamed live on Jul 17, 2017): GitLab CI/CD Deep Dive](https://youtu.be/pBe4t1CD8Fc?t=195)
-  - [Demo (March, 2017): how to get started using CI/CD with GitLab--GitLab CI/CDÈëÃÅ](https://about.gitlab.com/2017/03/13/ci-cd-demo/)
-  - [Webcast (April, 2016): getting started with CI in GitLab-ÔÚGitLabÖĞÊ¹ÓÃCI](https://about.gitlab.com/2016/04/20/webcast-recording-and-slides-introduction-to-ci-in-gitlab/)
-- **Third-party videos:µÚÈı·½µÄÊÓÆµ**
+  - [Demo (March, 2017): how to get started using CI/CD with GitLab--GitLab CI/CDå…¥é—¨](https://about.gitlab.com/2017/03/13/ci-cd-demo/)
+  - [Webcast (April, 2016): getting started with CI in GitLab-åœ¨GitLabä¸­ä½¿ç”¨CI](https://about.gitlab.com/2016/04/20/webcast-recording-and-slides-introduction-to-ci-in-gitlab/)
+- **Third-party videos:ç¬¬ä¸‰æ–¹çš„è§†é¢‘**
   - [Integration continue avec GitLab (September, 2016)](https://www.youtube.com/watch?v=URcMBXjIr24&t=13s)
   - [GitLab CI for Minecraft Plugins (July, 2016)](https://www.youtube.com/watch?v=Z4pcI9F8yf8)
 
-## Reference guides--ÒıÓÃÖ¸ÄÏ
+## Reference guides--å¼•ç”¨æŒ‡å—
 
 Once you get familiar with the getting started guides, you'll find yourself
 digging into specific reference guides.
-Ò»µ©ÄãÊìÏ¤ÈëÃÅÖ¸ÄÏ£¬Äã»á·¢ÏÖ×Ô¼ºÍÚ¾òµ½ÌØ¶¨µÄ²Î¿¼Ö¸ÄÏ¡£
+ä¸€æ—¦ä½ ç†Ÿæ‚‰å…¥é—¨æŒ‡å—ï¼Œä½ ä¼šå‘ç°è‡ªå·±æŒ–æ˜åˆ°ç‰¹å®šçš„å‚è€ƒæŒ‡å—ã€‚
 
 
 - [`.gitlab-ci.yml` reference](yaml/README.md) - Learn all about the ins and
-  outs of `.gitlab-ci.yml` definitions--Ñ§Ï°ËùÓĞÓĞ¹Ø`.gitlab-ci.yml`µÄËùÓĞ¶¨Òå
+  outs of `.gitlab-ci.yml` definitions--å­¦ä¹ æ‰€æœ‰æœ‰å…³`.gitlab-ci.yml`çš„æ‰€æœ‰å®šä¹‰
 - [CI Variables](variables/README.md) - Learn how to use variables defined in
-  your `.gitlab-ci.yml` or secured ones defined in your project's settings--Ñ§Ï°ÈçºÎÔÚ`.gitlab-ci.yml`Ê¹ÓÃ±äÁ¿»ò¶¨ÒåÒ»¸ö°²×°µÄ±äÁ¿
-- **The permissions modelÈ¨ÏŞÄ£Ê½** - Learn about the access levels a user can have for
-  performing certain CI actions--ÁË½âÆÕÍ¨ÓÃ»§Ö´ĞĞCIµÄ·ÃÎÊÈ¨ÏŞ
-  - [User permissions--ÓÃ»§È¨ÏŞ](../user/permissions.md#gitlab-ci)
-  - [Job permissions--×÷ÒµÈ¨ÏŞ](../user/permissions.md#job-permissions)
+  your `.gitlab-ci.yml` or secured ones defined in your project's settings--å­¦ä¹ å¦‚ä½•åœ¨`.gitlab-ci.yml`ä½¿ç”¨å˜é‡æˆ–å®šä¹‰ä¸€ä¸ªå®‰è£…çš„å˜é‡
+- **The permissions modelæƒé™æ¨¡å¼** - Learn about the access levels a user can have for
+  performing certain CI actions--äº†è§£æ™®é€šç”¨æˆ·æ‰§è¡ŒCIçš„è®¿é—®æƒé™
+  - [User permissions--ç”¨æˆ·æƒé™](../user/permissions.md#gitlab-ci)
+  - [Job permissions--ä½œä¸šæƒé™](../user/permissions.md#job-permissions)
 
-## Auto DevOps--×Ô¶¯»¯ÔËÎ¬
+## Auto DevOps--è‡ªåŠ¨åŒ–è¿ç»´
 
 - [Auto DevOps](../topics/autodevops/index.md)
 
 ## GitLab CI + Docker
 
 Leverage the power of Docker to run your CI pipelines.
-ÀûÓÃDockerµÄÇ¿´ó¹¦ÄÜÀ´ÔËĞĞÄúµÄCI¹ÜµÀ¡£
+åˆ©ç”¨Dockerçš„å¼ºå¤§åŠŸèƒ½æ¥è¿è¡Œæ‚¨çš„CIç®¡é“ã€‚
 
-- [Use Docker images with GitLab Runner--Ê¹ÓÃDocker¾µÏñÀ´ÔËĞĞRunner](docker/using_docker_images.md)
-- [Use CI to build Docker images--Ê¹ÓÃCIÀ´¹¹½¨Docker¾µÏñ](docker/using_docker_build.md)
-- [CI services (linked Docker containers)--CI·şÎñ£¨Á´½Óµ½DockerÈİÆ÷£©](services/README.md)
-- **ArticlesÏà¹ØÎÄÕÂ:**
-  - [Setting up GitLab Runner For Continuous Integration--Ê¹ÓÃGitLab-Runner×ö³ÖĞø¼¯³É](https://about.gitlab.com/2016/03/01/gitlab-runner-with-docker/)
+- [Use Docker images with GitLab Runner--ä½¿ç”¨Dockeré•œåƒæ¥è¿è¡ŒRunner](docker/using_docker_images.md)
+- [Use CI to build Docker images--ä½¿ç”¨CIæ¥æ„å»ºDockeré•œåƒ](docker/using_docker_build.md)
+- [CI services (linked Docker containers)--CIæœåŠ¡ï¼ˆé“¾æ¥åˆ°Dockerå®¹å™¨ï¼‰](services/README.md)
+- **Articlesç›¸å…³æ–‡ç« :**
+  - [Setting up GitLab Runner For Continuous Integration--ä½¿ç”¨GitLab-RunneråšæŒç»­é›†æˆ](https://about.gitlab.com/2016/03/01/gitlab-runner-with-docker/)
 
-## Advanced use--¸ß¼¶Ó¦ÓÃ
+## Advanced use--é«˜çº§åº”ç”¨
 
 Once you get familiar with the basics of GitLab CI, it's time to dive in and
 learn how to leverage its potential even more.
-Ò»µ©ÄúÊìÏ¤ÁËGitLab CIµÄ»ù´¡ÖªÊ¶£¬¾Í¿ÉÒÔÉîÈëÁË½âÈçºÎ³ä·ÖÀûÓÃÆäÇ±Á¦¡£
+ä¸€æ—¦æ‚¨ç†Ÿæ‚‰äº†GitLab CIçš„åŸºç¡€çŸ¥è¯†ï¼Œå°±å¯ä»¥æ·±å…¥äº†è§£å¦‚ä½•å……åˆ†åˆ©ç”¨å…¶æ½œåŠ›ã€‚
 
 
-- [Environments and deployments--»·¾³ºÍ²¿Êğ](environments.md) - Separate your jobs into
+- [Environments and deployments--ç¯å¢ƒå’Œéƒ¨ç½²](environments.md) - Separate your jobs into
   environments and use them for different purposes like testing, building and
-  deploying--¸ù¾İ»·¾³·ÖÀë×÷Òµ£¬ÒÔ½øĞĞ²âÊÔ¡¢¹¹½¨ºÍ²¿ÊğµÈÄ¿µÄ
-- [Job artifacts--×÷Òµ×é¼ş](../user/project/pipelines/job_artifacts.md)
-- [Git submodules-Git×ÓÄ£¿é](git_submodules.md) - How to run your CI jobs when Git
-  submodules are involved--µ±Éæ¼°Git×ÓÄ£¿éÊ±£¬ÈçºÎÔËĞĞCI×÷Òµ
-- [Auto deploy×Ô¶¯»¯²¿Êğ](autodeploy/index.md)
-- [Use SSH keys in your build environmentÔÚ¹¹½¨»·¾³Ê¹ÓÃSSHÃÜÔ¿](ssh_keys/README.md)
-- [Trigger pipelines through the GitLab API--Í¨¹ıGitLab½Ó¿Ú´¥·¢¹ÜµÀ](triggers/README.md)
-- [Trigger pipelines on a schedule--Í¨¹ı¼Æ»®´¥·¢¹ÜµÀ](../user/project/pipelines/schedules.md)
+  deploying--æ ¹æ®ç¯å¢ƒåˆ†ç¦»ä½œä¸šï¼Œä»¥è¿›è¡Œæµ‹è¯•ã€æ„å»ºå’Œéƒ¨ç½²ç­‰ç›®çš„
+- [Job artifacts--ä½œä¸šç»„ä»¶](../user/project/pipelines/job_artifacts.md)
+- [Git submodules-Gitå­æ¨¡å—](git_submodules.md) - How to run your CI jobs when Git
+  submodules are involved--å½“æ¶‰åŠGitå­æ¨¡å—æ—¶ï¼Œå¦‚ä½•è¿è¡ŒCIä½œä¸š
+- [Auto deployè‡ªåŠ¨åŒ–éƒ¨ç½²](autodeploy/index.md)
+- [Use SSH keys in your build environmentåœ¨æ„å»ºç¯å¢ƒä½¿ç”¨SSHå¯†é’¥](ssh_keys/README.md)
+- [Trigger pipelines through the GitLab API--é€šè¿‡GitLabæ¥å£è§¦å‘ç®¡é“](triggers/README.md)
+- [Trigger pipelines on a schedule--é€šè¿‡è®¡åˆ’è§¦å‘ç®¡é“](../user/project/pipelines/schedules.md)
 
-## Review Apps--´úÂë¼ì²é
+## Review Apps--ä»£ç æ£€æŸ¥
 
 - [Review Apps](review_apps/index.md)
 - **Articles:**
-  - [Introducing Review Apps--´úÂë¼ì²é½áÊø](https://about.gitlab.com/2016/11/22/introducing-review-apps/)
-  - [Example project that shows how to use Review Apps--´úÂë¼ì²éµÄÀı×Ó](https://gitlab.com/gitlab-examples/review-apps-nginx/)
+  - [Introducing Review Apps--ä»£ç æ£€æŸ¥ç»“æŸ](https://about.gitlab.com/2016/11/22/introducing-review-apps/)
+  - [Example project that shows how to use Review Apps--ä»£ç æ£€æŸ¥çš„ä¾‹å­](https://gitlab.com/gitlab-examples/review-apps-nginx/)
 
 ## GitLab CI for GitLab Pages
 
 See the topic on [GitLab Pages](../user/project/pages/index.md).
 
-## Special configuration--ÌØÊâÅäÖÃ
+## Special configuration--ç‰¹æ®Šé…ç½®
 
 You can change the default behavior of GitLab CI in your whole GitLab instance
 as well as in each project.
-Äú¿ÉÒÔÔÚÕû¸öGitLabÊµÀıÒÔ¼°Ã¿¸öÏîÄ¿ÖĞ¸ü¸ÄGitLab CIµÄÄ¬ÈÏĞĞÎª¡£
+æ‚¨å¯ä»¥åœ¨æ•´ä¸ªGitLabå®ä¾‹ä»¥åŠæ¯ä¸ªé¡¹ç›®ä¸­æ›´æ”¹GitLab CIçš„é»˜è®¤è¡Œä¸ºã€‚
 
-- **Project specific--ÔÚÏîÄ¿ÖĞ¸ü¸ÄCI**
-  - [Pipelines settings--¹ÜµÀÉèÖÃ](../user/project/pipelines/settings.md)
-  - [Learn how to enable or disable GitLab CI--ÁË½âÈçºÎÔÚÏîÄ¿ÖĞÆô¶¯»ò½ûÓÃCI](enable_or_disable_ci.md)
-- **Affecting the whole GitLab instance--È«¾ÖÖĞÉèÖÃCI**
-  - [Continuous Integration admin settings--CI¹ÜÀíÉèÖÃ](../user/admin_area/settings/continuous_integration.md)
+- **Project specific--åœ¨é¡¹ç›®ä¸­æ›´æ”¹CI**
+  - [Pipelines settings--ç®¡é“è®¾ç½®](../user/project/pipelines/settings.md)
+  - [Learn how to enable or disable GitLab CI--äº†è§£å¦‚ä½•åœ¨é¡¹ç›®ä¸­å¯åŠ¨æˆ–ç¦ç”¨CI](enable_or_disable_ci.md)
+- **Affecting the whole GitLab instance--å…¨å±€ä¸­è®¾ç½®CI**
+  - [Continuous Integration admin settings--CIç®¡ç†è®¾ç½®](../user/admin_area/settings/continuous_integration.md)
 
-## Examples--Àı×Ó
+## Examples--ä¾‹å­
 
 >**Note:**
 A collection of `.gitlab-ci.yml` files is maintained at the
 [GitLab CI Yml project][gitlab-ci-templates].
 If your favorite programming language or framework is missing we would love
 your help by sending a merge request with a `.gitlab-ci.yml`.
-×¢Òâ£º.gitlab-ci.ymlÎÄ¼ş¼¯ÔÚGitLab CI YmlÏîÄ¿ÖĞÎ¬»¤¡£ Èç¹ûÄã×îÏ²»¶µÄ±à³ÌÓïÑÔ»ò¿ò¼ÜÃ»ÓĞÕâ¸öÎÄ¼ş£¬ÎÒÃÇÏ£ÍûÍ¨¹ı·¢ËÍÒ»¸ö.gitlab-ci.ymlºÏ²¢ÇëÇóÀ´°ïÖúÄã¡£
+æ³¨æ„ï¼š.gitlab-ci.ymlæ–‡ä»¶é›†åœ¨GitLab CI Ymlé¡¹ç›®ä¸­ç»´æŠ¤ã€‚ å¦‚æœä½ æœ€å–œæ¬¢çš„ç¼–ç¨‹è¯­è¨€æˆ–æ¡†æ¶æ²¡æœ‰è¿™ä¸ªæ–‡ä»¶ï¼Œæˆ‘ä»¬å¸Œæœ›é€šè¿‡å‘é€ä¸€ä¸ª.gitlab-ci.ymlåˆå¹¶è¯·æ±‚æ¥å¸®åŠ©ä½ ã€‚
 
 
 Here is an collection of tutorials and guides on setting up your CI pipeline.
-ÒÔÏÂÊÇÉèÖÃCI¹ÜµÀµÄÖ¸ÒıºÍËµÃ÷£º
+ä»¥ä¸‹æ˜¯è®¾ç½®CIç®¡é“çš„æŒ‡å¼•å’Œè¯´æ˜ï¼š
 - [GitLab CI examples](examples/README.md) for the following languages and frameworks:
   - [PHP](examples/php.md)
   - [Ruby](examples/test-and-deploy-ruby-application-to-heroku.md)
@@ -131,46 +131,46 @@ Here is an collection of tutorials and guides on setting up your CI pipeline.
   - [Clojure](examples/test-clojure-application.md)
   - [Scala](examples/test-scala-application.md)
   - [Phoenix](examples/test-phoenix-application.md)
-  - [Run PHP Composer & NPM scripts then deploy them to a staging server--²¿Êğ](examples/deployment/composer-npm-deploy.md)
-  - [Analyze code quality with the Code Climate CLI--Ê¹ÓÃCode Climate·ÖÎö´úÂëÖÊÁ¿](examples/code_climate.md)
-- **ArticlesÏà¹ØÎÄÏ×**
-  - [How to test and deploy Laravel/PHP applications with GitLab CI/CD and Envoy--ÈçºÎÊ¹ÓÃCI/CDºÍEnvoyÀ´²âÊÔºÍ²¿ÊğLaravel/PHPÓ¦ÓÃ](../articles/laravel_with_gitlab_and_envoy/index.md)
-  - [How to deploy Maven projects to Artifactory with GitLab CI/CD--ÈçºÎ²¿ÊğÒ»¸öMavenÏîÄ¿µ½¹¹¼ş](../articles/artifactory_and_gitlab/index.md)
-  - [Automated Debian packaging--×Ô¶¯´ò°üDebian°ü](https://about.gitlab.com/2016/10/12/automated-debian-package-build-with-gitlab-ci/)
+  - [Run PHP Composer & NPM scripts then deploy them to a staging server--éƒ¨ç½²](examples/deployment/composer-npm-deploy.md)
+  - [Analyze code quality with the Code Climate CLI--ä½¿ç”¨Code Climateåˆ†æä»£ç è´¨é‡](examples/code_climate.md)
+- **Articlesç›¸å…³æ–‡çŒ®**
+  - [How to test and deploy Laravel/PHP applications with GitLab CI/CD and Envoy--å¦‚ä½•ä½¿ç”¨CI/CDå’ŒEnvoyæ¥æµ‹è¯•å’Œéƒ¨ç½²Laravel/PHPåº”ç”¨](../articles/laravel_with_gitlab_and_envoy/index.md)
+  - [How to deploy Maven projects to Artifactory with GitLab CI/CD--å¦‚ä½•éƒ¨ç½²ä¸€ä¸ªMavené¡¹ç›®åˆ°æ„ä»¶](../articles/artifactory_and_gitlab/index.md)
+  - [Automated Debian packaging--è‡ªåŠ¨æ‰“åŒ…DebianåŒ…](https://about.gitlab.com/2016/10/12/automated-debian-package-build-with-gitlab-ci/)
   - [Spring boot application with GitLab CI and Kubernetes](https://about.gitlab.com/2016/12/14/continuous-delivery-of-a-spring-boot-application-with-gitlab-ci-and-kubernetes/)
-  - [Setting up GitLab CI for iOS projects-¶ÔiOSÏîÄ¿ÉèÖÃCI](https://about.gitlab.com/2016/03/10/setting-up-gitlab-ci-for-ios-projects/)
-  - [Setting up GitLab CI for Android projects-¶ÔAndroidÏîÄ¿½øĞĞCI](https://about.gitlab.com/2016/11/30/setting-up-gitlab-ci-for-android-projects/)
-  - [Building a new GitLab Docs site with Nanoc, GitLab CI, and GitLab Pages--Ê¹ÓÃNanoc¡¢CIºÍPages¹¹½¨Ò»¸öGItLabÎÄµµÒ³Ãæ](https://about.gitlab.com/2016/12/07/building-a-new-gitlab-docs-site-with-nanoc-gitlab-ci-and-gitlab-pages/)
+  - [Setting up GitLab CI for iOS projects-å¯¹iOSé¡¹ç›®è®¾ç½®CI](https://about.gitlab.com/2016/03/10/setting-up-gitlab-ci-for-ios-projects/)
+  - [Setting up GitLab CI for Android projects-å¯¹Androidé¡¹ç›®è¿›è¡ŒCI](https://about.gitlab.com/2016/11/30/setting-up-gitlab-ci-for-android-projects/)
+  - [Building a new GitLab Docs site with Nanoc, GitLab CI, and GitLab Pages--ä½¿ç”¨Nanocã€CIå’ŒPagesæ„å»ºä¸€ä¸ªGItLabæ–‡æ¡£é¡µé¢](https://about.gitlab.com/2016/12/07/building-a-new-gitlab-docs-site-with-nanoc-gitlab-ci-and-gitlab-pages/)
   - [CI/CD with GitLab in action](https://about.gitlab.com/2017/03/13/ci-cd-demo/)
-  - [Building an Elixir Release into a Docker image using GitLab CI--Ê¹ÓÃGitLab CI¹¹½¨Ò»¸öElixir·¢²¼µ½Docker¾µÏñ](https://about.gitlab.com/2016/08/11/building-an-elixir-release-into-docker-image-using-gitlab-ci-part-1/)
-- **MiscellaneousÆäËû**
-  - [Using `dpl` as deployment tool--Ê¹ÓÃ`dpl`×÷Îª²¿Êğ¹¤¾ß](examples/deployment/README.md)
-  - [Repositories with examples for various languages--¸÷ÖÖÓïÑÔÀı×ÓµÄ´æ´¢¿â](https://gitlab.com/groups/gitlab-examples)
-  - [The .gitlab-ci.yml file for GitLab itself--GitLab±¾ÉíµÄ.gitlab-ci.ymlÎÄ¼ş](https://gitlab.com/gitlab-org/gitlab-ce/blob/master/.gitlab-ci.yml)
-  - [Example project that shows how to use Review Apps--ÈçºÎ½øĞĞ´úÂëÉó²éµÄÀı×Ó](https://gitlab.com/gitlab-examples/review-apps-nginx/)
+  - [Building an Elixir Release into a Docker image using GitLab CI--ä½¿ç”¨GitLab CIæ„å»ºä¸€ä¸ªElixirå‘å¸ƒåˆ°Dockeré•œåƒ](https://about.gitlab.com/2016/08/11/building-an-elixir-release-into-docker-image-using-gitlab-ci-part-1/)
+- **Miscellaneouså…¶ä»–**
+  - [Using `dpl` as deployment tool--ä½¿ç”¨`dpl`ä½œä¸ºéƒ¨ç½²å·¥å…·](examples/deployment/README.md)
+  - [Repositories with examples for various languages--å„ç§è¯­è¨€ä¾‹å­çš„å­˜å‚¨åº“](https://gitlab.com/groups/gitlab-examples)
+  - [The .gitlab-ci.yml file for GitLab itself--GitLabæœ¬èº«çš„.gitlab-ci.ymlæ–‡ä»¶](https://gitlab.com/gitlab-org/gitlab-ce/blob/master/.gitlab-ci.yml)
+  - [Example project that shows how to use Review Apps--å¦‚ä½•è¿›è¡Œä»£ç å®¡æŸ¥çš„ä¾‹å­](https://gitlab.com/gitlab-examples/review-apps-nginx/)
 
-## Integrations--¼¯³É
+## Integrations--é›†æˆ
 
-- **ArticlesÏà¹ØÎÄÏ×:**
-  - [Continuous Delivery with GitLab and Convox--Ê¹ÓÃGitLabºÍConvox½øĞĞ³ÖĞø½»¸¶](https://about.gitlab.com/2016/06/09/continuous-delivery-with-gitlab-and-convox/)
-  - [Getting Started with GitLab and Shippable Continuous Integration--GitLabºÍShippable Continuous IntegrationµÄÈëÃÅÖ¸ÄÏ](https://about.gitlab.com/2016/05/05/getting-started-gitlab-and-shippable/)
-  - [GitLab Partners with DigitalOcean to make Continuous Integration faster, safer, and more affordable--Ê¹ÓÃDigitalOceanÓëGitLabºÏ×÷£¬ÊÇCI¸ü¿ì¡¢°²È«ºÍ¸üÊµ»İ](https://about.gitlab.com/2016/04/19/gitlab-partners-with-digitalocean-to-make-continuous-integration-faster-safer-and-more-affordable/)
+- **Articlesç›¸å…³æ–‡çŒ®:**
+  - [Continuous Delivery with GitLab and Convox--ä½¿ç”¨GitLabå’ŒConvoxè¿›è¡ŒæŒç»­äº¤ä»˜](https://about.gitlab.com/2016/06/09/continuous-delivery-with-gitlab-and-convox/)
+  - [Getting Started with GitLab and Shippable Continuous Integration--GitLabå’ŒShippable Continuous Integrationçš„å…¥é—¨æŒ‡å—](https://about.gitlab.com/2016/05/05/getting-started-gitlab-and-shippable/)
+  - [GitLab Partners with DigitalOcean to make Continuous Integration faster, safer, and more affordable--ä½¿ç”¨DigitalOceanä¸GitLabåˆä½œï¼Œæ˜¯CIæ›´å¿«ã€å®‰å…¨å’Œæ›´å®æƒ ](https://about.gitlab.com/2016/04/19/gitlab-partners-with-digitalocean-to-make-continuous-integration-faster-safer-and-more-affordable/)
 
-## Why GitLab CI?ÎªÊ²Ã´×öGitLab CI£¿
+## Why GitLab CI?ä¸ºä»€ä¹ˆåšGitLab CIï¼Ÿ
 
-- **ArticlesÏà¹ØÎÄÏ×:**
-  - [Why We Chose GitLab CI for our CI/CD Solution--ÎªÊ²Ã´Ñ¡ÔñGitLab CI×÷ÎªÎÒÃÇµÄCI/CD½â¾ö·½°¸](https://about.gitlab.com/2016/10/17/gitlab-ci-oohlala/)
-  - [Building our web-app on GitLab CI: 5 reasons why Captain Train migrated from Jenkins to GitLab CI--ÔÚGitLab CIÉÏ¹¹½¨ÎÒÃÇµÄWebÓ¦ÓÃ³ÌĞò£ºCaptain Train´ÓJenkinsÇ¨ÒÆµ½GitLab CIµÄ5¸öÀíÓÉ
+- **Articlesç›¸å…³æ–‡çŒ®:**
+  - [Why We Chose GitLab CI for our CI/CD Solution--ä¸ºä»€ä¹ˆé€‰æ‹©GitLab CIä½œä¸ºæˆ‘ä»¬çš„CI/CDè§£å†³æ–¹æ¡ˆ](https://about.gitlab.com/2016/10/17/gitlab-ci-oohlala/)
+  - [Building our web-app on GitLab CI: 5 reasons why Captain Train migrated from Jenkins to GitLab CI--åœ¨GitLab CIä¸Šæ„å»ºæˆ‘ä»¬çš„Webåº”ç”¨ç¨‹åºï¼šCaptain Trainä»Jenkinsè¿ç§»åˆ°GitLab CIçš„5ä¸ªç†ç”±
   ](https://about.gitlab.com/2016/07/22/building-our-web-app-on-gitlab-ci/)
 
 ## Breaking changes--
 
 - [CI variables renaming for GitLab 9.0](variables/README.md#9-0-renaming) Read about the
-  deprecated CI variables and what you should use for GitLab 9.0+.ÎªGitLab 9.0ÖØÃüÃûCI±äÁ¿¡£ÔÄ¶ÁÓĞ¹Ø²»ÍÆ¼öÊ¹ÓÃµÄCI±äÁ¿ÒÔ¼°GitLab 9.0+Ó¦¸ÃÊ¹ÓÃÄÄĞ©±äÁ¿¡£
-- [New CI job permissions model--ĞÂµÄ×÷Òµ·ÃÎÊÄ£ĞÍ](../user/project/new_ci_build_permissions_model.md)
+  deprecated CI variables and what you should use for GitLab 9.0+.ä¸ºGitLab 9.0é‡å‘½åCIå˜é‡ã€‚é˜…è¯»æœ‰å…³ä¸æ¨èä½¿ç”¨çš„CIå˜é‡ä»¥åŠGitLab 9.0+åº”è¯¥ä½¿ç”¨å“ªäº›å˜é‡ã€‚
+- [New CI job permissions model--æ–°çš„ä½œä¸šè®¿é—®æ¨¡å‹](../user/project/new_ci_build_permissions_model.md)
   Read about what changed in GitLab 8.12 and how that affects your jobs.
   There's a new way to access your Git submodules and LFS objects in jobs.
-  ÔÄ¶ÁGitLab 8.12ÖĞµÄ±ä»¯ÒÔ¼°ÕâĞ©±ä»¯¶ÔÄúµÄ×÷ÒµµÄÓ°Ïì¡£ ÓĞÒ»ÖÖĞÂµÄ·½Ê½À´·ÃÎÊ×÷ÒµÖĞµÄGit×ÓÄ£¿éºÍLFS¶ÔÏó¡£
+  é˜…è¯»GitLab 8.12ä¸­çš„å˜åŒ–ä»¥åŠè¿™äº›å˜åŒ–å¯¹æ‚¨çš„ä½œä¸šçš„å½±å“ã€‚ æœ‰ä¸€ç§æ–°çš„æ–¹å¼æ¥è®¿é—®ä½œä¸šä¸­çš„Gitå­æ¨¡å—å’ŒLFSå¯¹è±¡ã€‚
   
 
 [gitlab-ci-templates]: https://gitlab.com/gitlab-org/gitlab-ci-yml
