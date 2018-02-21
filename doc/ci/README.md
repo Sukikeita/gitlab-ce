@@ -23,12 +23,12 @@ The first steps towards your GitLab CI journey.
 
 走向GitLab CI旅程的第一步。
 
-- [Getting started with GitLab CI 快速入门指南](quick_start/README.md)
-- [Pipelines and jobs 流水线和作业](pipelines.md)
-- [Configure a Runner, the application that runs your jobs 配置Runner运行作业](runners/README.md)
+- [Getting started with GitLab CI 快速入门指南](quick_start/README.md)（已翻译）
+- [Pipelines and jobs 流水线和作业](pipelines.md)（已翻译）
+- [Configure a Runner, the application that runs your jobs 配置Runner运行作业](runners/README.md)（已翻译）
 - **Articles文章:**
   - [Getting started with GitLab and GitLab CI - Intro to CI CI简介](https://about.gitlab.com/2015/12/14/getting-started-with-gitlab-and-gitlab-ci/)
-  - [ ] [Continuous Integration, Delivery, and Deployment with GitLab - Intro to CI/CD 使用GitLab持续集成、交付和部署](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/)
+  - [ ] [Continuous Integration, Delivery, and Deployment with GitLab - Intro to CI/CD 使用GitLab持续集成、交付和部署](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/)（已翻译）
   - [GitLab CI: Run jobs sequentially, in parallel, or build a custom pipeline 线性运行作业、并行运行作业或构件自定义的流水线](https://about.gitlab.com/2016/07/29/the-basics-of-gitlab-ci/)
   - [Setting up GitLab Runner For Continuous Integration安装GitLab-Runner做持续集成](https://about.gitlab.com/2016/03/01/gitlab-runner-with-docker/)
   - [GitLab CI: Deployment & environments 部署和环境](https://about.gitlab.com/2016/08/26/ci-deployment-and-environments/)
@@ -48,9 +48,9 @@ digging into specific reference guides.
 
 
 - [`.gitlab-ci.yml` reference](yaml/README.md) - Learn all about the ins and
-  outs of `.gitlab-ci.yml` definitions--学习所有有关`.gitlab-ci.yml`的所有定义
+  outs of `.gitlab-ci.yml` definitions--学习所有有关`.gitlab-ci.yml`的所有定义（已翻译）
 - [CI Variables](variables/README.md) - Learn how to use variables defined in
-  your `.gitlab-ci.yml` or secured ones defined in your project's settings--学习如何在`.gitlab-ci.yml`使用变量或定义一个安装的变量
+  your `.gitlab-ci.yml` or secured ones defined in your project's settings--（未翻译完）学习如何在`.gitlab-ci.yml`使用变量或定义一个安装的变量
 - **The permissions model权限模式** - Learn about the access levels a user can have for
   performing certain CI actions--了解普通用户执行CI的访问权限
   - [User permissions--用户权限](../user/permissions.md#gitlab-ci)
