@@ -39,7 +39,7 @@ Shortcuts to GitLab's most visited docs:
 
 - [GitLab Basics](gitlab-basics/README.md): Start working on your command line and on GitLab.在GitLab中使用命令行
 - [GitLab Workflow](workflow/README.md): Enhance your workflow with the best of GitLab Workflow.使用GitLab工作流
-  - See also [GitLab Workflow - an overview](https://about.gitlab.com/2016/10/25/gitlab-workflow-an-overview/).Gitlab工作流概述
+    - See also [GitLab Workflow - an overview](https://about.gitlab.com/2016/10/25/gitlab-workflow-an-overview/).Gitlab工作流概述
 - [GitLab Markdown](user/markdown.md): GitLab's advanced formatting system (GitLab Flavored Markdown).GitLab的高级格式化系统（GitLab Flavored Markdown）。
 - [GitLab Quick Actions](user/project/quick_actions.md): Textual shortcuts for common actions on issues or merge requests that are usually done by clicking buttons or dropdowns in GitLab's UI.issues和合并请求的文本快捷方式，通常通过单击按钮或下拉在GitLab的用户界面中的常见行动。
 - [Auto DevOps](topics/autodevops/index.md) DevOps
