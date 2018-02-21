@@ -25,196 +25,196 @@ plus premium features available in each version: **Enterprise Edition Starter**
 
 Shortcuts to GitLab's most visited docs:
 
-| [GitLab CI/CD](ci/README.md) | Other |
+| [GitLab CI/CD](ci/README.md)-å·²ç¿»è¯‘å®Œ | Other |
 | :----- | :----- |
-| [Quick start guide](ci/quick_start/README.md)¿ìËÙÈëÃÅÖ¸ÄÏ | [API](api/README.md) |
-| [Configuring `.gitlab-ci.yml`](ci/yaml/README.md)ÅäÖÃ`.gitlab-ci.yml` | [SSH authentication](ssh/README.md)SSHÈÏÖ¤ |
-| [Using Docker images](ci/docker/using_docker_images.md)Ê¹ÓÃDocker¾µÏñ | [GitLab Pages](user/project/pages/index.md)GitLabÖ÷Ò³ |
+| [Quick start guide](ci/quick_start/README.md)å¿«é€Ÿå…¥é—¨æŒ‡å—-å·²ç¿»è¯‘å®Œ | [API](api/README.md) |
+| [Configuring `.gitlab-ci.yml`](ci/yaml/README.md)é…ç½®`.gitlab-ci.yml`-å·²ç¿»è¯‘å®Œ | [SSH authentication](ssh/README.md)SSHè®¤è¯ |
+| [Using Docker images](ci/docker/using_docker_images.md)ä½¿ç”¨Dockeré•œåƒ | [GitLab Pages](user/project/pages/index.md)GitLabä¸»é¡µ |
 
-- [User documentation](user/index.md)ÓÃ»§ÎÄµµ
-- [Administrator documentation](#administrator-documentation)¹ÜÀíÎÄµµ
-- [Technical Articles](articles/index.md)¼¼ÊõÎÄÕÂ
+- [User documentation](user/index.md)ç”¨æˆ·æ–‡æ¡£
+- [Administrator documentation](#administrator-documentation)ç®¡ç†æ–‡æ¡£
+- [Technical Articles](articles/index.md)æŠ€æœ¯æ–‡ç« 
 
-## Getting started with GitLab --¿ªÊ¼Ê¹ÓÃGitLab
+## Getting started with GitLab --å¼€å§‹ä½¿ç”¨GitLab
 
-- [GitLab Basics](gitlab-basics/README.md): Start working on your command line and on GitLab.ÔÚGitLabÖĞÊ¹ÓÃÃüÁîĞĞ
-- [GitLab Workflow](workflow/README.md): Enhance your workflow with the best of GitLab Workflow.Ê¹ÓÃGitLab¹¤×÷Á÷
-  - See also [GitLab Workflow - an overview](https://about.gitlab.com/2016/10/25/gitlab-workflow-an-overview/).Gitlab¹¤×÷Á÷¸ÅÊö
-- [GitLab Markdown](user/markdown.md): GitLab's advanced formatting system (GitLab Flavored Markdown).GitLabµÄ¸ß¼¶¸ñÊ½»¯ÏµÍ³£¨GitLab Flavored Markdown£©¡£
-- [GitLab Quick Actions](user/project/quick_actions.md): Textual shortcuts for common actions on issues or merge requests that are usually done by clicking buttons or dropdowns in GitLab's UI.issuesºÍºÏ²¢ÇëÇóµÄÎÄ±¾¿ì½İ·½Ê½£¬Í¨³£Í¨¹ıµ¥»÷°´Å¥»òÏÂÀ­ÔÚGitLabµÄÓÃ»§½çÃæÖĞµÄ³£¼ûĞĞ¶¯¡£
+- [GitLab Basics](gitlab-basics/README.md): Start working on your command line and on GitLab.åœ¨GitLabä¸­ä½¿ç”¨å‘½ä»¤è¡Œ
+- [GitLab Workflow](workflow/README.md): Enhance your workflow with the best of GitLab Workflow.ä½¿ç”¨GitLabå·¥ä½œæµ
+ Â - See also [GitLab Workflow - an overview](https://about.gitlab.com/2016/10/25/gitlab-workflow-an-overview/).Gitlabå·¥ä½œæµæ¦‚è¿°
+- [GitLab Markdown](user/markdown.md): GitLab's advanced formatting system (GitLab Flavored Markdown).GitLabçš„é«˜çº§æ ¼å¼åŒ–ç³»ç»Ÿï¼ˆGitLab Flavored Markdownï¼‰ã€‚
+- [GitLab Quick Actions](user/project/quick_actions.md): Textual shortcuts for common actions on issues or merge requests that are usually done by clicking buttons or dropdowns in GitLab's UI.issueså’Œåˆå¹¶è¯·æ±‚çš„æ–‡æœ¬å¿«æ·æ–¹å¼ï¼Œé€šå¸¸é€šè¿‡å•å‡»æŒ‰é’®æˆ–ä¸‹æ‹‰åœ¨GitLabçš„ç”¨æˆ·ç•Œé¢ä¸­çš„å¸¸è§è¡ŒåŠ¨ã€‚
 - [Auto DevOps](topics/autodevops/index.md) DevOps
 
-### User account ÓÃ»§ÕË»§
+### User account ç”¨æˆ·è´¦æˆ·
 
-- [User account](user/profile/index.md): Manage your account ¹ÜÀíÕËºÅ
-  - [Authentication](topics/authentication/index.md): Account security with two-factor authentication, setup your ssh keys and deploy keys for secure access to your projects.ÈÏÖ¤£ºÁ½ÖÖ°²È«µÄÈÏÖ¤·½Ê½£¬½¨Á¢ÄãµÄsshÃÜÔ¿ºÍ²¿ÊğÃÜÔ¿ÒÔ°²È«µØ·ÃÎÊÄúµÄÏîÄ¿
-  - [Profile settings](user/profile/index.md#profile-settings): Manage your profile settings, two factor authentication and more.¹ÜÀíÅäÖÃÎÄ¼şÉèÖÃ£¬Á½ÖÖÈÏÖ¤»ò¸ü¶à·½Ê½¡£
-- [User permissions](user/permissions.md): Learn what each role in a project (external/guest/reporter/developer/master/owner) can do.ÓÃ»§È¨ÏŞ£ºÑ§Ï°ÏîÄ¿ÖĞÃ¿¸ö½ÇÉ«µÄ¹¦ÄÜ
+- [User account](user/profile/index.md): Manage your account ç®¡ç†è´¦å·
+  - [Authentication](topics/authentication/index.md): Account security with two-factor authentication, setup your ssh keys and deploy keys for secure access to your projects.è®¤è¯ï¼šä¸¤ç§å®‰å…¨çš„è®¤è¯æ–¹å¼ï¼Œå»ºç«‹ä½ çš„sshå¯†é’¥å’Œéƒ¨ç½²å¯†é’¥ä»¥å®‰å…¨åœ°è®¿é—®æ‚¨çš„é¡¹ç›®
+  - [Profile settings](user/profile/index.md#profile-settings): Manage your profile settings, two factor authentication and more.ç®¡ç†é…ç½®æ–‡ä»¶è®¾ç½®ï¼Œä¸¤ç§è®¤è¯æˆ–æ›´å¤šæ–¹å¼ã€‚
+- [User permissions](user/permissions.md): Learn what each role in a project (external/guest/reporter/developer/master/owner) can do.ç”¨æˆ·æƒé™ï¼šå­¦ä¹ é¡¹ç›®ä¸­æ¯ä¸ªè§’è‰²çš„åŠŸèƒ½
 
-### Projects and groups ÏîÄ¿ºÍ×é
+### Projects and groups é¡¹ç›®å’Œç»„
 
 - [Projects](user/project/index.md):
-  - [Project settings](user/project/settings/index.md) ÏîÄ¿ÉèÖÃ
-  - [Create a project](gitlab-basics/create-project.md) ´´½¨ÏîÄ¿
-  - [Fork a project](gitlab-basics/fork-project.md) ¸´¿ÌÒ»¸öÏîÄ¿
-  - [Importing and exporting projects between instances](user/project/settings/import_export.md). ÔÚÊµÀıÖĞµ¼Èë»òµ¼³öÏîÄ¿
-  - [Project access](public_access/public_access.md): Setting up your project's visibility to public, internal, or private. ·ÃÎÊÏîÄ¿£ºÉèÖÃÏîÄ¿µÄ¿ÉÊÓĞÔ£¨public¡¢internal¡¢provate£©
-  - [GitLab Pages](user/project/pages/index.md): Build, test, and deploy your static website with GitLab Pages.¹¹½¨¡¢²âÊÔ¡¢²¿ÊğÄúµÄ¾²Ì¬Ò³Ãæ
-- [Groups](user/group/index.md): Organize your projects in groups. ÒÔ×éµÄ·½Ê½¹ÜÀíÏîÄ¿
-  - [Subgroups](user/group/subgroups/index.md) ÑÇÈº
-- [Search through GitLab](user/search/index.md): Search for issues, merge requests, projects, groups, todos, and issues in Issue Boards. Ê¹ÓÃIssue°å
-- [Snippets](user/snippets.md): Snippets allow you to create little bits of code. SnippetÔÊĞíÄã´´½¨Ò»Ğ©´úÂë
-- [Wikis](user/project/wiki/index.md): Enhance your repository documentation with built-in wikis. Ê¹ÓÃÄÚÖÃµÄwikes¼ÓÇ¿´æ´¢¿âµÄÎÄµµ¹ÜÀí
+  - [Project settings](user/project/settings/index.md) é¡¹ç›®è®¾ç½®
+  - [Create a project](gitlab-basics/create-project.md) åˆ›å»ºé¡¹ç›®
+  - [Fork a project](gitlab-basics/fork-project.md) å¤åˆ»ä¸€ä¸ªé¡¹ç›®
+  - [Importing and exporting projects between instances](user/project/settings/import_export.md). åœ¨å®ä¾‹ä¸­å¯¼å…¥æˆ–å¯¼å‡ºé¡¹ç›®
+  - [Project access](public_access/public_access.md): Setting up your project's visibility to public, internal, or private. è®¿é—®é¡¹ç›®ï¼šè®¾ç½®é¡¹ç›®çš„å¯è§†æ€§ï¼ˆpublicã€internalã€provateï¼‰
+  - [GitLab Pages](user/project/pages/index.md): Build, test, and deploy your static website with GitLab Pages.æ„å»ºã€æµ‹è¯•ã€éƒ¨ç½²æ‚¨çš„é™æ€é¡µé¢
+- [Groups](user/group/index.md): Organize your projects in groups. ä»¥ç»„çš„æ–¹å¼ç®¡ç†é¡¹ç›®
+  - [Subgroups](user/group/subgroups/index.md) äºšç¾¤
+- [Search through GitLab](user/search/index.md): Search for issues, merge requests, projects, groups, todos, and issues in Issue Boards. ä½¿ç”¨Issueæ¿
+- [Snippets](user/snippets.md): Snippets allow you to create little bits of code. Snippetå…è®¸ä½ åˆ›å»ºä¸€äº›ä»£ç 
+- [Wikis](user/project/wiki/index.md): Enhance your repository documentation with built-in wikis. ä½¿ç”¨å†…ç½®çš„wikesåŠ å¼ºå­˜å‚¨åº“çš„æ–‡æ¡£ç®¡ç†
 
-### Repository--´æ´¢¿â
+### Repository--å­˜å‚¨åº“
 
 Manage your [repositories](user/project/repository/index.md) from the UI (user interface):
-ÔÚUI½çÃæ¹ÜÀíÄúµÄ´æ´¢¿â£º
+åœ¨UIç•Œé¢ç®¡ç†æ‚¨çš„å­˜å‚¨åº“ï¼š
 
-- [Files](user/project/repository/index.md#files) ÎÄ¼ş¹ÜÀí
-  - [Create a file](user/project/repository/web_editor.md#create-a-file) ´´½¨Ò»¸öÎÄ¼ş
-  - [Upload a file](user/project/repository/web_editor.md#upload-a-file) ÉÏ´«Ò»¸öÎÄ¼ş
-  - [File templates](user/project/repository/web_editor.md#template-dropdowns) ÁÙÊ±ÎÄ¼ş
-  - [Create a directory](user/project/repository/web_editor.md#create-a-directory) ´´½¨Ò»¸öÄ¿Â¼
-  - [Start a merge request](user/project/repository/web_editor.md#tips) (when committing via UI) ·¢ÆğÒ»¸öºÏ²¢ÇëÇó
-- [Branches](user/project/repository/branches/index.md) ·ÖÖ§¹ÜÀí
-  - [Default branch](user/project/repository/branches/index.md#default-branch) Ä¬ÈÏ·ÖÖ§
-  - [Create a branch](user/project/repository/web_editor.md#create-a-new-branch) ´´½¨·ÖÖ§
-  - [Protected branches](user/project/protected_branches.md#protected-branches) ±£»¤·ÖÖ§
-  - [Delete merged branches](user/project/repository/branches/index.md#delete-merged-branches) É¾³ıÒÑºÏ²¢µÄ·ÖÖ§
-- [Commits](user/project/repository/index.md#commits) Ìá½»
-  - [Signing commits](user/project/repository/gpg_signed_commits/index.md): use GPG to sign your commits. Ç©ÊğÌá½»
+- [Files](user/project/repository/index.md#files) æ–‡ä»¶ç®¡ç†
+  - [Create a file](user/project/repository/web_editor.md#create-a-file) åˆ›å»ºä¸€ä¸ªæ–‡ä»¶
+  - [Upload a file](user/project/repository/web_editor.md#upload-a-file) ä¸Šä¼ ä¸€ä¸ªæ–‡ä»¶
+  - [File templates](user/project/repository/web_editor.md#template-dropdowns) ä¸´æ—¶æ–‡ä»¶
+  - [Create a directory](user/project/repository/web_editor.md#create-a-directory) åˆ›å»ºä¸€ä¸ªç›®å½•
+  - [Start a merge request](user/project/repository/web_editor.md#tips) (when committing via UI) å‘èµ·ä¸€ä¸ªåˆå¹¶è¯·æ±‚
+- [Branches](user/project/repository/branches/index.md) åˆ†æ”¯ç®¡ç†
+  - [Default branch](user/project/repository/branches/index.md#default-branch) é»˜è®¤åˆ†æ”¯
+  - [Create a branch](user/project/repository/web_editor.md#create-a-new-branch) åˆ›å»ºåˆ†æ”¯
+  - [Protected branches](user/project/protected_branches.md#protected-branches) ä¿æŠ¤åˆ†æ”¯
+  - [Delete merged branches](user/project/repository/branches/index.md#delete-merged-branches) åˆ é™¤å·²åˆå¹¶çš„åˆ†æ”¯
+- [Commits](user/project/repository/index.md#commits) æäº¤
+  - [Signing commits](user/project/repository/gpg_signed_commits/index.md): use GPG to sign your commits. ç­¾ç½²æäº¤
 
-### Issues and Merge Requests (MRs)--IssueºÍºÏ²¢ÇëÇó
+### Issues and Merge Requests (MRs)--Issueå’Œåˆå¹¶è¯·æ±‚
 
-- [Discussions](user/discussions/index.md): Threads, comments, and resolvable discussions in issues, commits, and  merge requests.issues¡¢Ìá½»ºÍºÏ²¢ÇëÇóÖĞµÄÖ÷Ìâ¡¢ÆÀÂÛ¡¢¿É½â¾öÌÖÂÛ
+- [Discussions](user/discussions/index.md): Threads, comments, and resolvable discussions in issues, commits, and  merge requests.issuesã€æäº¤å’Œåˆå¹¶è¯·æ±‚ä¸­çš„ä¸»é¢˜ã€è¯„è®ºã€å¯è§£å†³è®¨è®º
 - [Issues](user/project/issues/index.md) Issues
-- [Project issue Board](user/project/issue_board.md)ÏîÄ¿µÄissue°å
-- [Issues and merge requests templates](user/project/description_templates.md): Create templates for submitting new issues and merge requests.´´½¨Ìá½»ĞÂÎÊÌâºÍºÏ²¢ÇëÇóµÄÄ£°å£»
-- [Labels](user/project/labels.md): Categorize your issues or merge requests based on descriptive titles.¸ù¾İ±êÌâÃèÊö½«issuesºÍºÏ²¢ÇëÇó·ÖÂ¼
-- [Merge Requests](user/project/merge_requests/index.md) ºÏ²¢ÇëÇó
-  - [Work In Progress Merge Requests](user/project/merge_requests/work_in_progress_merge_requests.md)¹¤×÷½øĞĞÖĞ·¢ÆğºÏ²¢ÇëÇó
-  - [Merge Request discussion resolution](user/discussions/index.md#moving-a-single-discussion-to-a-new-issue): Resolve discussions, move discussions in a merge request to an issue, only allow merge requests to be merged if all discussions are resolved.ºÏ²¢ÇëÇóÌÖÂÛ¾öÒé£º½â¾öÌÖÂÛÎÊÌâ¡¢½«ÌÖÂÛ´ÓºÏ²¢ÇëÇóÒÆµ½issueÖĞ£¬Èç¹ûËùÓĞÌÖÂÛÒÑ½â¾ö£¬ÔòÖ»ÔÊĞíºÏ²¢ÇëÇó
-  - [Checkout merge requests locally](user/project/merge_requests/index.md#checkout-merge-requests-locally) ½«ºÏ²¢ÇëÇó¼ì³öµ½±¾µØ
+- [Project issue Board](user/project/issue_board.md)é¡¹ç›®çš„issueæ¿
+- [Issues and merge requests templates](user/project/description_templates.md): Create templates for submitting new issues and merge requests.åˆ›å»ºæäº¤æ–°é—®é¢˜å’Œåˆå¹¶è¯·æ±‚çš„æ¨¡æ¿ï¼›
+- [Labels](user/project/labels.md): Categorize your issues or merge requests based on descriptive titles.æ ¹æ®æ ‡é¢˜æè¿°å°†issueså’Œåˆå¹¶è¯·æ±‚åˆ†å½•
+- [Merge Requests](user/project/merge_requests/index.md) åˆå¹¶è¯·æ±‚
+  - [Work In Progress Merge Requests](user/project/merge_requests/work_in_progress_merge_requests.md)å·¥ä½œè¿›è¡Œä¸­å‘èµ·åˆå¹¶è¯·æ±‚
+  - [Merge Request discussion resolution](user/discussions/index.md#moving-a-single-discussion-to-a-new-issue): Resolve discussions, move discussions in a merge request to an issue, only allow merge requests to be merged if all discussions are resolved.åˆå¹¶è¯·æ±‚è®¨è®ºå†³è®®ï¼šè§£å†³è®¨è®ºé—®é¢˜ã€å°†è®¨è®ºä»åˆå¹¶è¯·æ±‚ç§»åˆ°issueä¸­ï¼Œå¦‚æœæ‰€æœ‰è®¨è®ºå·²è§£å†³ï¼Œåˆ™åªå…è®¸åˆå¹¶è¯·æ±‚
+  - [Checkout merge requests locally](user/project/merge_requests/index.md#checkout-merge-requests-locally) å°†åˆå¹¶è¯·æ±‚æ£€å‡ºåˆ°æœ¬åœ°
   - [Cherry-pick](user/project/merge_requests/cherry_pick_changes.md)
-- [Milestones](user/project/milestones/index.md): Organize issues and merge requests into a cohesive group, optionally setting a due date. Àï³Ì±®£º×éÖ¯issueºÍºÏ²¢ÇëÇóµ½Ò»¸öÓĞÄı¾ÛÁ¦µÄ×éÖĞ£¬¿ÉÑ¡µØÉèÖÃ½ØÖ¹ÈÕÆÚ
-- [Todos](workflow/todos.md): A chronological list of to-dos that are waiting for your input, all in a simple dashboard.µÈ´ıÄúµÄÊäÈëµÄ°´Ê±¼äÅÅĞòµÄ´ı°ìÊÂÏîÇåµ¥£¬È«²¿·ÅÔÚ¼òµ¥µÄÒÇ±í°åÖĞ¡£
+- [Milestones](user/project/milestones/index.md): Organize issues and merge requests into a cohesive group, optionally setting a due date. é‡Œç¨‹ç¢‘ï¼šç»„ç»‡issueå’Œåˆå¹¶è¯·æ±‚åˆ°ä¸€ä¸ªæœ‰å‡èšåŠ›çš„ç»„ä¸­ï¼Œå¯é€‰åœ°è®¾ç½®æˆªæ­¢æ—¥æœŸ
+- [Todos](workflow/todos.md): A chronological list of to-dos that are waiting for your input, all in a simple dashboard.ç­‰å¾…æ‚¨çš„è¾“å…¥çš„æŒ‰æ—¶é—´æ’åºçš„å¾…åŠäº‹é¡¹æ¸…å•ï¼Œå…¨éƒ¨æ”¾åœ¨ç®€å•çš„ä»ªè¡¨æ¿ä¸­ã€‚
 
 
 ### Git and GitLab
 
-- [Git](topics/git/index.md): Getting started with Git, branching strategies, Git LFS, advanced use. ·ÖÖ§²ßÂÔ¡¢GitµÄLFS¡¢¸ß¼¶ÓÃ·¨
-- [Git cheatsheet](https://gitlab.com/gitlab-com/marketing/raw/master/design/print/git-cheatsheet/print-pdf/git-cheatsheet.pdf): Download a PDF describing the most used Git operations.ÏÂÔØ³£ÓÃµÄGit²Ù×÷µÄPDFÎÄµµ
-- [GitLab Flow](workflow/gitlab_flow.md): explore the best of Git with the GitLab Flow strategy.Ì½Ë÷Ê¹ÓÃ×îºÏÊÊµÄ¹¤×÷Á÷²ßÂÔ
+- [Git](topics/git/index.md): Getting started with Git, branching strategies, Git LFS, advanced use. åˆ†æ”¯ç­–ç•¥ã€Gitçš„LFSã€é«˜çº§ç”¨æ³•
+- [Git cheatsheet](https://gitlab.com/gitlab-com/marketing/raw/master/design/print/git-cheatsheet/print-pdf/git-cheatsheet.pdf): Download a PDF describing the most used Git operations.ä¸‹è½½å¸¸ç”¨çš„Gitæ“ä½œçš„PDFæ–‡æ¡£
+- [GitLab Flow](workflow/gitlab_flow.md): explore the best of Git with the GitLab Flow strategy.æ¢ç´¢ä½¿ç”¨æœ€åˆé€‚çš„å·¥ä½œæµç­–ç•¥
 
-### Migrate and import your projects from other platforms--´ÓÆäËûÆ½Ì¨Ç¨ÒÆºÍµ¼ÈëÏîÄ¿µ½Git
+### Migrate and import your projects from other platforms--ä»å…¶ä»–å¹³å°è¿ç§»å’Œå¯¼å…¥é¡¹ç›®åˆ°Git
 
-- [Importing to GitLab](user/project/import/index.md): Import your projects from GitHub, Bitbucket, GitLab.com, FogBugz and SVN into GitLab.´ÓÆäËûÆ´Í¼µ¼ÈëÄúµÄÏîÄ¿µ½GitLab
-- [Migrating from SVN](workflow/importing/migrating_from_svn.md): Convert a SVN repository to Git and GitLab.´ÓSVN´æ´¢¿âÇ¨ÒÆµ½GitºÍGitLab
+- [Importing to GitLab](user/project/import/index.md): Import your projects from GitHub, Bitbucket, GitLab.com, FogBugz and SVN into GitLab.ä»å…¶ä»–æ‹¼å›¾å¯¼å…¥æ‚¨çš„é¡¹ç›®åˆ°GitLab
+- [Migrating from SVN](workflow/importing/migrating_from_svn.md): Convert a SVN repository to Git and GitLab.ä»SVNå­˜å‚¨åº“è¿ç§»åˆ°Gitå’ŒGitLab
 
-### Continuous Integration, Delivery, and Deployment--³ÖĞø¼¯³É¡¢½»¸¶¡¢ºÍ²¿Êğ
+### Continuous Integration, Delivery, and Deployment--æŒç»­é›†æˆã€äº¤ä»˜ã€å’Œéƒ¨ç½²
 
-- [GitLab CI](ci/README.md): Explore the features and capabilities of Continuous Integration, Continuous Delivery, and Continuous Deployment with GitLab.ÁË½âGitLabµÄCI¡¢³ÖĞø½»¸¶¡¢³ÖĞø²¿Êğ¹¦ÄÜºÍĞÔÄÜ
-  - [Auto Deploy](ci/autodeploy/index.md): Configure GitLab CI for the deployment of your application.ÅäÖÃCI²¿ÊğÓ¦ÓÃ
-  - [Review Apps](ci/review_apps/index.md): Preview changes to your app right from a merge request.´ÓºÏ²¢ÇëÇóÖĞ½øĞĞ´úÂëÉó²é
-- [GitLab Cycle Analytics](user/project/cycle_analytics.md): Cycle Analytics measures the time it takes to go from an [idea to production](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/#from-idea-to-production-with-gitlab) for each project you have. ·ÖÎöÏîÄ¿µÄÖÜÆÚ
-- [GitLab Container Registry](user/project/container_registry.md): Learn how to use GitLab's built-in Container Registry.Ñ§Ï°ÈçºÎÊ¹ÓÃÄÚÖÃµÄ×¢²áÈİÆ÷
+- [GitLab CI](ci/README.md): Explore the features and capabilities of Continuous Integration, Continuous Delivery, and Continuous Deployment with GitLab.äº†è§£GitLabçš„CIã€æŒç»­äº¤ä»˜ã€æŒç»­éƒ¨ç½²åŠŸèƒ½å’Œæ€§èƒ½
+  - [Auto Deploy](ci/autodeploy/index.md): Configure GitLab CI for the deployment of your application.é…ç½®CIéƒ¨ç½²åº”ç”¨
+  - [Review Apps](ci/review_apps/index.md): Preview changes to your app right from a merge request.ä»åˆå¹¶è¯·æ±‚ä¸­è¿›è¡Œä»£ç å®¡æŸ¥
+- [GitLab Cycle Analytics](user/project/cycle_analytics.md): Cycle Analytics measures the time it takes to go from an [idea to production](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/#from-idea-to-production-with-gitlab) for each project you have. åˆ†æé¡¹ç›®çš„å‘¨æœŸ
+- [GitLab Container Registry](user/project/container_registry.md): Learn how to use GitLab's built-in Container Registry.å­¦ä¹ å¦‚ä½•ä½¿ç”¨å†…ç½®çš„æ³¨å†Œå®¹å™¨
 
-### Automation--×Ô¶¯»¯
+### Automation--è‡ªåŠ¨åŒ–
 
-- [API](api/README.md): Automate GitLab via a simple and powerful API. Í¨¹ı¼òµ¥¶øÇ¿´óµÄAPI×Ô¶¯»¯GitLab
-- [GitLab Webhooks](user/project/integrations/webhooks.md): Let GitLab notify you when new code has been pushed to your project. ÈÃGitLabÍ¨ÖªÄú£¬µ±ÓĞĞÂµÄ´úÂëÍÆËÍµ½ÄúµÄÏîÄ¿Ê±¡£
+- [API](api/README.md): Automate GitLab via a simple and powerful API. é€šè¿‡ç®€å•è€Œå¼ºå¤§çš„APIè‡ªåŠ¨åŒ–GitLab
+- [GitLab Webhooks](user/project/integrations/webhooks.md): Let GitLab notify you when new code has been pushed to your project. è®©GitLabé€šçŸ¥æ‚¨ï¼Œå½“æœ‰æ–°çš„ä»£ç æ¨é€åˆ°æ‚¨çš„é¡¹ç›®æ—¶ã€‚
 
-### Integrations--¼¯³É
+### Integrations--é›†æˆ
 
-- [Project Services](user/project/integrations/project_services.md): Integrate a project with external services, such as CI and chat. Ê¹ÓÃÍâ²¿·şÎñ£¬ÈçCIºÍchat¼¯³ÉÏîÄ¿
-- [GitLab Integration](integration/README.md): Integrate with multiple third-party services with GitLab to allow external issue trackers and external authentication. Ê¹ÓÃµÚÈı·½·şÎñ¼¯³Éµ½GitLabÖĞÒÔÊ¹ÓÃÍâ²¿µÄissue¸ú×ÙºÍÍâ²¿µÄÈÏÖ¤·şÎñ£»
-- [Trello Power-Up](integration/trello_power_up.md): Integrate with GitLab's Trello Power-Up ¼¯³ÉTrello Power-Up
+- [Project Services](user/project/integrations/project_services.md): Integrate a project with external services, such as CI and chat. ä½¿ç”¨å¤–éƒ¨æœåŠ¡ï¼Œå¦‚CIå’Œchaté›†æˆé¡¹ç›®
+- [GitLab Integration](integration/README.md): Integrate with multiple third-party services with GitLab to allow external issue trackers and external authentication. ä½¿ç”¨ç¬¬ä¸‰æ–¹æœåŠ¡é›†æˆåˆ°GitLabä¸­ä»¥ä½¿ç”¨å¤–éƒ¨çš„issueè·Ÿè¸ªå’Œå¤–éƒ¨çš„è®¤è¯æœåŠ¡ï¼›
+- [Trello Power-Up](integration/trello_power_up.md): Integrate with GitLab's Trello Power-Up é›†æˆTrello Power-Up
 
 ----
 
-## Administrator documentation--¹ÜÀíGitLab
+## Administrator documentation--ç®¡ç†GitLab
 
 Learn how to administer your GitLab instance. Regular users don't
 have access to GitLab administration tools and settings.
-Ñ§Ï°ÈçºÎ¹ÜÀíÄúµÄGitLabÊµÀı¡£ÆÕÍ¨ÓÃ»§Ã»ÓĞÈ¨ÏŞ·ÃÎÊ¹ÜÀíÔ±¹¤¾ßºÍÉèÖÃ¡£
+å­¦ä¹ å¦‚ä½•ç®¡ç†æ‚¨çš„GitLabå®ä¾‹ã€‚æ™®é€šç”¨æˆ·æ²¡æœ‰æƒé™è®¿é—®ç®¡ç†å‘˜å·¥å…·å’Œè®¾ç½®ã€‚
 
 
-### Install, update, upgrade, migrate °²×°¡¢¸üĞÂ¡¢Éı¼¶¡¢Ç¨ÒÆ
+### Install, update, upgrade, migrate å®‰è£…ã€æ›´æ–°ã€å‡çº§ã€è¿ç§»
 
-- [Install](install/README.md): Requirements, directory structures and installation from source.°²×°£ºÒªÇó¡¢Ä¿Â¼½á¹¹ºÍ´ÓÔ´ÂëÖĞ°²×°
-- [Mattermost](https://docs.gitlab.com/omnibus/gitlab-mattermost/): Integrate [Mattermost](https://about.mattermost.com/) with your GitLab installation.¼¯³ÉMattermostµ½GitLabÖĞ¡£
-- [Migrate GitLab CI to CE/EE](migrate_ci_to_ce/README.md): If you have an old GitLab installation (older than 8.0), follow this guide to migrate your existing GitLab CI data to GitLab CE/EE.Èç¹ûÄúÊ¹ÓÃµÄÊÇ½ÏÔçµÄGitLab°æ±¾£¬Çë°´ÕÕ±¾Ö¸ÄÏ½«ÏÖÓĞµÄGitLab CIÊı¾İÇ¨ÒÆµ½GitLab CE/EE¡£
-- [Restart GitLab](administration/restart_gitlab.md): Learn how to restart GitLab and its components. Ñ§Ï°ÈçºÎÖØÆôGitLabºÍ×é¼ş
-- [Update](update/README.md): Update guides to upgrade your installation. Éı¼¶GitLab¡£
+- [Install](install/README.md): Requirements, directory structures and installation from source.å®‰è£…ï¼šè¦æ±‚ã€ç›®å½•ç»“æ„å’Œä»æºç ä¸­å®‰è£…
+- [Mattermost](https://docs.gitlab.com/omnibus/gitlab-mattermost/): Integrate [Mattermost](https://about.mattermost.com/) with your GitLab installation.é›†æˆMattermoståˆ°GitLabä¸­ã€‚
+- [Migrate GitLab CI to CE/EE](migrate_ci_to_ce/README.md): If you have an old GitLab installation (older than 8.0), follow this guide to migrate your existing GitLab CI data to GitLab CE/EE.å¦‚æœæ‚¨ä½¿ç”¨çš„æ˜¯è¾ƒæ—©çš„GitLabç‰ˆæœ¬ï¼Œè¯·æŒ‰ç…§æœ¬æŒ‡å—å°†ç°æœ‰çš„GitLab CIæ•°æ®è¿ç§»åˆ°GitLab CE/EEã€‚
+- [Restart GitLab](administration/restart_gitlab.md): Learn how to restart GitLab and its components. å­¦ä¹ å¦‚ä½•é‡å¯GitLabå’Œç»„ä»¶
+- [Update](update/README.md): Update guides to upgrade your installation. å‡çº§GitLabã€‚
 
-### User permissions--ÓÃ»§È¨ÏŞ
+### User permissions--ç”¨æˆ·æƒé™
 
-- [Access restrictions](user/admin_area/settings/visibility_and_access_controls.md#enabled-git-access-protocols): Define which Git access protocols can be used to talk to GitLab ·ÃÎÊÏŞÖÆ£ºÖ¸¶¨Ê¹ÓÃÄÄÖÖGit·ÃÎÊĞ­ÒéÀ´·ÃÎÊGitLab¡£
-- [Authentication/Authorization](topics/authentication/index.md#gitlab-administrators): Enforce 2FA, configure external authentication with LDAP, SAML, CAS and additional Omniauth providers. ÓÃ»§ÈÏÖ¤£ºÖ´ĞĞ 2FAÅäÖÃÍâ²¿µÄLDAP¡¢SAML¡¢CASÈÏÖ¤ºÍ¶îÍâµÄOmniauth¹©Ó¦ÉÌ
+- [Access restrictions](user/admin_area/settings/visibility_and_access_controls.md#enabled-git-access-protocols): Define which Git access protocols can be used to talk to GitLab è®¿é—®é™åˆ¶ï¼šæŒ‡å®šä½¿ç”¨å“ªç§Gitè®¿é—®åè®®æ¥è®¿é—®GitLabã€‚
+- [Authentication/Authorization](topics/authentication/index.md#gitlab-administrators): Enforce 2FA, configure external authentication with LDAP, SAML, CAS and additional Omniauth providers. ç”¨æˆ·è®¤è¯ï¼šæ‰§è¡Œ 2FAé…ç½®å¤–éƒ¨çš„LDAPã€SAMLã€CASè®¤è¯å’Œé¢å¤–çš„Omniauthä¾›åº”å•†
 
-### Features--¹¦ÄÜ
+### Features--åŠŸèƒ½
 
-- [Container Registry](administration/container_registry.md): Configure Docker Registry with GitLab.×¢²áÈİÆ÷£ºÅäÖÃDockerµÄ×¢²á»úÖÆµ½GitLab
-- [Custom Git hooks](administration/custom_hooks.md): Custom Git hooks (on the filesystem) for when webhooks aren't enough. µ±webhooks²»ÄÜÂú×ãÄãµÄÊ±ºò£¬×Ô¶¨ÒåGit¹³×Ó£¨ÔÚÎÄ¼şÏµÍ³£©
-- [Git LFS configuration](workflow/lfs/lfs_administration.md): Learn how to use LFS under GitLab. Ñ§Ï°ÈçºÎÔÚGitLabÖĞÊ¹ÓÃLFS
-- [GitLab Pages configuration](administration/pages/index.md): Configure GitLab Pages. ÅäÖÃGitLabÒ³Ãæ
-- [High Availability](administration/high_availability/README.md): Configure multiple servers for scaling or high availability. ÅäÖÃ¶àÌ¨·şÎñÒÔÀ©Õ¹»òÌá¸ßĞÔÄÜ
-- [User cohorts](user/admin_area/user_cohorts.md): View user activity over time. ËæÊ±¼ä²é¿´ÓÃ»§»î¶¯¡£
-- [Web terminals](administration/integration/terminal.md): Provide terminal access to environments from within GitLab. ÔÚGitLabÖĞÌá¹©ÖÕ¶Ë·ÃÎÊ»·¾³¡£
-- GitLab CI ³ÖĞø¼¯³É
-    - [CI admin settings](user/admin_area/settings/continuous_integration.md): Define max artifacts size and expiration time.³ÖĞø¼¯³É¹ÜÀíÉèÖÃ£º¶¨Òå×î´ó¹¤¼ş´óĞ¡ºÍµ½ÆÚÊ±¼ä¡£
+- [Container Registry](administration/container_registry.md): Configure Docker Registry with GitLab.æ³¨å†Œå®¹å™¨ï¼šé…ç½®Dockerçš„æ³¨å†Œæœºåˆ¶åˆ°GitLab
+- [Custom Git hooks](administration/custom_hooks.md): Custom Git hooks (on the filesystem) for when webhooks aren't enough. å½“webhooksä¸èƒ½æ»¡è¶³ä½ çš„æ—¶å€™ï¼Œè‡ªå®šä¹‰Gité’©å­ï¼ˆåœ¨æ–‡ä»¶ç³»ç»Ÿï¼‰
+- [Git LFS configuration](workflow/lfs/lfs_administration.md): Learn how to use LFS under GitLab. å­¦ä¹ å¦‚ä½•åœ¨GitLabä¸­ä½¿ç”¨LFS
+- [GitLab Pages configuration](administration/pages/index.md): Configure GitLab Pages. é…ç½®GitLabé¡µé¢
+- [High Availability](administration/high_availability/README.md): Configure multiple servers for scaling or high availability. é…ç½®å¤šå°æœåŠ¡ä»¥æ‰©å±•æˆ–æé«˜æ€§èƒ½
+- [User cohorts](user/admin_area/user_cohorts.md): View user activity over time. éšæ—¶é—´æŸ¥çœ‹ç”¨æˆ·æ´»åŠ¨ã€‚
+- [Web terminals](administration/integration/terminal.md): Provide terminal access to environments from within GitLab. åœ¨GitLabä¸­æä¾›ç»ˆç«¯è®¿é—®ç¯å¢ƒã€‚
+- GitLab CI æŒç»­é›†æˆ
+    - [CI admin settings](user/admin_area/settings/continuous_integration.md): Define max artifacts size and expiration time.æŒç»­é›†æˆç®¡ç†è®¾ç½®ï¼šå®šä¹‰æœ€å¤§å·¥ä»¶å¤§å°å’Œåˆ°æœŸæ—¶é—´ã€‚
 
-### Integrations--¼¯³É
+### Integrations--é›†æˆ
 
-- [Integrations](integration/README.md): How to integrate with systems such as JIRA, Redmine, Twitter.ÈçºÎÕûºÏÖîÈçJIRA£¬Redmine£¬TwitterµÈÏµÍ³¡£
-- [Mattermost](user/project/integrations/mattermost.md): Set up GitLab with Mattermost.ÉèÖÃGitLabÊ¹ÓÃMattermost
+- [Integrations](integration/README.md): How to integrate with systems such as JIRA, Redmine, Twitter.å¦‚ä½•æ•´åˆè¯¸å¦‚JIRAï¼ŒRedmineï¼ŒTwitterç­‰ç³»ç»Ÿã€‚
+- [Mattermost](user/project/integrations/mattermost.md): Set up GitLab with Mattermost.è®¾ç½®GitLabä½¿ç”¨Mattermost
 
-### Monitoring--¼à¿Ø
+### Monitoring--ç›‘æ§
 
-- [GitLab performance monitoring with InfluxDB](administration/monitoring/performance/introduction.md): Configure GitLab and InfluxDB for measuring performance metrics. Ê¹ÓÃInfluxDBAÀ´¼à¿ØGitLab»î¶¯£ºÅäÖÃGitLabºÍInfluxDBÒÔºâÁ¿ĞÔÄÜÖ¸±ê
-- [GitLab performance monitoring with Prometheus](administration/monitoring/prometheus/index.md): Configure GitLab and Prometheus for measuring performance metrics.Ê¹ÓÃPrometheus¼à¿ØGitLab»î¶¯£ºÅäÖÃGitLabºÍPrometheusÒÔºâÁ¿ĞÔÄÜÖ¸±ê
-- [Monitoring uptime](user/admin_area/monitoring/health_check.md): Check the server status using the health check endpoint.¼à¿ØÔËĞĞÊ±¼ä£ºÊ¹ÓÃÔËĞĞ×´¿ö¼ì²é¶Ëµã¼ì²é·şÎñÆ÷×´Ì¬
-- [Monitoring GitHub imports](administration/monitoring/github_imports.md) ¼à¿ØGitHubµÄµ¼Èë
+- [GitLab performance monitoring with InfluxDB](administration/monitoring/performance/introduction.md): Configure GitLab and InfluxDB for measuring performance metrics. ä½¿ç”¨InfluxDBAæ¥ç›‘æ§GitLabæ´»åŠ¨ï¼šé…ç½®GitLabå’ŒInfluxDBä»¥è¡¡é‡æ€§èƒ½æŒ‡æ ‡
+- [GitLab performance monitoring with Prometheus](administration/monitoring/prometheus/index.md): Configure GitLab and Prometheus for measuring performance metrics.ä½¿ç”¨Prometheusç›‘æ§GitLabæ´»åŠ¨ï¼šé…ç½®GitLabå’ŒPrometheusä»¥è¡¡é‡æ€§èƒ½æŒ‡æ ‡
+- [Monitoring uptime](user/admin_area/monitoring/health_check.md): Check the server status using the health check endpoint.ç›‘æ§è¿è¡Œæ—¶é—´ï¼šä½¿ç”¨è¿è¡ŒçŠ¶å†µæ£€æŸ¥ç«¯ç‚¹æ£€æŸ¥æœåŠ¡å™¨çŠ¶æ€
+- [Monitoring GitHub imports](administration/monitoring/github_imports.md) ç›‘æ§GitHubçš„å¯¼å…¥
 
-### Performance--ĞÔÄÜ±íÏÖ
+### Performance--æ€§èƒ½è¡¨ç°
 
-- [Housekeeping](administration/housekeeping.md): Keep your Git repository tidy and fast. Ê¹´æ´¢¿â¸É¾»ºÍ¸ßĞ§
-- [Operations](administration/operations.md): Keeping GitLab up and running. ²Ù×÷£º±£³ÖGitLabÕı³£ÔËĞĞ
-- [Polling](administration/polling.md): Configure how often the GitLab UI polls for updates.ÂÖÑ¯£ºÅäÖÃGitLab UIÂÖÑ¯¸üĞÂµÄÆµÂÊ
-- [Request Profiling](administration/monitoring/performance/request_profiling.md): Get a detailed profile on slow requests.ÇëÇó·ÖÎö£º»ñÈ¡»ºÂıÇëÇóµÄÏêÏ¸×ÊÁÏ
-- [Performance Bar](administration/monitoring/performance/performance_bar.md): Get performance information for the current page.ĞÔÄÜÀ¸£º»ñÈ¡µ±Ç°Ò³ÃæµÄĞÔÄÜĞÅÏ¢¡£
-
-
-### Customization--¶¨ÖÆ
-
-- [Adjust your instance's timezone](workflow/timezone.md): Customize the default time zone of GitLab.×Ô¶¨ÒåGitLabµÄÄ¬ÈÏÊ±Çø
-- [Environment variables](administration/environment_variables.md): Supported environment variables that can be used to override their defaults values in order to configure GitLab.¶¨ÖÆ»·¾³±äÁ¿£ºÖ§³ÖµÄ»·¾³±äÁ¿£¬¿ÉÓÃÓÚ¸²¸ÇÆäÄ¬ÈÏÖµ£¬ÒÔÅäÖÃGitLab£»
-- [Header logo](customization/branded_page_and_email_header.md): Change the logo on the overall page and email header.¸ü¸ÄÕû¸öÒ³ÃæºÍµç×ÓÓÊ¼ş±êÌâÉÏµÄlogo£»
-- [Issue closing pattern](administration/issue_closing_pattern.md): Customize how to close an issue from commit messages.×Ô¶¨ÒåÈçºÎ´ÓÌá½»ÏûÏ¢ÖĞ¹Ø±ÕÎÊÌâ£»
-- [Libravatar](customization/libravatar.md): Use Libravatar instead of Gravatar for user avatars.Ê¹ÓÃLibravatar¶ø²»ÊÇGravatar×÷ÎªÓÃ»§Í·Ïñ£»
-- [Welcome message](customization/welcome_message.md): Add a custom welcome message to the sign-in page.½«×Ô¶¨Òå»¶Ó­ÏûÏ¢Ìí¼Óµ½µÇÂ¼Ò³Ãæ¡£
-
-### Admin tools ¹ÜÀí¹¤¾ß
-
-- [Gitaly](administration/gitaly/index.md): Configuring Gitaly, GitLab's Git repository storage service.ÅäÖÃGitLabµÄGit´æ´¢¿â´æ´¢·şÎñºÍGitaly£»
-- [Raketasks](raketasks/README.md): Backups, maintenance, automatic webhook setup and the importing of projects.±¸·İ¡¢Î¬»¤¡¢×Ô¶¯ÉèÖÃwebhookºÍµ¼ÈëÏîÄ¿
-    - [Backup and restore](raketasks/backup_restore.md): Backup and restore your GitLab instance.±¸·İºÍ»Ø¸´ÄúµÄGitLabÊµÀı
-- [Reply by email](administration/reply_by_email.md): Allow users to comment on issues and merge requests by replying to notification emails.ÔÊĞíÓÃ»§ÔÚissuesÖĞÆÀÂÛºÍÍ¨¹ı»Ø¸´Í¨ÖªÓÊ¼ş·¢ÆğmergeÇëÇó
-- [Repository checks](administration/repository_checks.md): Periodic Git repository checks.¶¨ÆÚ¼ì²éGit´æ´¢¿â£»
-- [Repository storage paths](administration/repository_storage_paths.md): Manage the paths used to store repositories.¹ÜÀí±£´æ´æ´¢¿âµÄÂ·¾¶£»
-- [Security](security/README.md): Learn what you can do to further secure your GitLab instance.ÁË½âÄú¿ÉÒÔ×öĞ©Ê²Ã´À´½øÒ»²½±£»¤ÄúµÄGitLabÊµÀı
-- [System hooks](system_hooks/system_hooks.md): Notifications when users, projects and keys are changed.ÏµÍ³¹³×Ó½Å±¾£ºµ±ÓÃ»§¡¢ÏîÄ¿ºÍÃÜÔ¿¸ü¸ÄÊ±×Ô¶¯Í¨ÖªÄú¡£
-
-### Troubleshooting--¹ÊÕÏÅÅ³ı
-
-- [Debugging tips](administration/troubleshooting/debug.md): Tips to debug problems when things go wrong µ÷ÊÔÎÊÌâÊ±µÄÌáÊ¾£»
-- [Log system](administration/logs.md): Where to look for logs.²éÕÒÈÕÖ¾ĞÅÏ¢£»
-- [Sidekiq Troubleshooting](administration/troubleshooting/sidekiq.md): Debug when Sidekiq appears hung and is not processing jobs.µ±Sidekiq¹ÒÆğ²¢ÇÒ²»´¦Àí×÷ÒµÊ±½øĞĞµ÷ÊÔ¡£
+- [Housekeeping](administration/housekeeping.md): Keep your Git repository tidy and fast. ä½¿å­˜å‚¨åº“å¹²å‡€å’Œé«˜æ•ˆ
+- [Operations](administration/operations.md): Keeping GitLab up and running. æ“ä½œï¼šä¿æŒGitLabæ­£å¸¸è¿è¡Œ
+- [Polling](administration/polling.md): Configure how often the GitLab UI polls for updates.è½®è¯¢ï¼šé…ç½®GitLab UIè½®è¯¢æ›´æ–°çš„é¢‘ç‡
+- [Request Profiling](administration/monitoring/performance/request_profiling.md): Get a detailed profile on slow requests.è¯·æ±‚åˆ†æï¼šè·å–ç¼“æ…¢è¯·æ±‚çš„è¯¦ç»†èµ„æ–™
+- [Performance Bar](administration/monitoring/performance/performance_bar.md): Get performance information for the current page.æ€§èƒ½æ ï¼šè·å–å½“å‰é¡µé¢çš„æ€§èƒ½ä¿¡æ¯ã€‚
 
 
-## Contributor documentation--¹±Ï×ÕßÎÄµµ
+### Customization--å®šåˆ¶
 
-- [Development](development/README.md): All styleguides and explanations how to contribute.ËùÓĞµÄstyleguidesºÍ½âÊÍÈçºÎ¹±Ï×
-- [Legal](legal/README.md): Contributor license agreements. ²ÎÓëÕßĞí¿ÉĞ­Òé
-- [Writing documentation](development/writing_documentation.md): Contributing to GitLab Docs. ²ÎÓëGitLabÎÄµµµÄ±àĞ´
+- [Adjust your instance's timezone](workflow/timezone.md): Customize the default time zone of GitLab.è‡ªå®šä¹‰GitLabçš„é»˜è®¤æ—¶åŒº
+- [Environment variables](administration/environment_variables.md): Supported environment variables that can be used to override their defaults values in order to configure GitLab.å®šåˆ¶ç¯å¢ƒå˜é‡ï¼šæ”¯æŒçš„ç¯å¢ƒå˜é‡ï¼Œå¯ç”¨äºè¦†ç›–å…¶é»˜è®¤å€¼ï¼Œä»¥é…ç½®GitLabï¼›
+- [Header logo](customization/branded_page_and_email_header.md): Change the logo on the overall page and email header.æ›´æ”¹æ•´ä¸ªé¡µé¢å’Œç”µå­é‚®ä»¶æ ‡é¢˜ä¸Šçš„logoï¼›
+- [Issue closing pattern](administration/issue_closing_pattern.md): Customize how to close an issue from commit messages.è‡ªå®šä¹‰å¦‚ä½•ä»æäº¤æ¶ˆæ¯ä¸­å…³é—­é—®é¢˜ï¼›
+- [Libravatar](customization/libravatar.md): Use Libravatar instead of Gravatar for user avatars.ä½¿ç”¨Libravatarè€Œä¸æ˜¯Gravatarä½œä¸ºç”¨æˆ·å¤´åƒï¼›
+- [Welcome message](customization/welcome_message.md): Add a custom welcome message to the sign-in page.å°†è‡ªå®šä¹‰æ¬¢è¿æ¶ˆæ¯æ·»åŠ åˆ°ç™»å½•é¡µé¢ã€‚
+
+### Admin tools ç®¡ç†å·¥å…·
+
+- [Gitaly](administration/gitaly/index.md): Configuring Gitaly, GitLab's Git repository storage service.é…ç½®GitLabçš„Gitå­˜å‚¨åº“å­˜å‚¨æœåŠ¡å’ŒGitalyï¼›
+- [Raketasks](raketasks/README.md): Backups, maintenance, automatic webhook setup and the importing of projects.å¤‡ä»½ã€ç»´æŠ¤ã€è‡ªåŠ¨è®¾ç½®webhookå’Œå¯¼å…¥é¡¹ç›®
+    - [Backup and restore](raketasks/backup_restore.md): Backup and restore your GitLab instance.å¤‡ä»½å’Œå›å¤æ‚¨çš„GitLabå®ä¾‹
+- [Reply by email](administration/reply_by_email.md): Allow users to comment on issues and merge requests by replying to notification emails.å…è®¸ç”¨æˆ·åœ¨issuesä¸­è¯„è®ºå’Œé€šè¿‡å›å¤é€šçŸ¥é‚®ä»¶å‘èµ·mergeè¯·æ±‚
+- [Repository checks](administration/repository_checks.md): Periodic Git repository checks.å®šæœŸæ£€æŸ¥Gitå­˜å‚¨åº“ï¼›
+- [Repository storage paths](administration/repository_storage_paths.md): Manage the paths used to store repositories.ç®¡ç†ä¿å­˜å­˜å‚¨åº“çš„è·¯å¾„ï¼›
+- [Security](security/README.md): Learn what you can do to further secure your GitLab instance.äº†è§£æ‚¨å¯ä»¥åšäº›ä»€ä¹ˆæ¥è¿›ä¸€æ­¥ä¿æŠ¤æ‚¨çš„GitLabå®ä¾‹
+- [System hooks](system_hooks/system_hooks.md): Notifications when users, projects and keys are changed.ç³»ç»Ÿé’©å­è„šæœ¬ï¼šå½“ç”¨æˆ·ã€é¡¹ç›®å’Œå¯†é’¥æ›´æ”¹æ—¶è‡ªåŠ¨é€šçŸ¥æ‚¨ã€‚
+
+### Troubleshooting--æ•…éšœæ’é™¤
+
+- [Debugging tips](administration/troubleshooting/debug.md): Tips to debug problems when things go wrong è°ƒè¯•é—®é¢˜æ—¶çš„æç¤ºï¼›
+- [Log system](administration/logs.md): Where to look for logs.æŸ¥æ‰¾æ—¥å¿—ä¿¡æ¯ï¼›
+- [Sidekiq Troubleshooting](administration/troubleshooting/sidekiq.md): Debug when Sidekiq appears hung and is not processing jobs.å½“SidekiqæŒ‚èµ·å¹¶ä¸”ä¸å¤„ç†ä½œä¸šæ—¶è¿›è¡Œè°ƒè¯•ã€‚
+
+
+## Contributor documentation--è´¡çŒ®è€…æ–‡æ¡£
+
+- [Development](development/README.md): All styleguides and explanations how to contribute.æ‰€æœ‰çš„styleguideså’Œè§£é‡Šå¦‚ä½•è´¡çŒ®
+- [Legal](legal/README.md): Contributor license agreements. å‚ä¸è€…è®¸å¯åè®®
+- [Writing documentation](development/writing_documentation.md): Contributing to GitLab Docs. å‚ä¸GitLabæ–‡æ¡£çš„ç¼–å†™
