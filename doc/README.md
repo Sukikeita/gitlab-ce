@@ -115,7 +115,7 @@ Manage your [repositories](user/project/repository/index.md) from the UI (user i
 ### Continuous Integration, Delivery, and Deployment--持续集成、交付、和部署
 
 - [GitLab CI](ci/README.md): Explore the features and capabilities of Continuous Integration, Continuous Delivery, and Continuous Deployment with GitLab.了解GitLab的CI、持续交付、持续部署功能和性能（已翻译）
-  - [Auto Deploy](ci/autodeploy/index.md): Configure GitLab CI for the deployment of your application.（已翻译）配置CI部署应用
+    - [Auto Deploy](ci/autodeploy/index.md): Configure GitLab CI for the deployment of your application.（已翻译）配置CI部署应用
   - [Review Apps](ci/review_apps/index.md): Preview changes to your app right from a merge request.从合并请求中进行代码审查
 - [GitLab Cycle Analytics](user/project/cycle_analytics.md): Cycle Analytics measures the time it takes to go from an [idea to production](https://about.gitlab.com/2016/08/05/continuous-integration-delivery-and-deployment-with-gitlab/#from-idea-to-production-with-gitlab) for each project you have. 分析项目的周期
 - [GitLab Container Registry](user/project/container_registry.md): Learn how to use GitLab's built-in Container Registry.学习如何使用内置的注册容器
